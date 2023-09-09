@@ -1,17 +1,17 @@
 
-export * from './lib/atoms/Button';
-export * from './lib/atoms/Input';
-export * from './lib/atoms/Label';
-export * from './lib/atoms/Output';
-export * from './lib/atoms/ProgressBar';
-export * from './lib/atoms/Toggle';
+export {Button} from './lib/atoms/Button';
+export {Input} from './lib/atoms/Input';
+export {Label} from './lib/atoms/Label';
+export {Output} from './lib/atoms/Output';
+export {ProgressBar} from './lib/atoms/ProgressBar';
+export {Toggle} from './lib/atoms/Toggle';
 
-export * from './lib/icons/TravelingShip';
+export {TravelingShip} from './lib/icons/TravelingShip';
 
-export * from './lib/molecules/Card';
-export * from './lib/molecules/GridTemplate';
-export * from './lib/molecules/GridArea';
+export {Card} from './lib/molecules/Card';
+export {GridTemplate} from './lib/molecules/GridTemplate';
+export {GridArea} from './lib/molecules/GridArea';
 
-export * from './lib/organism-tabs/Tabs';
-export * from './lib/organism-tabs/Tab';
+export {Tabs} from './lib/organism-tabs/Tabs';
+export {Tab} from './lib/organism-tabs/Tab';
 
