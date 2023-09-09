@@ -1,4 +1,5 @@
-import {memo, ReactNode, useEffect, useState} from 'react';
+"use client"
+import {memo, PropsWithChildren, ReactNode, useEffect, useState} from 'react';
 
 import {T_CardLayer} from 'TS_General';
 
@@ -11,7 +12,7 @@ type T_Props = {
   style?: Record<string, any>
 }
 
-const Card: React.FC<T_Props> = memo(({layer, heading, children, style}) => {
+const Card: React.FC<PropsWithChildren<T_Props>> = memo(({layer, heading, children, style}) => {
   const [opacity, setOpacity] = useState(0);
   useEffect(() => {
     setTimeout(() => {
