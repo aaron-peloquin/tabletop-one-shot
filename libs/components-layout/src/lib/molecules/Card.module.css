@@ -1,0 +1,47 @@
+
+.card {
+    border-radius: 4px;
+    margin: 12px;
+    padding: 12px;
+    transition-duration: 1s;
+    transition-property: opacity;
+}
+
+.card h1,
+.card h2, 
+.card h3, 
+.card h4,
+.card h5 {
+    margin-bottom: 4px;
+    margin-top: 0;
+}
+
+.card-layer-1 {
+    background-color: #000;
+    box-shadow:1 4px 4px #000;
+    color: #FFF;
+}
+
+.card-layer-2 {
+    background-color: #111;
+    box-shadow:1 4px 4px #111;
+    color: #EEE;
+}
+
+.card-layer-3 {
+    background-color: #222;
+    box-shadow:1 4px 4px #222;
+    color: #DDD;
+}
+
+.card-layer-4 {
+    background-color: #333;
+    box-shadow:1 4px 4px #333;
+    color: #CCC;
+}
+
+.card-layer-5 {
+    background-color: #444;
+    box-shadow:1 4px 4px #444;
+    color: #BBB;
+}

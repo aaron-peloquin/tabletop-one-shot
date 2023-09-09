@@ -1,0 +1,44 @@
+.checkbox {
+    border: 0;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
+.toggle-plate {
+    border: solid #444;
+    border-radius: 8px;
+    border-width: .25rem;
+    height: .75rem;
+    margin: 0;
+    width: 2rem;
+}
+
+.toggle-switch {
+    border-radius: 4px;
+    font-size: 0px;
+    height: .75rem;
+    position: relative;
+    transition: 0.25s ease-in-out 0s;
+    transition-property: background-color, left;
+    width: .75rem;
+}
+
+.switch-on {
+    /* animation: switch-on 2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both; */
+    animation: fly-from-left 1.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    background-color: seagreen;
+    left: 1.25rem;
+}
+
+.switch-off {
+    animation: switch-off 1s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    background-color: saddlebrown;
+    left: 0rem;
+}

@@ -1,0 +1,38 @@
+.ship {
+    animation: ease-in-out;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-name: ship-sailing;
+    font-size: 7rem;
+    position: relative;
+  }
+  
+  @keyframes ship-sailing {
+    0% { /* start */
+        margin-left: -70%;
+        top: -2rem;
+        transform: rotate(0deg) scaleX(1);
+    }
+    10% {transform: rotate(20deg);} /* bouncing */
+    15% {transform: rotate(18deg);} /* bouncing */
+    20% {transform: rotate(12deg);} /* bouncing */
+    35% { /* descended */
+        margin-left: 70%;
+        top: 2rem;
+        transform: rotate(-10deg);
+    }
+    45% {transform: rotate(0deg) scaleX(-1);} /* flipped bouncing */
+    55% {transform: rotate(10deg) scaleX(-1);} /* flipped bouncing */
+    70% {transform: rotate(18deg) scaleX(-1);} /* flipped bouncing */
+
+    80% { /* flipped ascending */
+        top: .5rem;
+        transform: rotate(5deg) scaleX(-1);
+    }
+    90% {transform: rotate(0deg) scaleX(0);} /* ascending */
+    100% {/* end, reset */
+        margin-left: -70%;
+        top: -2rem;
+        transform: rotate(0deg) scaleX(1);
+    }
+  }
