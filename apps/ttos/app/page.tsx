@@ -1,4 +1,5 @@
-import styles from './page.module.scss';
+import {Card} from '@components-layout';
+
 
 export default async function Index() {
   /*
@@ -7,8 +8,8 @@ export default async function Index() {
    * Note: The corresponding styles are in the ./index.scss file.
    */
   return (
-    <div className={styles.page}>
-      
-    </div>
+    <Card layer="1">
+      <p>Hello</p>
+    </Card>
   );
 }

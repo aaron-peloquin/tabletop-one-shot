@@ -1,5 +1,6 @@
-import {emptyFunction} from '@static';
+"use client"
 import {createContext} from 'react';
+import {emptyFunction} from '@static';
 
 export type T_TabId = string
 type T_TabName = string
