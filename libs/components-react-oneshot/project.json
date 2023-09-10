@@ -1,0 +1,18 @@
+{
+  "name": "components-react-oneshot",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/components-react-oneshot/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/components-react-oneshot/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    }
+  }
+}

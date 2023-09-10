@@ -16,6 +16,12 @@
     "baseUrl": ".",
     "paths": {
       "@components-layout": ["libs/components-layout/src/index.ts"],
+      "@components-react-oneshot": [
+        "libs/components-react-oneshot/src/index.ts"
+      ],
+      "@components-react-oneshot/server": [
+        "libs/components-react-oneshot/src/server.ts"
+      ],
       "@helper": ["libs/helper/src/index.ts"],
       "@static": ["libs/static/src/index.ts"]
     }
