@@ -1,4 +1,4 @@
-import {ReactNode} from 'react';
+import {PropsWithChildren, ReactNode} from 'react';
 
 import style from './Label.module.css';
 
@@ -8,7 +8,7 @@ type T_Props = {
 }
 
 
-const Label: React.FC<T_Props> = ({text, htmlFor, children}) => {
+const Label: React.FC<PropsWithChildren<T_Props>> = ({text, htmlFor, children}) => {
   return <>
     <label className={style['label']} htmlFor={htmlFor}>{text}:</label>
     {children}

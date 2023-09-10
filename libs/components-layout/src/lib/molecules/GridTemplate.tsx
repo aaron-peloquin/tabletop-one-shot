@@ -1,5 +1,5 @@
 import CSS from 'csstype';
-import {memo, useMemo} from 'react';
+import {PropsWithChildren, memo, useMemo} from 'react';
 
 import styles from './GridTemplate.module.css';
 
@@ -13,7 +13,7 @@ type T_Props = {
 
 type T_CombinedProps = T_Props & T_CssProps
 
-const GridTemplate: React.FC<T_CombinedProps> = memo(({
+const GridTemplate: React.FC<PropsWithChildren<T_CombinedProps>> = memo(({
   alignItems,
   children,
   className,

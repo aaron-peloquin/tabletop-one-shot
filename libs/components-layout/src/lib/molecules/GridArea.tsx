@@ -1,5 +1,5 @@
 import CSS from 'csstype';
-import {memo, useMemo} from 'react';
+import {PropsWithChildren, memo, useMemo} from 'react';
 
 type T_CssProps = Pick<CSS.Properties, 'alignSelf' | 'justifySelf' | 'textAlign'>
 
@@ -12,7 +12,7 @@ type T_Props = {
 }
 
 type T_CombinedProps = T_Props & T_CssProps
-const GridArea: React.FC<T_CombinedProps> = memo(({alignSelf, children, className, name, justifySelf, style, textAlign}) => {
+const GridArea: React.FC<PropsWithChildren<T_CombinedProps>> = memo(({alignSelf, children, className, name, justifySelf, style, textAlign}) => {
   const dynamicStyles = useMemo(() => ({
     alignSelf,
     gridArea: name,

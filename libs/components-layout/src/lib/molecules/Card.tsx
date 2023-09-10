@@ -7,19 +7,20 @@ import styles from './Card.module.css';
 
 /* eslint-disable-next-line */
 type T_Props = {
+  className?: string
   layer: T_CardLayer
   heading?: string | ReactNode
   style?: Record<string, any>
 }
 
-const Card: React.FC<PropsWithChildren<T_Props>> = memo(({layer, heading, children, style}) => {
+const Card: React.FC<PropsWithChildren<T_Props>> = memo(({className, layer, heading, children, style}) => {
   const [opacity, setOpacity] = useState(0);
   useEffect(() => {
     setTimeout(() => {
       setOpacity(1);
     }, 50);
   }, []);
-  const classNames = styles['card'] + ' ' + styles[`card-layer-${layer}`];
+  const classNames = (styles['card'] + ' ' + styles[`card-layer-${layer}`] + ' ' + className).trim();
 
   return (
     <div className={classNames} style={{opacity, ...style}}>
