@@ -1,20 +1,29 @@
 html {
-    background-color: #000;
-    color: #CCC;
-    display: block;
-    font-family:'Courier New', Courier, monospace;
-    font-size: 18px;
-    height: 100%;
-  }
-  
-  a {
-    color: #77F;
-    text-decoration: none;
-  }
-  a:visited {
-    color: #AAF;
-  }
-  
-  input {
-    width: 100%;
-  }
+  background-color: #000;
+  color: #CCC;
+  display: block;
+  font-family:'Courier New', Courier, monospace;
+  font-size: 18px;
+  height: 100%;
+}
+
+a {
+  color: #77F;
+  text-decoration: none;
+}
+a:visited {
+  color: #AAF;
+}
+
+input,
+textarea,
+.full-width {
+  width: 100%;
+}
+
+.limited-height {
+  overflow-y: auto;
+  max-height: 250px;
+  scrollbar-color: red;
+  scrollbar-base-color: blue;
+}

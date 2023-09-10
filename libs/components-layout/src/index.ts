@@ -5,6 +5,7 @@ export {Label} from './lib/atoms/Label';
 export {Output} from './lib/atoms/Output';
 export {ProgressBar} from './lib/atoms/ProgressBar';
 export {Toggle} from './lib/atoms/Toggle';
+export {Textarea} from './lib/atoms/Textarea';
 
 export {TravelingShip} from './lib/icons/TravelingShip';
 
