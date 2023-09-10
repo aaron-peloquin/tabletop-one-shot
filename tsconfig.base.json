@@ -15,8 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@static": ["libs/static/src/index.ts"],
       "@components-layout": ["libs/components-layout/src/index.ts"],
+      "@helper": ["libs/helper/src/index.ts"],
+      "@static": ["libs/static/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
