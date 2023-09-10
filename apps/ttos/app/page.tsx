@@ -1,15 +1,20 @@
+"use client"
 import {Card, GridArea, GridTemplate, Input, Textarea} from '@components-layout';
+import { useCallback, useState } from 'react';
 
 const GRID_TEMPLATE_AREA =`
 "prompt_overview___ generated_overview generated_overview"
 `
 
 export default async function Index() {
-  /*
-   * Replace the elements below with your own.
-   *
-   * Note: The corresponding styles are in the ./index.scss file.
-   */
+  const [overviewPrompt, setOverviewPrompt] = useState('Generate a one-shot for dungeons and dragons where the players need to clear out a small band of goblins from a forest near a small town')
+  const handleOverviewPrompt = useCallback((event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setOverviewPrompt(event.target.value)
+  }, [])
+  const handleOverviewPrompt2 = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    setOverviewPrompt(event.target.value)
+  }, [])
+
   return (
     <Card layer="1" heading="Tabletop One Shot Generator">
       <GridTemplate
@@ -20,11 +25,13 @@ export default async function Index() {
       >
         <GridArea className='full-width' name="prompt_overview___">
           <Card layer="2" heading="Overview Input">
-            <Textarea
-              id="prompt_one"
-              label="Prompt"
-              value="Test"
-              style={{ width: '100%' }}
+            <Input
+              id="overviewPrompt"
+              label="Overview Prompt"
+              value={overviewPrompt}
+              style={{ width: '100%', minHeight: 150 }}
+              // onChange={handleOverviewPrompt}
+              onChange={handleOverviewPrompt2}
             />
           </Card>
         </GridArea>
