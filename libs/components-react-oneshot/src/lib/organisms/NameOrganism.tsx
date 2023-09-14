@@ -4,22 +4,30 @@ import { useRandomName } from '@helper'
 import { useCallback, useState } from "react"
 
 export const NameOrganism = () => {
-  const [name, setName] = useState('The Harbinger of Shadow')
+  const [name, setName] = useState('')
   const handleSetName = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event?.target.value)
   }, [])
 
-  const getRandomName = useRandomName()
+  const {getName, loading} = useRandomName(setName)
 
   const handleRandomizeName = useCallback(async () => {
-    const newName = await getRandomName()
-    console.log({newName})
-    setName(newName)
-  }, [getRandomName])
+    getName()
+  }, [getName])
+
+  return <>
+    <Input
+      id="name"
+      value={name}
+      onChange={handleSetName}
+      label="One Shot Session Name"
+    />
+    <Button style={{height:'100%'}} text="Randomize" disabled={loading} onClick={handleRandomizeName} />
+  </>
 
   return <GridTemplate columns={2}>
     <GridArea>
-      <Button text="Randomize" onClick={handleRandomizeName} />
+      <Button style={{height:'100%'}} text="Randomize" disabled={loading} onClick={handleRandomizeName} />
     </GridArea>
     <GridArea>
       <Input

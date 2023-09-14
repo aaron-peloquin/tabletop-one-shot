@@ -1,12 +1,15 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 
-export function useRandomName() {
+export function useRandomName(callback) {
+  const [loading, setLoading] = useState(false)
   const getName = useCallback(async () => {
-    const response = await fetch('/api/llm/name')
-    const reply = await response.json()
-    return reply.message
-  }, [])
+    setLoading(true)
+    fetch('/api/llm/name').then(res => res.json()).then(({message})=>{
+      callback(message)
+      setLoading(false)
+    })
+  }, [callback])
 
-  return getName;
+  return {getName, loading};
 }
  

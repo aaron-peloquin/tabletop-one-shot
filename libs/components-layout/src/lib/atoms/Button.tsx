@@ -10,7 +10,7 @@ type T_Props = {
   onClick?: (event: SyntheticEvent) => void
 }
 
-type T_CombinedProps = T_Props
+type T_CombinedProps = T_Props & React.HTMLProps<HTMLButtonElement>
 
 const Button: React.FC<T_CombinedProps> = memo(({
   ariaLabel,

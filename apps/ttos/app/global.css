@@ -21,6 +21,11 @@ textarea,
   width: 100%;
 }
 
+input,
+textarea {
+  font-size: 18px;
+}
+
 .limited-height {
   overflow-y: auto;
   max-height: 250px;
