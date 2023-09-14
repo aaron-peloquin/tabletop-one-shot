@@ -13,7 +13,7 @@ export const OverviewOrganism: React.FC<T_Props> = ({gridNameInput, gridNameOutp
       setOverviewPrompt(event.target.value)
     }, [])
 
-return <>
+    return <>
     <GridArea className='full-width' name={gridNameInput}>
         <Card layer="2" heading="Overview Input">
         <Textarea
