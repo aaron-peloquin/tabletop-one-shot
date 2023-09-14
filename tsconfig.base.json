@@ -23,6 +23,7 @@
         "libs/components-react-oneshot/src/server.ts"
       ],
       "@helper": ["libs/helper/src/index.ts"],
+      "@helper/server": ["libs/helper/src/server.ts"],
       "@static": ["libs/static/src/index.ts"]
     }
   },

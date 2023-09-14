@@ -16,7 +16,7 @@ export const HomeTemplate = () => {
       textAlign='left'
       columns={3}
     >
-      <GridArea name="oneshot_name______">
+      <GridArea name="oneshot_name______" className="full-width">
         <Card layer={2}>
           <NameOrganism />
         </Card>

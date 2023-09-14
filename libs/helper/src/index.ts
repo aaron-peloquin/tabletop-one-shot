@@ -1,2 +1,1 @@
-export {useTextGeneration} from './lib/useTextGeneration';
-export {llmGoogle} from './lib/llmGoogle';
+export {useRandomName} from './lib/useRandomName';

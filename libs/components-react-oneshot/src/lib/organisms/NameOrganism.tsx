@@ -1,5 +1,6 @@
 "use state"
 import { Button, GridArea, GridTemplate, Input } from "@components-layout"
+import { useRandomName } from '@helper'
 import { useCallback, useState } from "react"
 
 export const NameOrganism = () => {
@@ -8,9 +9,13 @@ export const NameOrganism = () => {
     setName(event?.target.value)
   }, [])
 
-  const handleRandomizeName = useCallback(() => {
-      
-  }, [])
+  const getRandomName = useRandomName()
+
+  const handleRandomizeName = useCallback(async () => {
+    const newName = await getRandomName()
+    console.log({newName})
+    setName(newName)
+  }, [getRandomName])
 
   return <GridTemplate columns={2}>
     <GridArea>
