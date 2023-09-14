@@ -2,7 +2,8 @@
   "name": "@helper",
   "version": "0.0.1",
   "dependencies": {
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "langchain": "^0.0.146"
   },
   "type": "commonjs",
   "main": "./src/index.js",

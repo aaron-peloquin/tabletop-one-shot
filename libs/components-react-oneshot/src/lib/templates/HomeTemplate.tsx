@@ -25,6 +25,6 @@ export const HomeTemplate = () => {
         gridNameInput="prompt_overview___" // corresponding to GRID_TEMPLATE_AREA
         gridNameOutput="generated_overview" // corresponding to GRID_TEMPLATE_AREA
       />
-</GridTemplate>
+    </GridTemplate>
   </Card>
 }

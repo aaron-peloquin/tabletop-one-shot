@@ -24,7 +24,9 @@
     {
       "files": ["*.ts", "*.tsx"],
       "extends": ["plugin:@nx/typescript"],
-      "rules": {}
+      "rules": {
+        "indent": ["error", 2]
+      }
     },
     {
       "files": ["*.js", "*.jsx"],

@@ -16,8 +16,8 @@ const Toggle: React.FC<T_Props & InputHTMLAttributes<HTMLInputElement>> = memo((
     <span>{label}:</span>
     <div className={classNames['toggle-plate']}>
       {checked ?
-      <div className={`${classNames['toggle-switch']} ${classNames['switch-on']}`}>Yes</div> :
-      <div className={`${classNames['toggle-switch']} ${classNames['switch-off']}`}>No</div>}
+        <div className={`${classNames['toggle-switch']} ${classNames['switch-on']}`}>Yes</div> :
+        <div className={`${classNames['toggle-switch']} ${classNames['switch-off']}`}>No</div>}
     </div>
   </label>;
 });
