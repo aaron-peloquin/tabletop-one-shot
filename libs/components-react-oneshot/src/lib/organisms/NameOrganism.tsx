@@ -9,7 +9,7 @@ export const NameOrganism = () => {
     setName(event?.target.value)
   }, [])
 
-  const {getName, loading} = useRandomName(setName)
+  const {getName, nameLoading} = useRandomName(setName)
 
   const handleRandomizeName = useCallback(async () => {
     getName()
@@ -22,6 +22,6 @@ export const NameOrganism = () => {
       onChange={handleSetName}
       label="One Shot Session Name"
     />
-    <Button style={{height:'100%'}} text="Randomize" disabled={loading} onClick={handleRandomizeName} />
+    <Button style={{height:'100%'}} text="Randomize" disabled={nameLoading} onClick={handleRandomizeName} />
   </>
 }

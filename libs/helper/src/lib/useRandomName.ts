@@ -1,15 +1,14 @@
 import { useCallback, useState } from "react";
 
 export function useRandomName(callback) {
-  const [loading, setLoading] = useState(false)
+  const [nameLoading, setNameLoading] = useState(false)
   const getName = useCallback(async () => {
-    setLoading(true)
+    setNameLoading(true)
     fetch('/api/llm/name').then(res => res.json()).then(({message})=>{
       callback(message)
-      setLoading(false)
+      setNameLoading(false)
     })
   }, [callback])
 
-  return {getName, loading};
+  return {getName, nameLoading};
 }
- 
