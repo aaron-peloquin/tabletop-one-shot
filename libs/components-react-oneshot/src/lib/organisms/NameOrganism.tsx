@@ -1,10 +1,10 @@
-"use state"
-import { Button, GridArea, GridTemplate, Input } from "@components-layout"
+import { Button, Input } from "@components-layout"
 import { useRandomName } from '@helper'
-import { useCallback, useState } from "react"
+import { useCallback, useContext } from "react"
+import { globalDataContext } from "../providers/globalData"
 
 export const NameOrganism = () => {
-  const [name, setName] = useState('')
+  const {name, setName} = useContext(globalDataContext)
   const handleSetName = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event?.target.value)
   }, [])
@@ -24,18 +24,4 @@ export const NameOrganism = () => {
     />
     <Button style={{height:'100%'}} text="Randomize" disabled={loading} onClick={handleRandomizeName} />
   </>
-
-  return <GridTemplate columns={2}>
-    <GridArea>
-      <Button style={{height:'100%'}} text="Randomize" disabled={loading} onClick={handleRandomizeName} />
-    </GridArea>
-    <GridArea>
-      <Input
-        id="name"
-        value={name}
-        onChange={handleSetName}
-        label="Name"
-      />
-    </GridArea>
-  </GridTemplate>
 }
