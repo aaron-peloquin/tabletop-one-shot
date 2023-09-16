@@ -1,4 +1,4 @@
-import { GridArea, Card, Textarea, Button } from "@components-layout";
+import { GridArea, Card, Button } from "@components-layout";
 import { useCallback, useContext } from "react";
 import { globalDataContext } from "../providers/globalData";
 import { useGenerateOverview } from "@helper";
@@ -10,8 +10,6 @@ type T_Props = {
 
 export const OverviewOrganism: React.FC<T_Props> = ({gridNameInput, gridNameOutput}) => {
   const {overview, name, setOverview} = useContext(globalDataContext);
-  console.log({overview});
-
   const {generateOverview, overviewLoading} = useGenerateOverview(setOverview);
 
   const handleGenerateOverview = useCallback(() => {
