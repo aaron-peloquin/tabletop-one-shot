@@ -1,3 +1,3 @@
 # static
 
-A **Data-access library** that exports static data
+A **Static library** that exports static data
