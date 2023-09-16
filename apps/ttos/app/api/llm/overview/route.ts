@@ -7,16 +7,15 @@ import { LLMChain } from 'langchain/chains';
 import { llmGoogle } from '@helper/server';
 
 const zodSchema = zod.object({
-  sessionDescription: zod.string().describe("a brief Description of the one-shot session"),
+  description: zod.string().describe("a brief Description of the one-shot session"),
   encounters: zod.array(zod.object({
     name: zod.string(),
     description: zod.string().describe('Details for the Game Master about this encounter. Mention any items, traps, etc that the GM should know about'),
     purpose: zod.string().describe('Reason the encounter exists'),
     NPCs: zod.array(zod.object({
       name: zod.string(),
-      purpose: zod.string().describe('Reason the NPC character is here'),
+      motivations: zod.string(),
       physicalDescription: zod.string(),
-      // motivations: zod.string().describe('The characters goals'),
       // backstory: zod.string().describe('A brief backstory'),
     })).describe('Any important characters for conversation or battle')
   })).describe('Ordered list of encounters for this session')

@@ -1,7 +1,7 @@
 import { llmGoogle } from '@helper/server';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-const SESSION_DESCRIPTORS = ['dank', 'dark', 'exciting', 'comedy', 'engaging', 'mundane', 'roguish']
+const SESSION_DESCRIPTORS = ['murky', 'dark', 'exciting', 'comedy', 'engaging', 'mundane', 'roguish']
 
 export const GET = async (req: NextApiRequest, res: NextApiResponse) => {
   const descriptorKey = Math.floor(Math.random() * SESSION_DESCRIPTORS.length)

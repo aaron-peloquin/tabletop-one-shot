@@ -2,17 +2,26 @@
 
 import { Dispatch, PropsWithChildren, SetStateAction, createContext, useMemo, useState } from "react"
 
+type T_overviewData = {
+  description: string,
+  encounters: {
+    name: string,
+    description: string,
+    purpose: string,
+  }[]
+}
+
 type T_globalDataContext = {
   name: string
   setName: Dispatch<SetStateAction<string>>
-  overview: string
+  overview?: T_overviewData
   setOverview: Dispatch<SetStateAction<string>>
 }
 
 export const globalDataContext = createContext<T_globalDataContext>({
   name: '',
   setName: () => { return },
-  overview: '',
+  overview: undefined,
   setOverview: () => { return },
 })
 
@@ -20,7 +29,7 @@ const {Provider} = globalDataContext
 
 export const GlobalDataProvider: React.FC<PropsWithChildren> = ({children}) => {
   const [name, setName] = useState('')
-  const [overview, setOverview] = useState('')
+  const [overview, setOverview] = useState()
 
   const value = useMemo(() => ({
     name, setName,

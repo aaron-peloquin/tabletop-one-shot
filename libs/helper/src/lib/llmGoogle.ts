@@ -7,5 +7,5 @@ export const llmGoogle = new GooglePaLM({
       threshold: "BLOCK_MEDIUM_AND_ABOVE",
     },
   ],
-  stopSequences: ["stop"], // OPTIONAL
+  // stopSequences: ["stop"], // OPTIONAL
 });
