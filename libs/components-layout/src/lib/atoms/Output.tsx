@@ -7,7 +7,7 @@ type T_Props = {
   value: string | number | ReactNode
   label: string | ReactNode
   id: string
-}
+};
 
 const Output: React.FC<T_Props & OutputHTMLAttributes<HTMLOutputElement>> = ({id, label, value, ...props}) => {
   return <>

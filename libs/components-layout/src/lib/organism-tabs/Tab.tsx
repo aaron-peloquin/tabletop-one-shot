@@ -1,11 +1,11 @@
-"use client"
+"use client";
 import {PropsWithChildren, memo, useContext, useEffect, useMemo} from 'react';
 
 import style from './Tab.module.css';
 
 import {tabsContext, T_Tab} from './tabsContext';
 
-type T_Props = T_Tab
+type T_Props = T_Tab;
 const Tab: React.FC<PropsWithChildren<T_Props>> = memo(({children, id, name, sort}) => {
   const tabsData = useContext(tabsContext);
   const {deregisterTab, registerTab, tabs} = tabsData;

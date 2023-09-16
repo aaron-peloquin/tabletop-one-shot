@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import {memo, PropsWithChildren, ReactNode, useEffect, useState} from 'react';
 
 import {T_CardLayer} from 'TS_General';
@@ -11,7 +11,7 @@ type T_Props = {
   layer: T_CardLayer
   heading?: string | ReactNode
   style?: Record<string, any>
-}
+};
 
 const Card: React.FC<PropsWithChildren<T_Props>> = memo(({className, layer, heading, children, style}) => {
   const [opacity, setOpacity] = useState(0);

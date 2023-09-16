@@ -8,9 +8,9 @@ type T_Props = {
   text: string
   type?: 'button' | 'submit' | 'reset'
   onClick?: (event: SyntheticEvent) => void
-}
+};
 
-type T_CombinedProps = T_Props & React.HTMLProps<HTMLButtonElement>
+type T_CombinedProps = T_Props & React.HTMLProps<HTMLButtonElement>;
 
 const Button: React.FC<T_CombinedProps> = memo(({
   ariaLabel,

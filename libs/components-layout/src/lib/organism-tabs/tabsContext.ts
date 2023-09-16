@@ -1,15 +1,15 @@
-"use client"
+"use client";
 import {createContext} from 'react';
 import {emptyFunction} from '@static';
 
-export type T_TabId = string
-type T_TabName = string
+export type T_TabId = string;
+type T_TabName = string;
 
 export type T_Tab = {
   id: T_TabId
   name: T_TabName
   sort?: number
-}
+};
 
 export type T_tabsContextValue = {
   currentTabId: string
@@ -17,7 +17,7 @@ export type T_tabsContextValue = {
   setCurrentTabId: (id: T_TabId) => void
   registerTab: (tab: T_Tab) => void
   tabs: T_Tab[]
-}
+};
 
 const tabsContextDefault:T_tabsContextValue = {
   currentTabId: '',

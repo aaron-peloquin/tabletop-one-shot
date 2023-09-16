@@ -11,7 +11,7 @@ import {Card} from '../molecules/Card';
 type T_Props = {
     defaultTab?: T_TabId
     layer: T_CardLayer
-  }
+  };
 
 const Tabs: React.FC<T_Props> = memo(({defaultTab, layer, children}) => {
   const hasCard = !!layer;

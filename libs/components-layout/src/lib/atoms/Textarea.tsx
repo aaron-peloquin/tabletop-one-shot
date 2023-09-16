@@ -6,7 +6,7 @@ import {Label} from './Label';
 type T_Props = {
     label: string | ReactNode
     id: string
-}
+};
 
 const Textarea: React.FC<T_Props & TextareaHTMLAttributes<HTMLTextAreaElement>> = ({label, id, ...props}) => {
   return <Label htmlFor={id} text={label}>

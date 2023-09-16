@@ -1,13 +1,13 @@
-"use client"
+"use client";
 import { Card, GridArea, GridTemplate } from "@components-layout";
-import { NameOrganism } from '../organisms/NameOrganism'
-import { OverviewOrganism } from '../organisms/OverviewOrganism'
+import { NameOrganism } from '../organisms/NameOrganism';
+import { OverviewOrganism } from '../organisms/OverviewOrganism';
 import { GlobalDataProvider } from "../providers/globalData";
 
 const GRID_TEMPLATE_AREA =`
 "oneshot_name______ oneshot_name______ oneshot_name______"
 "prompt_overview___ generated_overview generated_overview"
-`
+`;
 
 export const HomeTemplate = () => {
   return <GlobalDataProvider>
@@ -29,5 +29,5 @@ export const HomeTemplate = () => {
         />
       </GridTemplate>
     </Card>
-  </GlobalDataProvider>
-}
+  </GlobalDataProvider>;
+};

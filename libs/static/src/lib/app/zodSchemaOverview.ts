@@ -1,4 +1,4 @@
-import {z} from 'zod'
+import {z} from 'zod';
 
 export const zodSchemaOverview = z.object({
   description: z.string().describe("a brief Description of the one-shot session"),
@@ -13,4 +13,4 @@ export const zodSchemaOverview = z.object({
       // backstory: z.string().describe('A brief backstory'),
     })).describe('Any important characters for conversation or battle')
   })).describe('Ordered list of encounters for this session')
-})
+});

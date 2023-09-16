@@ -1,40 +1,34 @@
-"use client"
+"use client";
 
-import { Dispatch, PropsWithChildren, SetStateAction, createContext, useMemo, useState } from "react"
-
-type T_overviewData = {
-  description: string,
-  encounters: {
-    name: string,
-    description: string,
-    purpose: string,
-  }[]
-}
+import { Dispatch, PropsWithChildren, SetStateAction, createContext, useMemo, useState } from "react";
+import {z} from 'zod';
+import { zodSchemaOverview } from '@static';
+type T_Overview = z.infer<typeof zodSchemaOverview>;
 
 type T_globalDataContext = {
   name: string
   setName: Dispatch<SetStateAction<string>>
-  overview?: T_overviewData
+  overview?: T_Overview[]
   setOverview: Dispatch<SetStateAction<string>>
-}
+};
 
 export const globalDataContext = createContext<T_globalDataContext>({
   name: '',
-  setName: () => { return },
+  setName: () => { return; },
   overview: undefined,
-  setOverview: () => { return },
-})
+  setOverview: () => { return; },
+});
 
-const {Provider} = globalDataContext
+const {Provider} = globalDataContext;
 
 export const GlobalDataProvider: React.FC<PropsWithChildren> = ({children}) => {
-  const [name, setName] = useState('')
-  const [overview, setOverview] = useState()
+  const [name, setName] = useState('');
+  const [overview, setOverview] = useState();
 
   const value = useMemo(() => ({
     name, setName,
     overview, setOverview
-  }), [name, overview])
+  }), [name, overview]);
 
-  return <Provider value={value}>{children}</Provider>
-}
+  return <Provider value={value}>{children}</Provider>;
+};

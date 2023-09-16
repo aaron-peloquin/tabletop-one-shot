@@ -6,7 +6,7 @@ type T_Props = {
     color?: 'skyblue' | 'red' | 'orange' | 'seagreen' | 'yellow'
     max: number
     value: number
-}
+};
 
 const ProgressBar: React.FC<T_Props & ProgressHTMLAttributes<HTMLProgressElement>> = ({color, ...props}) => {
   const style = useMemo(() => ({accentColor: color}), [color]);

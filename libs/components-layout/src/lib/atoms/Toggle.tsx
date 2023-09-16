@@ -8,7 +8,7 @@ type T_Props = {
     id: string
     label: string
     checked: boolean
-}
+};
 
 const Toggle: React.FC<T_Props & InputHTMLAttributes<HTMLInputElement>> = memo(({id, label, checked, ...props}) => {
   return <label htmlFor={id}>

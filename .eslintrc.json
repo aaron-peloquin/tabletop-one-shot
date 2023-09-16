@@ -25,7 +25,8 @@
       "files": ["*.ts", "*.tsx"],
       "extends": ["plugin:@nx/typescript"],
       "rules": {
-        "indent": ["error", 2]
+        "indent": ["error", 2],
+        "@typescript-eslint/semi": "error"
       }
     },
     {

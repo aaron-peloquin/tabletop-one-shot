@@ -3,15 +3,15 @@ import {PropsWithChildren, memo, useMemo} from 'react';
 
 import styles from './GridTemplate.module.css';
 
-type T_CssProps = Pick<CSS.Properties, 'gridTemplateAreas' | 'gridTemplateRows' | 'gridTemplateColumns' | 'gridGap' | 'alignItems' | 'textAlign' | 'justifyItems'>
+type T_CssProps = Pick<CSS.Properties, 'gridTemplateAreas' | 'gridTemplateRows' | 'gridTemplateColumns' | 'gridGap' | 'alignItems' | 'textAlign' | 'justifyItems'>;
 
 type T_Props = {
   className?: string
   columns?: number
   rows?: number
-}
+};
 
-type T_CombinedProps = T_Props & T_CssProps
+type T_CombinedProps = T_Props & T_CssProps;
 
 const GridTemplate: React.FC<PropsWithChildren<T_CombinedProps>> = memo(({
   alignItems,

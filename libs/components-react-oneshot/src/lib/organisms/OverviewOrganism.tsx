@@ -1,29 +1,29 @@
-import { GridArea, Card, Textarea, Button } from "@components-layout"
-import { useCallback, useContext } from "react"
-import { globalDataContext } from "../providers/globalData"
-import { useGenerateOverview } from "@helper"
+import { GridArea, Card, Textarea, Button } from "@components-layout";
+import { useCallback, useContext } from "react";
+import { globalDataContext } from "../providers/globalData";
+import { useGenerateOverview } from "@helper";
 
 type T_Props = {
     gridNameInput: string
     gridNameOutput: string
-}
+};
 
 export const OverviewOrganism: React.FC<T_Props> = ({gridNameInput, gridNameOutput}) => {
-  const {overview, name, setOverview} = useContext(globalDataContext)
-  console.log({overview})
+  const {overview, name, setOverview} = useContext(globalDataContext);
+  console.log({overview});
 
-  const {generateOverview, overviewLoading} = useGenerateOverview(setOverview)
+  const {generateOverview, overviewLoading} = useGenerateOverview(setOverview);
 
   const handleGenerateOverview = useCallback(() => {
-    generateOverview(name)
-  }, [generateOverview, name])
+    generateOverview(name);
+  }, [generateOverview, name]);
 
-  const disabled = !name || overviewLoading
+  const disabled = !name || overviewLoading;
 
   return <>
     <GridArea className='full-width' name={gridNameInput}>
       <Card layer="2" heading="Overview Input">
-        <Button text="Generate" disabled={disabled} onClick={handleGenerateOverview} />
+        <Button text={`${overview ? 'Re-' : ''}Generate`} disabled={disabled} onClick={handleGenerateOverview} />
       </Card>
     </GridArea>
     <GridArea name={gridNameOutput}>
@@ -33,6 +33,6 @@ export const OverviewOrganism: React.FC<T_Props> = ({gridNameInput, gridNameOutp
         This adventure contains {overview?.encounters?.length || 0} encounters
       </Card>
     </GridArea>
-  </>
+  </>;
 
-}
+};
