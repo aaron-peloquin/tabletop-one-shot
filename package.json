@@ -14,7 +14,8 @@
     "react-dom": "18.2.0",
     "react-icons": "^4.11.0",
     "request": "^2.88.2",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "zod": "^3.22.2"
   },
   "devDependencies": {
     "@nx/cypress": "16.8.1",
