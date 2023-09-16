@@ -1,7 +1,7 @@
 import './global.css';
 
 export const metadata = {
-  title: 'Tabletop One Shot Generator',
+  title: 'Quickshot',
   description: 'An AI-Powered tool that helps generate a tabletop one-shot game content',
 };
 

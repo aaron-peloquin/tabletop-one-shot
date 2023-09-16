@@ -11,7 +11,7 @@ const GRID_TEMPLATE_AREA =`
 
 export const HomeTemplate = () => {
   return <GlobalDataProvider>
-    <Card layer="1" heading="Tabletop One Shot Generator">
+    <Card layer="1" heading="Quickshot">
       <GridTemplate
         gridTemplateAreas={GRID_TEMPLATE_AREA}
         justifyItems="center"
