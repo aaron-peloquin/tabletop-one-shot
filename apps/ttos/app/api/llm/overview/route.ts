@@ -1,27 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import zod from 'zod'
 import { StructuredOutputParser } from "langchain/output_parsers";
 import { PromptTemplate } from "langchain/prompts";
 import { LLMChain } from 'langchain/chains';
 
 import { llmGoogle } from '@helper/server';
+import { zodSchemaOverview } from '@static';
 
-const zodSchema = zod.object({
-  description: zod.string().describe("a brief Description of the one-shot session"),
-  encounters: zod.array(zod.object({
-    name: zod.string(),
-    description: zod.string().describe('Details for the Game Master about this encounter. Mention any items, traps, etc that the GM should know about'),
-    purpose: zod.string().describe('Reason the encounter exists'),
-    NPCs: zod.array(zod.object({
-      name: zod.string(),
-      motivations: zod.string(),
-      physicalDescription: zod.string(),
-      // backstory: zod.string().describe('A brief backstory'),
-    })).describe('Any important characters for conversation or battle')
-  })).describe('Ordered list of encounters for this session')
-})
-
-const outputParser = StructuredOutputParser.fromZodSchema(zodSchema)
+const outputParser = StructuredOutputParser.fromZodSchema(zodSchemaOverview)
 
 const promptTemplate = new PromptTemplate({
   template: `
