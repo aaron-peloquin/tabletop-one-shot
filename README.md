@@ -5,6 +5,8 @@ A tabletop one shot generator
 ## Local dev setup
 1. `npm i`
 2. `nx serve ttos`
+3. Get an API key from [Google MakerSuite](https://makersuite.google.com/)
+3. Create `.env` at base of repository and set its contents to `GOOGLE_PALM_API_KEY=YOUR KEY`
 
 ### Code Packages
 This project is built using internal packages (monorepo), powered by [Nx](https://nx.dev).
