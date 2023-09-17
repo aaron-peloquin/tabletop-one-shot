@@ -23,7 +23,7 @@ const {Provider} = globalDataContext;
 
 export const GlobalDataProvider: React.FC<PropsWithChildren> = ({children}) => {
   const [name, setName] = useState('');
-  const [overview, setOverview] = useState();
+  const [overview, setOverview] = useState<T_Overview>();
 
   const value = useMemo(() => ({
     name, setName,

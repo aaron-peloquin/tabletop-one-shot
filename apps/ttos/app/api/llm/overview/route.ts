@@ -1,10 +1,10 @@
-import { NextApiRequest, NextApiResponse } from 'next';
 import { StructuredOutputParser } from "langchain/output_parsers";
 import { PromptTemplate } from "langchain/prompts";
 import { LLMChain } from 'langchain/chains';
 
 import { llmGoogle } from '@helper/server';
 import { zodSchemaOverview } from '@static';
+import { NextRequest, NextResponse } from "next/server";
 
 const outputParser = StructuredOutputParser.fromZodSchema(zodSchemaOverview);
 
@@ -31,14 +31,12 @@ const overviewChain = new LLMChain({
   verbose: false
 });
 
-export const POST = async (req: NextApiRequest, res: NextApiResponse) => {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+export const POST = async (req: NextRequest) => {
   const {name} = await req.json();
   try {
     const response = await overviewChain.call({name});
-    return Response.json({ message: response.text }, { status: 200 });
+    return NextResponse.json({ message: response.text }, { status: 200 });
   } catch (e) {
-    return Response.json({message: 'Error generating text'}, {status: 500});
+    return NextResponse.json({ message: 'Error generating text' },  {status: 500 });
   }
 };

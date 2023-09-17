@@ -1,4 +1,4 @@
-import {memo} from 'react';
+import {memo, PropsWithChildren} from 'react';
 
 import {T_CardLayer} from 'TS_General';
 
@@ -13,7 +13,7 @@ type T_Props = {
     layer: T_CardLayer
   };
 
-const Tabs: React.FC<T_Props> = memo(({defaultTab, layer, children}) => {
+const Tabs: React.FC<PropsWithChildren<T_Props>> = memo(({defaultTab, layer, children}) => {
   const hasCard = !!layer;
   return <TabsProvider defaultTab={defaultTab}>
     {hasCard ? <Card layer={layer}>
