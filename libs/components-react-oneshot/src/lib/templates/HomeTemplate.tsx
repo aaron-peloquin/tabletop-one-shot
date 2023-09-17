@@ -19,7 +19,7 @@ export const HomeTemplate = () => {
         columns={2}
       >
         <GridArea name="oneshot_name______" className="full-width">
-          <Card layer={2}>
+          <Card layer="2">
             <NameOrganism />
           </Card>
         </GridArea>

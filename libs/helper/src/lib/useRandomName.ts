@@ -1,11 +1,16 @@
 "use client";
-import { useCallback, useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useState } from "react";
 
-export function useRandomName(callback) {
+type T_Sig = (callback: Dispatch<SetStateAction<string>>) => {
+  getName: () => Promise<void>,
+  nameLoading: boolean
+};
+
+export const useRandomName:T_Sig = (callback) => {
   const [nameLoading, setNameLoading] = useState(false);
   const getName = useCallback(async () => {
     setNameLoading(true);
-    fetch('/api/llm/name').then(res => res.json()).then(({message})=>{
+    fetch('/api/llm/name').then(res => res.json()).then(({message}) => {
       callback(message);
       setNameLoading(false);
     });

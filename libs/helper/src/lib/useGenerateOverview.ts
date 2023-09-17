@@ -1,10 +1,19 @@
 "use client";
-import { useCallback, useState } from "react";
+import { zodSchemaOverview } from "@static";
+import { Dispatch, SetStateAction, useCallback, useState } from "react";
+import { z } from "zod";
 
-export function useGenerateOverview(callback) {
+export type T_Overview = z.infer<typeof zodSchemaOverview> | null;
+
+type T_Sig = (callback: Dispatch<SetStateAction<T_Overview>>) => {
+  generateOverview: (name: string) => Promise<void>,
+  overviewLoading: boolean
+};
+
+export const useGenerateOverview:T_Sig = (callback) => {
   const [overviewLoading, setOverviewLoading] = useState(false);
 
-  const generateOverview = useCallback(async (name) => {
+  const generateOverview = useCallback(async (name: string) => {
     setOverviewLoading(true);
     const body = JSON.stringify({name});
     fetch('/api/llm/overview', {
@@ -22,4 +31,4 @@ export function useGenerateOverview(callback) {
   }, [callback]);
 
   return {generateOverview, overviewLoading};
-}
+};
