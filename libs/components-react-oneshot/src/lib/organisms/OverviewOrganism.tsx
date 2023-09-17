@@ -12,6 +12,10 @@ export const OverviewOrganism: React.FC<T_Props> = ({gridNameInput, gridNameOutp
   const {overview, name, setOverview} = useContext(globalDataContext);
   const {generateOverview, overviewLoading} = useGenerateOverview(setOverview);
 
+  const handleClearOverview = useCallback(() => {
+    setOverview(null);
+  }, [setOverview]);
+
   const handleGenerateOverview = useCallback(() => {
     generateOverview(name);
   }, [generateOverview, name]);
@@ -21,7 +25,8 @@ export const OverviewOrganism: React.FC<T_Props> = ({gridNameInput, gridNameOutp
   return <>
     <GridArea className='full-width' name={gridNameInput}>
       <Card layer="2" heading="Overview Generation">
-        <Button text={`${overview ? 'ReGenerate (wipes existing data)' : 'Generate'}`} disabled={disabled} onClick={handleGenerateOverview} />
+        {overview ? <Button text="Clear Data" onClick={handleClearOverview} /> : <Button text="Generate" disabled={disabled} onClick={handleGenerateOverview} />}
+        
       </Card>
     </GridArea>
     {overview && <GridArea name={gridNameOutput}>
@@ -31,7 +36,7 @@ export const OverviewOrganism: React.FC<T_Props> = ({gridNameInput, gridNameOutp
           <ul>{overview?.hooks?.map(hook => <li>{hook}</li>)}</ul>
         </Card>
         <Card layer="3" heading="Encounters">
-          <GridTemplate columns={overview?.encounters.length < 2 ? overview?.encounters.length : 2}>
+          <GridTemplate columns={overview?.encounters?.length < 2 ? overview?.encounters.length : 2}>
             {overview?.encounters?.map(({name, description, areaDescription, purpose, NPCs}, index) => {
               return <Card layer="4" heading={`#${index+1} ${name}`}>
                 <em>{areaDescription}</em>
@@ -40,7 +45,7 @@ export const OverviewOrganism: React.FC<T_Props> = ({gridNameInput, gridNameOutp
                 <hr />
                 Purpose: <em>{purpose}</em>
                 <Card heading="NPCs" layer="4">
-                  <GridTemplate columns={NPCs.length < 3 ? NPCs.length : 3}>
+                  <GridTemplate columns={NPCs?.length < 3 ? NPCs.length : 3}>
                     {NPCs.map(({name, physicalDescription, motivations}) => <Card layer="5" heading={name}>
                       {physicalDescription}
                       <hr />
