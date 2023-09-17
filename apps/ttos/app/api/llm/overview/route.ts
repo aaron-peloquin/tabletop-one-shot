@@ -10,7 +10,7 @@ const outputParser = StructuredOutputParser.fromZodSchema(zodSchemaOverview);
 
 const promptTemplate = new PromptTemplate({
   template: `
-Create the Overview synopsys for a tabletop RPG one-shot session for a group of 2-5 players.
+Create the Overview synopsys for a homebrew original custom tabletop RPG one-shot session for a group of 2-5 players.
 Do not reference any existing intellectual property or campaign settings like Phandelver, Volo, or Faerun.
 The session should have 1-4 encounters.
 
@@ -35,7 +35,10 @@ export const POST = async (req: NextApiRequest, res: NextApiResponse) => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const {name} = await req.json();
-  console.log('name:', name);
-  const response = await overviewChain.call({name});
-  return Response.json({ message: response.text }, { status: 200 });
+  try {
+    const response = await overviewChain.call({name});
+    return Response.json({ message: response.text }, { status: 200 });
+  } catch (e) {
+    return Response.json({message: 'Error generating text'}, {status: 500});
+  }
 };

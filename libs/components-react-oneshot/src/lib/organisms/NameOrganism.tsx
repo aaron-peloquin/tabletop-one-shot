@@ -7,7 +7,7 @@ export const NameOrganism = () => {
   const {name, setName} = useContext(globalDataContext);
   const handleSetName = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event?.target.value);
-  }, []);
+  }, [setName]);
 
   const {getName, nameLoading} = useRandomName(setName);
 
@@ -22,6 +22,6 @@ export const NameOrganism = () => {
       onChange={handleSetName}
       label="One Shot Session Name"
     />
-    <Button style={{height:'100%'}} text="Randomize" disabled={nameLoading} onClick={handleRandomizeName} />
+    <Button style={{height:'100%'}} text="Randomize Name" disabled={nameLoading} onClick={handleRandomizeName} />
   </>;
 };

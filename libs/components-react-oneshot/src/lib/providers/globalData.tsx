@@ -8,8 +8,8 @@ type T_Overview = z.infer<typeof zodSchemaOverview>;
 type T_globalDataContext = {
   name: string
   setName: Dispatch<SetStateAction<string>>
-  overview?: T_Overview[]
-  setOverview: Dispatch<SetStateAction<string>>
+  overview?: T_Overview
+  setOverview: Dispatch<SetStateAction<T_Overview>>
 };
 
 export const globalDataContext = createContext<T_globalDataContext>({

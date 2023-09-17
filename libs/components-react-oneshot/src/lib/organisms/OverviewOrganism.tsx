@@ -20,15 +20,34 @@ export const OverviewOrganism: React.FC<T_Props> = ({gridNameInput, gridNameOutp
 
   return <>
     <GridArea className='full-width' name={gridNameInput}>
-      <Card layer="2" heading="Overview Input">
-        <Button text={`${overview ? 'Re-' : ''}Generate`} disabled={disabled} onClick={handleGenerateOverview} />
+      <Card layer="2" heading="Overview Generation)">
+        <Button text={`${overview ? 'ReGenerate (wipes existing data)' : 'Generate'}`} disabled={disabled} onClick={handleGenerateOverview} />
       </Card>
     </GridArea>
     <GridArea name={gridNameOutput}>
       <Card layer="2" heading="Overview Output">
         {overview?.description}
-        <hr />
-        This adventure contains {overview?.encounters?.length || 0} encounters
+        <Card layer="3" heading="Adventure Hooks">
+          <ul>{overview?.hooks.map(hook => <li>{hook}</li>)}</ul>
+        </Card>
+        <Card layer="3" heading="Encounters">
+          {overview?.encounters.map(({name, description, areaDescription, purpose, NPCs}, index) => {
+            return <Card layer="4" heading={`#${index+1} ${name}`}>
+              <em>{areaDescription}</em>
+              <hr />
+              {description}
+              <hr />
+              Purpose: <em>{purpose}</em>
+              <Card heading="NPCs" layer="4">
+                {NPCs.map(({name, physicalDescription, motivations}) => <Card layer="5" heading={name}>
+                  {physicalDescription}
+                  <hr />
+                Motivations: <em>{motivations}</em>
+                </Card>)}
+              </Card>
+            </Card>;
+          })}
+        </Card>
       </Card>
     </GridArea>
   </>;

@@ -5,8 +5,8 @@ import { OverviewOrganism } from '../organisms/OverviewOrganism';
 import { GlobalDataProvider } from "../providers/globalData";
 
 const GRID_TEMPLATE_AREA =`
-"oneshot_name______ oneshot_name______ oneshot_name______"
-"prompt_overview___ generated_overview generated_overview"
+"oneshot_name______ prompt_overview___"
+"generated_overview generated_overview"
 `;
 
 export const HomeTemplate = () => {
@@ -16,7 +16,7 @@ export const HomeTemplate = () => {
         gridTemplateAreas={GRID_TEMPLATE_AREA}
         justifyItems="center"
         textAlign='left'
-        columns={3}
+        columns={2}
       >
         <GridArea name="oneshot_name______" className="full-width">
           <Card layer={2}>
