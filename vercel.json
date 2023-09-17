@@ -1,9 +1,9 @@
 {
     "functions": {
-      "api/llm/name/route.ts": {
+      "api/llm/name": {
         "maxDuration": 10
       },
-      "api/llm/overview/route.ts": {
+      "api/llm/overview": {
         "maxDuration": 10
       }
     }
