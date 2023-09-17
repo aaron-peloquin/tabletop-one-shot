@@ -1,6 +1,6 @@
 {
     "functions": {
-      "api/llm/*": {
+      "api/llm/*/route.ts": {
         "maxDuration": 10
       }
     }
