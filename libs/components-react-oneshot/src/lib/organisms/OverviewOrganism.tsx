@@ -9,8 +9,8 @@ type T_Props = {
 };
 
 export const OverviewOrganism: React.FC<T_Props> = ({gridNameInput, gridNameOutput}) => {
-  const {overview, name, setOverview} = useContext(globalDataContext);
-  const {generateOverview, overviewLoading} = useGenerateOverview(setOverview);
+  const {overview, overviewError, name, setOverview, setOverviewError} = useContext(globalDataContext);
+  const {generateOverview, overviewLoading} = useGenerateOverview(setOverview, setOverviewError);
 
   const handleClearOverview = useCallback(() => {
     setOverview(null);
@@ -29,7 +29,9 @@ export const OverviewOrganism: React.FC<T_Props> = ({gridNameInput, gridNameOutp
         
       </Card>
     </GridArea>
-    {overview && <GridArea name={gridNameOutput}>
+    <GridArea name={gridNameOutput}>
+      {overviewError && <Card layer="1" heading="Error">{overviewError}</Card>}
+      {overview && 
       <Card layer="2" heading="Overview Output">
         {overview?.description}
         <Card layer="3" heading="Adventure Hooks">
@@ -58,7 +60,8 @@ export const OverviewOrganism: React.FC<T_Props> = ({gridNameInput, gridNameOutp
           </GridTemplate>
         </Card>
       </Card>
-    </GridArea>}
+      }
+    </GridArea>
   </>;
 
 };

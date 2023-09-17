@@ -37,6 +37,6 @@ export const POST = async (req: NextRequest) => {
     const response = await overviewChain.call({name});
     return NextResponse.json({ message: response.text }, { status: 200 });
   } catch (e) {
-    return NextResponse.json({ message: 'Error generating text' },  {status: 500 });
+    return NextResponse.json({ error: 'Unable to generate overview, please try again' },  {status: 500 });
   }
 };

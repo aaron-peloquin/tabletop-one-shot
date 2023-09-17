@@ -1,16 +1,19 @@
 "use client";
 import { zodSchemaOverview } from "@static";
-import { Dispatch, SetStateAction, useCallback, useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useContext, useState } from "react";
 import { z } from "zod";
 
 export type T_Overview = z.infer<typeof zodSchemaOverview> | null;
 
-type T_Sig = (callback: Dispatch<SetStateAction<T_Overview>>) => {
+type T_Sig = (
+  setOverviewCallback: Dispatch<SetStateAction<T_Overview>>,
+  setOverviewErrorCallback: Dispatch<SetStateAction<string>>,
+) => {
   generateOverview: (name: string) => Promise<void>,
   overviewLoading: boolean
 };
 
-export const useGenerateOverview:T_Sig = (callback) => {
+export const useGenerateOverview:T_Sig = (setOverviewCallback, setOverviewErrorCallback) => {
   const [overviewLoading, setOverviewLoading] = useState(false);
 
   const generateOverview = useCallback(async (name: string) => {
@@ -24,11 +27,17 @@ export const useGenerateOverview:T_Sig = (callback) => {
       }
     })
       .then(res => res.json())
-      .then(({message})=>{
-        callback(message);
+      .then(({message, error})=>{
+        if(message) {
+          setOverviewErrorCallback('');
+          setOverviewCallback(message);
+        }
+        if(error) {
+          setOverviewErrorCallback(error);
+        }
         setOverviewLoading(false);
       });
-  }, [callback]);
+  }, [setOverviewCallback, setOverviewErrorCallback]);
 
   return {generateOverview, overviewLoading};
 };
