@@ -1,4 +1,4 @@
-import { Button, Input } from "@components-layout";
+import { Button, GridArea, GridTemplate, Input } from "@components-layout";
 import { useRandomName } from '@helper';
 import { useCallback, useContext } from "react";
 import { globalDataContext } from "../providers/globalData";
@@ -15,13 +15,17 @@ export const NameOrganism = () => {
     getName();
   }, [getName]);
 
-  return <>
-    <Input
-      id="name"
-      value={name}
-      onChange={handleSetName}
-      label="One Shot Session Name"
-    />
-    <Button style={{height:'100%'}} text="Randomize Name" disabled={nameLoading} onClick={handleRandomizeName} />
-  </>;
+  return <GridTemplate columns={2}>
+    <GridArea>
+      <Input
+        id="name"
+        value={name}
+        onChange={handleSetName}
+        label="One Shot Session Name"
+      />
+    </GridArea>
+    <GridArea justifySelf="center" alignSelf="end">
+      <Button text="Random Name" disabled={nameLoading} onClick={handleRandomizeName} />
+    </GridArea>
+  </GridTemplate>;
 };

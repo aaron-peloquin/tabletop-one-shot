@@ -1,11 +1,13 @@
 
 .button {
   background: black;
-  border: sandybrown 1px solid;
+  border: sandybrown 2px solid;
   border-radius: 4px;
   color: white;
-  font-size: 16px;
+  width: 100%;
+  font-size: 18px;
   margin: 0 4px;
+  padding: 4px;
 }
 
 .button:enabled:hover {

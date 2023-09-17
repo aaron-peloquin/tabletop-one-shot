@@ -15,15 +15,17 @@ a:visited {
   color: #AAF;
 }
 
-input,
 textarea,
 .full-width {
   width: 100%;
 }
 
-input,
 textarea {
   font-size: 18px;
+}
+
+.little-margin {
+  margin: 2px;
 }
 
 .limited-height {

@@ -1,3 +1,9 @@
 .input {
-    color: purple;
+    background-color: #222;
+    border: 2px solid #444;
+    color: sandybrown;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 4px;
+    width: 100%;
 }
