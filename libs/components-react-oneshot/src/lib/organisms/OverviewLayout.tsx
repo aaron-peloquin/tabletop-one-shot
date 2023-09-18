@@ -16,10 +16,12 @@ export const OverviewLayout: React.FC<T_Props> = ({gridName}) => {
     {overview && 
       <Card layer="2" heading="Overview Output">
         {overview?.description}
-        <Card layer="3" heading="Adventure Hooks">
-          <ul>{overview?.hooks?.map(hook => <li>{hook}</li>)}</ul>
+        <Card layer="2" heading="Adventure Hooks">
+          <Card layer="3">
+            <ul>{overview?.hooks?.map(hook => <li>{hook}</li>)}</ul>
+          </Card>
         </Card>
-        <Card layer="3" heading="Encounters">
+        <Card layer="2" heading="Encounters">
           <GridTemplate columns={overview?.encounters?.length < 2 ? overview?.encounters.length : 2}>
             {overview?.encounters?.map((encounter, index) => {
               return <EncounterDetails
