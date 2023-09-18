@@ -3,22 +3,23 @@ import { PromptTemplate } from "langchain/prompts";
 import { LLMChain } from 'langchain/chains';
 
 import { llmGoogle } from '@helper/server';
-import { zodSchemaOverview } from '@static';
+import { zodSchemaStats } from '@static';
 import { NextRequest, NextResponse } from "next/server";
 
-const outputParser = StructuredOutputParser.fromZodSchema(zodSchemaOverview);
+const outputParser = StructuredOutputParser.fromZodSchema(zodSchemaStats);
 
 const promptTemplate = new PromptTemplate({
   template: `
-Create the Overview synopsys for a homebrew original custom tabletop RPG one-shot session for a group of 2-5 players.
-Do not reference any existing intellectual property or campaign settings like Phandelver, Volo, or Faerun.
+Create the stat block for a creature in a custom tabletop RPG.
 
-You should make up 1-4 encounters, and no more than 5 NPCs total.
-
-The title for session is: "{name}"
+Creature Description:
+Name: {name}
+Type/Ancestry/Race: {classification}
+Challenge Rating: {challengeRating}
+Physical Description: {physicalDescription}
 
 {parsedFormat}`,
-  inputVariables: ['name'],
+  inputVariables: ['name', 'challengeRating', 'physicalDescription', 'classification'],
   partialVariables: {
     parsedFormat: outputParser.getFormatInstructions()
   }
@@ -33,9 +34,9 @@ const overviewChain = new LLMChain({
 });
 
 export const POST = async (req: NextRequest) => {
-  const {name} = await req.json();
+  const params = await req.json();
   try {
-    const response = await overviewChain.call({name});
+    const response = await overviewChain.call(params);
     return NextResponse.json({ message: response.text }, { status: 200 });
   } catch (e) {
     return NextResponse.json({ error: 'Unable to generate overview, please try again' },  {status: 500 });
