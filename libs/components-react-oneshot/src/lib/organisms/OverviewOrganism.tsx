@@ -2,6 +2,7 @@ import { GridArea, Card, Button, GridTemplate } from "@components-layout";
 import { useCallback, useContext } from "react";
 import { globalDataContext } from "../providers/globalData";
 import { useGenerateOverview } from "@helper";
+import { EncounterDetails } from "../molecules/EncounterDetails";
 
 type T_Props = {
     gridNameInput: string
@@ -39,23 +40,11 @@ export const OverviewOrganism: React.FC<T_Props> = ({gridNameInput, gridNameOutp
         </Card>
         <Card layer="3" heading="Encounters">
           <GridTemplate columns={overview?.encounters?.length < 2 ? overview?.encounters.length : 2}>
-            {overview?.encounters?.map(({name, description, areaDescription, purpose, NPCs}, index) => {
-              return <Card layer="4" heading={`#${index+1} ${name}`}>
-                <em>{areaDescription}</em>
-                <hr />
-                {description}
-                <hr />
-                Purpose: <em>{purpose}</em>
-                <Card heading="NPCs" layer="4">
-                  <GridTemplate columns={NPCs?.length < 3 ? NPCs.length : 3}>
-                    {NPCs.map(({name, physicalDescription, motivations}) => <Card layer="5" heading={name}>
-                      {physicalDescription}
-                      <hr />
-                      Motivations: <em>{motivations}</em>
-                    </Card>)}
-                  </GridTemplate>
-                </Card>
-              </Card>;
+            {overview?.encounters?.map((encounter, index) => {
+              return <EncounterDetails
+                encounter={encounter}
+                number={index+1}
+              />;
             })}
           </GridTemplate>
         </Card>
