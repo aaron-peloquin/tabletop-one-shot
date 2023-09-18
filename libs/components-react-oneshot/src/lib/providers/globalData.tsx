@@ -38,12 +38,3 @@ export const GlobalDataProvider: React.FC<PropsWithChildren> = ({children}) => {
 
   return <Provider value={value}>{children}</Provider>;
 };
-
-/**
-Type '{ name: string; setName: Dispatch<SetStateAction<string>>; overview: { description: string; hooks: string[]; encounters: { description: string; name: string; areaDescription: string; purpose: string; NPCs: { ...; }[]; }[]; } | undefined; setOverview: Dispatch<...>; }' is not assignable to type 'T_globalDataContext'.
-Types of property 'setOverview' are incompatible.
-
-T_globalDataContext
-
-
- */

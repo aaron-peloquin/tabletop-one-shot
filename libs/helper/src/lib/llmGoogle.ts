@@ -16,7 +16,7 @@ export const llmGoogleCreative = new GooglePaLM({
 
 export const llmGoogle = new GooglePaLM({
   temperature: 0.9,
-  maxOutputTokens: 1024,
+  maxOutputTokens: 2048,
   topK: 30,
   topP: 1,
   safetySettings: [

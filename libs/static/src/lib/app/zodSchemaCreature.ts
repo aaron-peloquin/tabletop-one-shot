@@ -2,9 +2,9 @@ import {z} from 'zod';
 
 export const zodSchemaCreature = z.object({
   name: z.string(),
-  challengeRating: z.number().multipleOf(0.25),
-  motivations: z.string(),
-  physicalDescription: z.string(),
-  classification: z.string().describe('Type, Race, or Ancestry of this creature'),
-  backstory: z.string().describe('A brief backstory')
+  cr: z.string().describe("challenge rating in decimal format"),
+  // motivations: z.string(),
+  description: z.string().describe('physical description'),
+  classification: z.string().describe('Single-word Type, Race, or Ancestry of this creature'),
+  backstory: z.string().describe('brief backstory to describe their motivations')
 });

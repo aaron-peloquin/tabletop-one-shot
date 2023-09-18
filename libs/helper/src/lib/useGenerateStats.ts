@@ -7,8 +7,8 @@ export type T_Stats = z.infer<typeof zodSchemaStats> | null;
 
 type T_Sig = (hookArgs: {
   name: string
-  physicalDescription: string
-  challengeRating: number
+  description: string
+  cr: string,
   classification: string
 }) => {
   generateStats: () => Promise<void>
@@ -16,13 +16,13 @@ type T_Sig = (hookArgs: {
   stats: T_Stats
 };
 
-export const useGenerateStats: T_Sig = ({name, physicalDescription, challengeRating, classification}) => {
+export const useGenerateStats: T_Sig = ({name, description, cr, classification}) => {
   const [loadingStats, setLoadingStats] = useState(false);
   const [stats, setStats] = useState<T_Stats>(null);
 
   const generateStats = useCallback(async () => {
     setLoadingStats(true);
-    const body = JSON.stringify({name, physicalDescription, challengeRating, classification});
+    const body = JSON.stringify({name, description, cr, classification});
     fetch('/api/llm/stats', {
       method: 'POST',
       body,
@@ -31,7 +31,7 @@ export const useGenerateStats: T_Sig = ({name, physicalDescription, challengeRat
       }
     })
       .then(res => res.json())
-      .then(({message, error})=>{
+      .then(({message})=>{
         if(message) {
           setStats(message);
         }

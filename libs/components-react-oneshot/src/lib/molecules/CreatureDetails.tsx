@@ -6,8 +6,8 @@ import { z } from "zod";
 
 export type T_Creature = z.infer<typeof zodSchemaCreature>;
 
-export const CreatureDetails: React.FC<T_Creature> = ({name, physicalDescription, backstory, challengeRating, motivations, classification}) => {
-  const { generateStats, loadingStats, stats } = useGenerateStats({name, physicalDescription, challengeRating, classification});
+export const CreatureDetails: React.FC<T_Creature> = ({name, description, backstory, cr, classification}) => {
+  const { generateStats, loadingStats, stats } = useGenerateStats({name, description, cr, classification});
   const [currentHp, setCurrentHp] = useState<number>(0);
   const handleSetHealth = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const newVal = parseInt(event.target.value);
@@ -16,9 +16,9 @@ export const CreatureDetails: React.FC<T_Creature> = ({name, physicalDescription
 
   return <Card layer="4" heading={name}>
     <Button text={loadingStats ? "Loading..." : "Generate Stats"} onClick={generateStats} disabled={loadingStats} />
-    <Card layer="5" heading="Description">{physicalDescription}</Card>
+    <Card layer="5" heading="Description">{description}</Card>
     <Card layer="5" heading="Backstory">{backstory}</Card>
-    <Card layer="5" heading="Motivations">{motivations}</Card>
+    {/* <Card layer="5" heading="Motivations">{motivations}</Card> */}
     {stats && <Card layer="4" heading={`${name}'s Stats`}>
       <Card layer="5" heading="Ability Scores">
         <GridTemplate columns={3}>

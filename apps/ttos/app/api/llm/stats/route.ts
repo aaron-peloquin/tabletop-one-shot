@@ -15,11 +15,11 @@ Create the stat block for a creature in a custom tabletop RPG.
 Creature Description:
 Name: {name}
 Type/Ancestry/Race: {classification}
-Challenge Rating: {challengeRating}
-Physical Description: {physicalDescription}
+Challenge Rating: {cr}
+Physical Description: {description}
 
 {parsedFormat}`,
-  inputVariables: ['name', 'challengeRating', 'physicalDescription', 'classification'],
+  inputVariables: ['name', 'cr', 'description', 'classification'],
   partialVariables: {
     parsedFormat: outputParser.getFormatInstructions()
   }
@@ -28,7 +28,6 @@ Physical Description: {physicalDescription}
 const overviewChain = new LLMChain({
   llm: llmGoogle,
   prompt: promptTemplate,
-  // outputKey: 'generated',
   outputParser: outputParser,
   verbose: false
 });

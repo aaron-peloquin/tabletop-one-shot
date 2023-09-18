@@ -13,9 +13,11 @@ const promptTemplate = new PromptTemplate({
 Create the Overview synopsys for a homebrew original custom tabletop RPG one-shot session for a group of 2-5 players.
 Do not reference any existing intellectual property or campaign settings like Phandelver, Volo, or Faerun.
 
-You should make up 1-4 encounters, and no more than 5 NPCs total.
+You should make up 1-3 Encounters, and no more than 5 Creatures total.
 
 The title for session is: "{name}"
+
+Ensure that you always reply in proper JSON structure where keys and values are always wrapped in double quotes (")
 
 {parsedFormat}`,
   inputVariables: ['name'],
@@ -27,7 +29,6 @@ The title for session is: "{name}"
 const overviewChain = new LLMChain({
   llm: llmGoogle,
   prompt: promptTemplate,
-  // outputKey: 'generated',
   outputParser: outputParser,
   verbose: false
 });
@@ -37,7 +38,8 @@ export const POST = async (req: NextRequest) => {
   try {
     const response = await overviewChain.call({name});
     return NextResponse.json({ message: response.text }, { status: 200 });
-  } catch (e) {
+  } catch (error) {
+    console.log('error: ', error);
     return NextResponse.json({ error: 'Unable to generate overview, please try again' },  {status: 500 });
   }
 };
