@@ -5,34 +5,15 @@ import { useGenerateOverview } from "@helper";
 import { EncounterDetails } from "../molecules/EncounterDetails";
 
 type T_Props = {
-    gridNameInput: string
-    gridNameOutput: string
+  gridName: string
 };
 
-export const OverviewLayout: React.FC<T_Props> = ({gridNameInput, gridNameOutput}) => {
-  const {overview, overviewError, name, setOverview, setOverviewError} = useContext(globalDataContext);
-  const {generateOverview, overviewLoading} = useGenerateOverview(setOverview, setOverviewError);
+export const OverviewLayout: React.FC<T_Props> = ({gridName}) => {
+  const {overview, overviewError} = useContext(globalDataContext);
 
-  const handleClearOverview = useCallback(() => {
-    setOverview(null);
-  }, [setOverview]);
-
-  const handleGenerateOverview = useCallback(() => {
-    generateOverview(name);
-  }, [generateOverview, name]);
-
-  const disabled = !name || overviewLoading;
-
-  return <>
-    <GridArea className='full-width' name={gridNameInput}>
-      <Card layer="2" heading="Overview Generation">
-        {overview ? <Button text="Clear Data" onClick={handleClearOverview} /> : <Button text="Generate" disabled={disabled} onClick={handleGenerateOverview} />}
-        
-      </Card>
-    </GridArea>
-    <GridArea name={gridNameOutput}>
-      {overviewError && <Card layer="1" heading="Error">{overviewError}</Card>}
-      {overview && 
+  return <GridArea name={gridName}>
+    {overviewError && <Card layer="1" heading="Error">{overviewError}</Card>}
+    {overview && 
       <Card layer="2" heading="Overview Output">
         {overview?.description}
         <Card layer="3" heading="Adventure Hooks">
@@ -49,8 +30,7 @@ export const OverviewLayout: React.FC<T_Props> = ({gridNameInput, gridNameOutput
           </GridTemplate>
         </Card>
       </Card>
-      }
-    </GridArea>
-  </>;
+    }
+  </GridArea>;
 
 };

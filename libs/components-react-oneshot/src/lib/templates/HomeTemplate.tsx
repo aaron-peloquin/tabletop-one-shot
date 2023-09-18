@@ -1,12 +1,13 @@
 "use client";
 import { Card, GridArea, GridTemplate } from "@components-layout";
-import { NameOrganism } from '../organisms/NameOrganism';
+import { SettingsLayout } from '../organisms/SettingsLayout';
 import { OverviewLayout } from '../organisms/OverviewLayout';
 import { GlobalDataProvider } from "../providers/globalData";
+import { GenerateOverviewButton } from "../organisms/GenerateOverviewButton";
 
 const GRID_TEMPLATE_AREA =`
-"oneshot_name______ prompt_overview___"
-"generated_overview generated_overview"
+"name____ generate"
+"overview overview"
 `;
 
 export const HomeTemplate = () => {
@@ -18,15 +19,9 @@ export const HomeTemplate = () => {
         textAlign='left'
         columns={2}
       >
-        <GridArea name="oneshot_name______" className="full-width">
-          <Card layer="2" heading="Settings">
-            <NameOrganism />
-          </Card>
-        </GridArea>
-        <OverviewLayout
-          gridNameInput="prompt_overview___" // corresponding to GRID_TEMPLATE_AREA
-          gridNameOutput="generated_overview" // corresponding to GRID_TEMPLATE_AREA
-        />
+        <SettingsLayout gridName="name____" />
+        <GenerateOverviewButton gridName="generate" />
+        <OverviewLayout gridName="overview" />
       </GridTemplate>
     </Card>
   </GlobalDataProvider>;
