@@ -1,6 +1,6 @@
 import {z} from 'zod';
 
-export const zodSchemaNPC = z.object({
+export const zodSchemaCreature = z.object({
   name: z.string(),
   challengeRating: z.number().multipleOf(0.25),
   motivations: z.string(),

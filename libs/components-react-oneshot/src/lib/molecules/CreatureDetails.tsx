@@ -1,12 +1,12 @@
-import { Button, Card, GridArea, GridTemplate } from "@components-layout";
+import { Button, Card, GridArea, GridTemplate, Input } from "@components-layout";
 import { useGenerateStats } from "@helper";
-import { zodSchemaNPC } from "@static";
+import { zodSchemaCreature } from "@static";
 import { useCallback, useState } from "react";
 import { z } from "zod";
 
-export type T_NPC = z.infer<typeof zodSchemaNPC>;
+export type T_Creature = z.infer<typeof zodSchemaCreature>;
 
-export const NpcDetails: React.FC<T_NPC> = ({name, physicalDescription, backstory, challengeRating, motivations, classification}) => {
+export const CreatureDetails: React.FC<T_Creature> = ({name, physicalDescription, backstory, challengeRating, motivations, classification}) => {
   const { generateStats, loadingStats, stats } = useGenerateStats({name, physicalDescription, challengeRating, classification});
   const [currentHp, setCurrentHp] = useState<number>(0);
   const handleSetHealth = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,9 +33,9 @@ export const NpcDetails: React.FC<T_NPC> = ({name, physicalDescription, backstor
       <Card layer="5" heading="Combat">
         <GridTemplate columns={2}>
           <GridArea>Init: {stats.initiative}</GridArea>
-          <GridArea>HP: <input value={currentHp || stats.hitPoints} type="number" onChange={handleSetHealth} />/{stats.hitPoints}</GridArea>
-          <GridArea>AC: {stats.armorClass}</GridArea>
           <GridArea>Speed: {stats.speed}</GridArea>
+          <GridArea>AC: {stats.armorClass}</GridArea>
+          <GridArea><Input value={currentHp || stats.hitPoints} type="number" onChange={handleSetHealth} label={`HP (${stats.hitPoints} max)`} id={`${name} HP`} /></GridArea>
         </GridTemplate>
       </Card>
       <Card layer="5" heading="Skills">

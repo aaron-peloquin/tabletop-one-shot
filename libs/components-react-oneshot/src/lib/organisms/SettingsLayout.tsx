@@ -23,6 +23,7 @@ export const SettingsLayout: React.FC<T_Props> = ({gridName}) => {
             value={name}
             onChange={handleSetName}
             label="One Shot Session Name"
+            autoComplete="off"
           />
         </GridArea>
         <GridArea justifySelf="center" alignSelf="end">

@@ -1,7 +1,7 @@
 import { Card, GridTemplate } from "@components-layout";
 import { zodSchemaEncounter } from "@static";
 import { z } from "zod";
-import { NpcDetails } from "./NpcDetails";
+import { CreatureDetails } from "./CreatureDetails";
 
 export type T_Encounter = z.infer<typeof zodSchemaEncounter>;
 
@@ -20,7 +20,7 @@ export const EncounterDetails: React.FC<T_Props> = ({encounter, number}) => {
     Purpose: <em>{purpose}</em>
     {NPCs?.length ? <Card heading="NPCs" layer="3">
       <GridTemplate columns={NPCs?.length < 3 ? NPCs.length : 3}>
-        {NPCs.map(npc => <NpcDetails {...npc} />)}
+        {NPCs.map(npc => <CreatureDetails {...npc} />)}
       </GridTemplate>
     </Card> : []}
   </Card>;
