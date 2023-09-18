@@ -17,8 +17,6 @@ You should make up 1-3 Encounters, and no more than 5 Creatures total.
 
 The title for session is: "{name}"
 
-Ensure that you always reply in proper JSON structure where keys and values are always wrapped in double quotes (")
-
 {parsedFormat}`,
   inputVariables: ['name'],
   partialVariables: {
