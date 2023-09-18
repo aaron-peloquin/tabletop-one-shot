@@ -9,7 +9,7 @@ type T_Props = {
     gridNameOutput: string
 };
 
-export const OverviewOrganism: React.FC<T_Props> = ({gridNameInput, gridNameOutput}) => {
+export const OverviewLayout: React.FC<T_Props> = ({gridNameInput, gridNameOutput}) => {
   const {overview, overviewError, name, setOverview, setOverviewError} = useContext(globalDataContext);
   const {generateOverview, overviewLoading} = useGenerateOverview(setOverview, setOverviewError);
 

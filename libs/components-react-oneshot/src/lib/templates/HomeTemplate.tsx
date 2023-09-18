@@ -1,7 +1,7 @@
 "use client";
 import { Card, GridArea, GridTemplate } from "@components-layout";
 import { NameOrganism } from '../organisms/NameOrganism';
-import { OverviewOrganism } from '../organisms/OverviewOrganism';
+import { OverviewLayout } from '../organisms/OverviewLayout';
 import { GlobalDataProvider } from "../providers/globalData";
 
 const GRID_TEMPLATE_AREA =`
@@ -23,7 +23,7 @@ export const HomeTemplate = () => {
             <NameOrganism />
           </Card>
         </GridArea>
-        <OverviewOrganism
+        <OverviewLayout
           gridNameInput="prompt_overview___" // corresponding to GRID_TEMPLATE_AREA
           gridNameOutput="generated_overview" // corresponding to GRID_TEMPLATE_AREA
         />
