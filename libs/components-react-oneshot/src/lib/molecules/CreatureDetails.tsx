@@ -14,8 +14,10 @@ export const CreatureDetails: React.FC<T_Creature> = ({name, description, backst
     setCurrentHp(newVal === 0 ? -1 : newVal);
   }, []);
 
+  const statsButtonText = loadingStats ? "Loading..." : `${stats?'Re':''}Generate Stats`;
+
   return <Card layer="4" heading={name}>
-    <Button text={loadingStats ? "Loading..." : "Generate Stats"} onClick={generateStats} disabled={loadingStats} />
+    <Button text={statsButtonText} onClick={generateStats} disabled={loadingStats} />
     <Card layer="5" heading="Description">{description}</Card>
     <Card layer="5" heading="Backstory">{backstory}</Card>
     {/* <Card layer="5" heading="Motivations">{motivations}</Card> */}

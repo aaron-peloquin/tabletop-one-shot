@@ -21,16 +21,6 @@ export const OverviewLayout: React.FC<T_Props> = ({gridName}) => {
             <ul>{overview?.hooks?.map(hook => <li>{hook}</li>)}</ul>
           </Card>
         </Card>
-        <Card layer="2" heading="Encounters">
-          <GridTemplate columns={overview?.encounters?.length < 2 ? overview?.encounters.length : 2}>
-            {overview?.encounters?.map((encounter, index) => {
-              return <EncounterDetails
-                encounter={encounter}
-                number={index+1}
-              />;
-            })}
-          </GridTemplate>
-        </Card>
       </Card>
     }
   </GridArea>;

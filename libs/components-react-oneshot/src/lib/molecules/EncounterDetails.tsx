@@ -16,7 +16,7 @@ export const EncounterDetails: React.FC<T_Props> = ({encounter, number}) => {
     <Card layer="4" heading="Details">{details}</Card>
     <Card layer="4" heading="Purpose">{purpose}</Card>
     {creatures?.length ? <Card heading="Creatures" layer="3">
-      <GridTemplate columns={creatures?.length < 3 ? creatures.length : 3}>
+      <GridTemplate columns={creatures?.length < 2 ? creatures.length : 2}>
         {creatures.map(creature => <CreatureDetails {...creature} />)}
       </GridTemplate>
     </Card> : []}
