@@ -1,5 +1,10 @@
 .textarea {
-    height: 100%;
-    overflow: auto;
-    box-sizing: border-box;
-  }
+  height: 100%;
+  overflow: auto;
+  color: sandybrown;
+  background-color: #222;
+  border: 2px solid #444;
+  box-sizing: border-box;
+  resize: vertical;
+  min-height: 75px;
+}

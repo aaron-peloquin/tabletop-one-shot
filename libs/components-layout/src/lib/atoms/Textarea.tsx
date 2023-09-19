@@ -1,6 +1,6 @@
 import {TextareaHTMLAttributes, ReactNode} from 'react';
 
-import styles from './Input.module.css';
+import styles from './Textarea.module.css';
 import {Label} from './Label';
 
 type T_Props = {
