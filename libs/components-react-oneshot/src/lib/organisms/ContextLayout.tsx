@@ -1,5 +1,4 @@
 import { GridArea, Card, Textarea } from "@components-layout";
-import { useGenerateOverview } from "@helper";
 import { useContext, useCallback } from "react";
 import { globalDataContext } from "../providers/globalData";
 
@@ -8,25 +7,23 @@ type T_Props = {
 };
 
 export const ContextLayout: React.FC<T_Props> = ({gridName}) => {
-  const {overview, name, setOverview, setOverviewError} = useContext(globalDataContext);
-  const {generateOverview, overviewLoading} = useGenerateOverview(setOverview, setOverviewError);
+  const {overview, context, setContext} = useContext(globalDataContext);
   
-  const handleContextChange = useCallback(() => {
-    generateOverview(name);
-  }, [generateOverview, name]);
+  const handleContextChange = useCallback((event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setContext(event?.target.value);
+  }, [setContext]);
   
-  const disabled = !!(overview || overviewLoading);
+  const editable = !(overview);
 
   return <GridArea className='full-width' name={gridName}>
-    <Card layer="2" heading="Overview Generation">
-      <Textarea
+    <Card layer="2" heading="Context">
+      {editable ? <Textarea
         onChange={handleContextChange}
-        value={''}
-        disabled={disabled}
-        label="Context (optional)"
-        placeholder="Optional context"
-        id={""}
-      />
+        value={context}
+        label="Optional context for the one-shot"
+        placeholder="This can be background on the party, goals of the ones-shot, suggesting a theme, etc-"
+        id="context"
+      /> : context}
     </Card>
   </GridArea>;
 

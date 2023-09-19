@@ -17,8 +17,14 @@ You should make up 1-3 Encounters, and no more than 5 Creatures total.
 
 The title for session is: "{name}"
 
+Context for this session:
+"""
+{context}
+"""
+Consider this context, but do not repeat it as part of your reply.
+
 {parsedFormat}`,
-  inputVariables: ['name'],
+  inputVariables: ['name', 'context'],
   partialVariables: {
     parsedFormat: outputParser.getFormatInstructions()
   }
@@ -32,9 +38,9 @@ const overviewChain = new LLMChain({
 });
 
 export const POST = async (req: NextRequest) => {
-  const {name} = await req.json();
+  const params = await req.json();
   try {
-    const response = await overviewChain.call({name});
+    const response = await overviewChain.call(params);
     return NextResponse.json({ message: response.text }, { status: 200 });
   } catch (error) {
     console.log('error: ', error);

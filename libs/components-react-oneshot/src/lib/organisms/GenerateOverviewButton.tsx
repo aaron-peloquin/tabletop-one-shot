@@ -8,7 +8,7 @@ type T_Props = {
 };
 
 export const GenerateOverviewButton: React.FC<T_Props> = ({gridName}) => {
-  const {overview, name, setOverview, setOverviewError} = useContext(globalDataContext);
+  const {overview, name, context, setOverview, setOverviewError} = useContext(globalDataContext);
   const {generateOverview, overviewLoading} = useGenerateOverview(setOverview, setOverviewError);
   
   const handleClearOverview = useCallback(() => {
@@ -16,8 +16,8 @@ export const GenerateOverviewButton: React.FC<T_Props> = ({gridName}) => {
   }, [setOverview]);
   
   const handleGenerateOverview = useCallback(() => {
-    generateOverview(name);
-  }, [generateOverview, name]);
+    generateOverview(name, context);
+  }, [generateOverview, name, context]);
   
   const disabled = !name || overviewLoading;
 

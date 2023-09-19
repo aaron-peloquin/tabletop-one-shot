@@ -9,16 +9,16 @@ type T_Sig = (
   setOverviewCallback: Dispatch<SetStateAction<T_Overview>>,
   setOverviewErrorCallback: Dispatch<SetStateAction<string>>,
 ) => {
-  generateOverview: (name: string) => Promise<void>,
+  generateOverview: (name: string, context: string) => Promise<void>,
   overviewLoading: boolean
 };
 
 export const useGenerateOverview:T_Sig = (setOverviewCallback, setOverviewErrorCallback) => {
   const [overviewLoading, setOverviewLoading] = useState(false);
 
-  const generateOverview = useCallback(async (name: string) => {
+  const generateOverview = useCallback(async (name, context) => {
     setOverviewLoading(true);
-    const body = JSON.stringify({name});
+    const body = JSON.stringify({name,context});
     fetch('/api/llm/overview', {
       method: 'POST',
       body,
