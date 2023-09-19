@@ -17,12 +17,9 @@ You should make up 1-3 Encounters, and no more than 5 Creatures total.
 
 The title for session is: "{name}"
 
-Context for this session:
-"""
+Required Context (Strictly follow this context while writing the session, but do not repeat it as part of your reply):
 {context}
-"""
-Consider this context, but do not repeat it as part of your reply.
-
+----
 {parsedFormat}`,
   inputVariables: ['name', 'context'],
   partialVariables: {

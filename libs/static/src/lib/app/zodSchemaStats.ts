@@ -23,5 +23,5 @@ export const zodSchemaStats = z.object({
     // weapons: z.string(),
     // armors: z.string(),
     // tools: z.string(),
-  })
+  }).describe('Skills are typically low numbers (-2 to 4), collated to their ability scores')
 });
