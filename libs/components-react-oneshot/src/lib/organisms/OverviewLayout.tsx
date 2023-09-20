@@ -1,6 +1,6 @@
 import { GridArea, Card, Button, GridTemplate } from "@components-layout";
 import { useCallback, useContext } from "react";
-import { globalDataContext } from "../providers/globalData";
+import { globalDataContext } from "@static";
 import { useGenerateOverview } from "@helper";
 import { EncounterDetails } from "../molecules/EncounterDetails";
 

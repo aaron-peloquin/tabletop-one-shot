@@ -1,7 +1,7 @@
 import { Card, GridArea, GridTemplate } from "@components-layout";
 import { EncounterDetails } from "../molecules/EncounterDetails";
 import { useContext } from "react";
-import { globalDataContext } from "../providers/globalData";
+import { globalDataContext } from "@static";
 
 type T_Props = {
   gridName: string

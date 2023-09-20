@@ -1,7 +1,8 @@
+"use client";
 import { Button, Card, GridArea, GridTemplate, Input } from "@components-layout";
 import { useRandomName } from '@helper';
+import { globalDataContext } from "@static";
 import { useCallback, useContext } from "react";
-import { globalDataContext } from "../providers/globalData";
 
 type T_Props = {
   gridName: string

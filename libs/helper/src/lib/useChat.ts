@@ -1,18 +1,9 @@
-import { useCallback, useState } from "react";
-import { T_Overview } from "./useGenerateOverview";
-
-type T_ChatHistory = {
-  role: 'human'|'ai'
-  message: string
-}[];      
+import { useCallback, useContext, useState } from "react";
+import { T_Overview, globalDataContext } from "@static";
 
 export const useChat = () => {
   const [loadingChat, setLoading] = useState(false);
-  const [history, setHistory] = useState<T_ChatHistory>([]);
-
-  const clearChat = useCallback(() => {
-    setHistory([]);
-  }, []);
+  const {history, setHistory} = useContext(globalDataContext);
 
   const sendChat = useCallback((human: string, overview: T_Overview) => {
     const body = JSON.stringify({ history, human, overview });
@@ -26,7 +17,7 @@ export const useChat = () => {
       .then(res => res.json())
       .then(({message}) => {
         if(message) {
-          setHistory(history => {
+          setHistory((history) => {
             history.push({message: human, role: 'human'});
             history.push({message: message, role: 'ai'});
             return history;
@@ -37,7 +28,7 @@ export const useChat = () => {
         console.error(error);
         setLoading(false);
       });
-  }, []);
+  }, [history]);
 
-  return {loadingChat, clearChat, sendChat, history};
+  return {loadingChat, sendChat};
 };

@@ -1,9 +1,7 @@
 "use client";
-import { zodSchemaOverview } from "@static";
-import { Dispatch, SetStateAction, useCallback, useContext, useState } from "react";
-import { z } from "zod";
+import { T_Overview } from "@static";
+import { Dispatch, SetStateAction, useCallback, useState } from "react";
 
-export type T_Overview = z.infer<typeof zodSchemaOverview> | null;
 
 type T_Sig = (
   setOverviewCallback: Dispatch<SetStateAction<T_Overview>>,

@@ -1,6 +1,6 @@
 import { GridArea, Card, Textarea } from "@components-layout";
+import { globalDataContext } from "@static";
 import { useContext, useCallback } from "react";
-import { globalDataContext } from "../providers/globalData";
 
 type T_Props = {
   gridName: string
