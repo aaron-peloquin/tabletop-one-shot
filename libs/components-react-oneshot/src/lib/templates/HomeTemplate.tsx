@@ -1,16 +1,18 @@
 "use client";
-import { Card, GridArea, GridTemplate } from "@components-layout";
+import { Card, GridTemplate } from "@components-layout";
 import { SettingsLayout } from '../organisms/SettingsLayout';
 import { OverviewLayout } from '../organisms/OverviewLayout';
 import { GlobalDataProvider } from "../providers/globalData";
 import { GenerateOverviewButton } from "../organisms/GenerateOverviewButton";
 import { EncountersLayout } from "../organisms/EncountersLayout";
 import { ContextLayout } from "../organisms/ContextLayout";
+import { ChatLayout } from "../organisms/ChatLayout";
 
 const GRID_TEMPLATE_AREA =`
 "name______ generate__ overview__ overview__"
 "context___ context___ overview__ overview__"
 "encounters encounters encounters encounters"
+"chat______ chat______ chat______ chat______"
 `;
 
 export const HomeTemplate = () => {
@@ -27,6 +29,7 @@ export const HomeTemplate = () => {
         <GenerateOverviewButton gridName="generate__" />
         <OverviewLayout gridName="overview__" />
         <EncountersLayout gridName="encounters" />
+        <ChatLayout gridName="chat______" />
       </GridTemplate>
     </Card>
   </GlobalDataProvider>;
