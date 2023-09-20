@@ -8,6 +8,16 @@ export const useChat = () => {
   const sendChat = useCallback((human: string, overview: T_Overview) => {
     const body = JSON.stringify({ history, human, overview });
     setLoading(true);
+    setHistory((history) => {
+      history.push({message: human, role: 'human'});
+      return history;
+    });
+    const popHistory = () => {
+      setHistory((history) => {
+        history.pop();
+        return history;
+      });  
+    };
 
     fetch('/api/llm/chat', {
       method: 'POST',
@@ -18,14 +28,16 @@ export const useChat = () => {
       .then(({message}) => {
         if(message) {
           setHistory((history) => {
-            history.push({message: human, role: 'human'});
             history.push({message: message, role: 'ai'});
             return history;
           });
+        } else {
+          popHistory();
         }
         setLoading(false);
       }).catch((error) => {
         console.error(error);
+        popHistory();
         setLoading(false);
       });
   }, [history]);
