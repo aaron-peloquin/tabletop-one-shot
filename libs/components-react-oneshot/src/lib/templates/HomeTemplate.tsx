@@ -7,8 +7,10 @@ import { GenerateOverviewButton } from "../organisms/GenerateOverviewButton";
 import { EncountersLayout } from "../organisms/EncountersLayout";
 import { ContextLayout } from "../organisms/ContextLayout";
 import { ChatLayout } from "../organisms/ChatLayout";
+import { LoginLayout } from '../organisms/LoginLayout';
 
 const GRID_TEMPLATE_AREA =`
+"login_____ __________ __________ __________"
 "name______ generate__ overview__ overview__"
 "context___ context___ overview__ overview__"
 "encounters encounters encounters encounters"
@@ -24,6 +26,7 @@ export const HomeTemplate = () => {
         textAlign='left'
         columns={4}
       >
+        <LoginLayout gridName="login_____" />
         <SettingsLayout gridName="name______" />
         <ContextLayout gridName="context___" />
         <GenerateOverviewButton gridName="generate__" />

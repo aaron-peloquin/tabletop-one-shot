@@ -1,22 +1,23 @@
-import {memo, SyntheticEvent} from 'react';
+import {PropsWithChildren, memo, SyntheticEvent} from 'react';
 
 import style from './Button.module.css';
 
 type T_Props = {
   ariaLabel?: string
   disabled?: boolean
-  text: string
+  text?: string
   type?: 'button' | 'submit' | 'reset'
   onClick?: (event: SyntheticEvent) => void
 };
 
-type T_CombinedProps = T_Props & React.HTMLProps<HTMLButtonElement>;
+type T_CombinedProps = PropsWithChildren<T_Props & React.HTMLProps<HTMLButtonElement>>;
 
 const Button: React.FC<T_CombinedProps> = memo(({
   ariaLabel,
   disabled,
   text,
   type,
+  children,
   ...buttonAttributes
 }) => {
   return <button
@@ -26,7 +27,7 @@ const Button: React.FC<T_CombinedProps> = memo(({
     type={type}
     {...buttonAttributes}
   >
-    {text}
+    {children || text}
   </button>;
 });
 
