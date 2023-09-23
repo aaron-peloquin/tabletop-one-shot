@@ -1,8 +1,6 @@
-import { GridArea, Card, Button, GridTemplate } from "@components-layout";
-import { useCallback, useContext } from "react";
+import { GridArea, Card } from "@components-layout";
+import { useContext } from "react";
 import { globalDataContext } from "@static";
-import { useGenerateOverview } from "@helper";
-import { EncounterDetails } from "../molecules/EncounterDetails";
 
 type T_Props = {
   gridName: string
@@ -11,7 +9,7 @@ type T_Props = {
 export const OverviewLayout: React.FC<T_Props> = ({gridName}) => {
   const {overview, overviewError} = useContext(globalDataContext);
 
-  return <GridArea name={gridName}>
+  return <GridArea name={gridName} className="full-width">
     {overviewError && <Card layer="1" heading="Error">{overviewError}</Card>}
     {overview && 
       <Card layer="2" heading="Overview Output">

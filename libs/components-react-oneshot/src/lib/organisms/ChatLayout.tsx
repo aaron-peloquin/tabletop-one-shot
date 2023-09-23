@@ -8,6 +8,11 @@ type T_Props = {
   gridName: string
 };
 
+const GRID_TEMPLATE_AREA =`
+"messages messages messages"
+"input___ input___ submit__"
+`;
+
 export const ChatLayout: React.FC<T_Props> = ({gridName}) => {
   const [humanText, setHumanText] = useState('');
   const {overview, history, clearHistory} = useContext(globalDataContext);
@@ -26,16 +31,18 @@ export const ChatLayout: React.FC<T_Props> = ({gridName}) => {
   }
 
   return <GridArea className="full-width" name={gridName}>
-    <Card layer="2" heading="Chat">
-      {history.length > 0 ? <Button text="Clear Chat" onClick={clearHistory} /> : []}
-      <GridTemplate columns={1}>
-        {history.map(({role, message})=> <Card layer="3" heading={`${role}:`}>
-          <ReactMarkdown>{message}</ReactMarkdown>
-        </Card>)}
-      </GridTemplate>
-      <form>
-        <GridTemplate columns={2}>
-          <GridArea>
+    <form>
+      <Card layer="2" heading="Chat">
+        <GridTemplate gridTemplateAreas={GRID_TEMPLATE_AREA}>
+          <GridArea name="messages">
+            {history.length > 0 ? <Button text="Clear Chat" onClick={clearHistory} /> : []}
+            <GridTemplate columns={1}>
+              {history.map(({role, message})=> <Card layer="3" heading={`${role}:`}>
+                <ReactMarkdown>{message}</ReactMarkdown>
+              </Card>)}
+            </GridTemplate>
+          </GridArea>
+          <GridArea name="input___">
             <Input
               id="name"
               value={humanText}
@@ -45,11 +52,11 @@ export const ChatLayout: React.FC<T_Props> = ({gridName}) => {
               label="Message"
             />
           </GridArea>
-          <GridArea justifySelf="center" alignSelf="end">
+          <GridArea name="submit__">
             <Button type="submit" text="Send =>" disabled={loadingChat} onClick={handleSendChat} />
           </GridArea>
         </GridTemplate>
-      </form>
-    </Card>
+      </Card>
+    </form>
   </GridArea>;
 };

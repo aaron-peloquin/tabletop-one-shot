@@ -15,7 +15,7 @@ export const EncountersLayout: React.FC<T_Props> = ({gridName}) => {
   }
   return <GridArea name={gridName}>
     <Card layer="2" heading="Encounters">
-      <GridTemplate columns={overview?.encounters?.length < 2 ? overview?.encounters.length : 2}>
+      <GridTemplate columns={1}>
         {overview?.encounters?.map((encounter, index) => {
           return <EncounterDetails
             encounter={encounter}

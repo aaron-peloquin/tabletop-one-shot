@@ -20,7 +20,7 @@ const Card: React.FC<PropsWithChildren<T_Props>> = memo(({className, layer, head
       setOpacity(1);
     }, 50);
   }, []);
-  const classNames = (styles['card'] + ' ' + styles[`card-layer-${layer}`] + ' ' + className).trim();
+  const classNames = (styles['card'] + ' ' + styles[`card-layer-${layer}`] + ' ' + (className?className:'')).trim();
 
   return (
     <div className={classNames} style={{opacity, ...style}}>
