@@ -7,6 +7,12 @@ const { composePlugins, withNx } = require('@nx/next');
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
  **/
 const nextConfig = {
+  images: {
+    remotePatterns: [{
+      protocol: 'https',
+      hostname: 'lh3.googleusercontent.com',
+    }]
+  },
   nx: {
     // Set this to true if you would like to use SVGR
     // See: https://github.com/gregberge/svgr
