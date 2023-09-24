@@ -7,7 +7,7 @@ import { GenerateOverviewButton } from "../organisms/GenerateOverviewButton";
 import { EncountersLayout } from "../organisms/EncountersLayout";
 import { ContextLayout } from "../organisms/ContextLayout";
 import { ChatLayout } from "../organisms/ChatLayout";
-import { LoginLayout } from '../organisms/LoginLayout';
+import { AccountLayout } from '../organisms/AccountLayout';
 import { ManageDataLayout } from "../organisms/ManageDataLayout";
 
 const GRID_TEMPLATE_AREA =`
@@ -27,8 +27,8 @@ export const HomeTemplate = () => {
         textAlign='left'
         columns={4}
       >
-        <LoginLayout gridName="login_____" />
-        <ManageDataLayout gridName="login_____" />
+        <AccountLayout gridName="login_____" />
+        <ManageDataLayout gridName="save_load_" />
         <SettingsLayout gridName="name______" />
         <ContextLayout gridName="context___" />
         <GenerateOverviewButton gridName="generate__" />
