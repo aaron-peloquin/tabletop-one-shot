@@ -9,8 +9,7 @@ type T_Props = {
 };
 
 const GRID_TEMPLATE_AREA =`
-"messages messages messages"
-"input___ input___ submit__"
+"input___ input___ input___ submit__"
 `;
 
 export const ChatLayout: React.FC<T_Props> = ({gridName}) => {
@@ -31,17 +30,15 @@ export const ChatLayout: React.FC<T_Props> = ({gridName}) => {
   }
 
   return <GridArea className="full-width" name={gridName}>
-    <form>
-      <Card layer="2" heading="Chat">
-        <GridTemplate gridTemplateAreas={GRID_TEMPLATE_AREA}>
-          <GridArea name="messages">
-            {history.length > 0 ? <Button text="Clear Chat" onClick={clearHistory} /> : []}
-            <GridTemplate columns={1}>
-              {history.map(({role, message})=> <Card layer="3" heading={`${role}:`}>
-                <ReactMarkdown>{message}</ReactMarkdown>
-              </Card>)}
-            </GridTemplate>
-          </GridArea>
+    <Card layer="2" heading="Chat">
+      {history.length > 0 ? <Button type="button" text="Clear Chat" onClick={clearHistory} /> : []}
+      <GridTemplate columns={1}>
+        {history.map(({role, message})=> <Card layer="3" heading={`${role}:`}>
+          <ReactMarkdown>{message}</ReactMarkdown>
+        </Card>)}
+      </GridTemplate>
+      <GridTemplate gridTemplateAreas={GRID_TEMPLATE_AREA} columns={4}>
+        <form>
           <GridArea name="input___">
             <Input
               id="name"
@@ -55,8 +52,8 @@ export const ChatLayout: React.FC<T_Props> = ({gridName}) => {
           <GridArea name="submit__">
             <Button type="submit" text="Send =>" disabled={loadingChat} onClick={handleSendChat} />
           </GridArea>
-        </GridTemplate>
-      </Card>
-    </form>
+        </form>
+      </GridTemplate>
+    </Card>
   </GridArea>;
 };

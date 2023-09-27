@@ -7,6 +7,7 @@ const {Provider} = globalDataContext;
 
 export const GlobalDataProvider: React.FC<PropsWithChildren> = ({children}) => {
   const [name, setName] = useState('');
+  const [saveId, setSaveId] = useState(0);
   const [context, setContext] = useState('');
   const [history, setHistory] = useState<T_ChatHistory>([]);
   const [overview, setOverview] = useState<T_Overview>(null);
@@ -17,17 +18,19 @@ export const GlobalDataProvider: React.FC<PropsWithChildren> = ({children}) => {
   }, []);
 
   const clearOverview = useCallback(() => {
+    setSaveId(0);
     setOverview(null);
     clearHistory();
   }, [clearHistory]);
 
   const value = useMemo(() => ({
     name, setName,
+    saveId, setSaveId,
     context, setContext,
     history, setHistory, clearHistory,
     overview, setOverview, clearOverview,
     overviewError, setOverviewError
-  }), [clearHistory, clearOverview, context, history, name, overview, overviewError]);
+  }), [clearHistory, clearOverview, context, history, name, overview, overviewError, saveId]);
 
   return <Provider value={value}>{children}</Provider>;
 };

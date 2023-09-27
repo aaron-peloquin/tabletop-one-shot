@@ -2,7 +2,7 @@
 import { Card, GridTemplate } from "@components-layout";
 import { SettingsLayout } from '../organisms/SettingsLayout';
 import { OverviewLayout } from '../organisms/OverviewLayout';
-import { GlobalDataProvider } from "../providers/globalData";
+import { GlobalDataProvider } from "../providers/GlobalDataProvider";
 import { GenerateOverviewButton } from "../organisms/GenerateOverviewButton";
 import { EncountersLayout } from "../organisms/EncountersLayout";
 import { ContextLayout } from "../organisms/ContextLayout";

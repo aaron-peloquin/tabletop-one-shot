@@ -12,21 +12,25 @@ export type T_ChatHistory = {
 type T_globalDataContext = {
   name: string
   setName: Dispatch<SetStateAction<string>>
+  saveId: number
+  setSaveId: Dispatch<SetStateAction<number>>
   context: string
   setContext: Dispatch<SetStateAction<string>>
-  history: T_ChatHistory
-  setHistory: Dispatch<SetStateAction<T_ChatHistory>>
-  clearHistory: () => void
   overview: T_Overview
   setOverview: Dispatch<SetStateAction<T_Overview>>
   clearOverview: () => void
   overviewError: string
   setOverviewError: Dispatch<SetStateAction<string>>
+  history: T_ChatHistory
+  setHistory: Dispatch<SetStateAction<T_ChatHistory>>
+  clearHistory: () => void
 };
 
 export const globalDataContext = createContext<T_globalDataContext>({
   name: '',
   setName: () => { return; },
+  saveId: 0,
+  setSaveId: () => { return; },
   context: '',
   setContext: () => { return; },
   history: [],
