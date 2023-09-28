@@ -1,7 +1,7 @@
 "use client";
 import { Dispatch, SetStateAction, useCallback, useState } from "react";
 
-type T_Sig = (callback: Dispatch<SetStateAction<string>>) => {
+type T_Sig = (callback: (name: string) => void) => {
   getName: () => Promise<void>,
   nameLoading: boolean
 };

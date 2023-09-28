@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction, useCallback, useState } from "react";
 
 
 type T_Sig = (
-  setOverviewCallback: Dispatch<SetStateAction<T_Overview>>,
+  setOverviewCallback: (overview: T_Overview) => void,
   setOverviewErrorCallback: Dispatch<SetStateAction<string>>,
 ) => {
   generateOverview: (name: string, context: string) => Promise<void>,

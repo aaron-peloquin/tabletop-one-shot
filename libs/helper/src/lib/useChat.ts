@@ -1,11 +1,12 @@
 import { useCallback, useContext, useState } from "react";
-import { T_Overview, globalDataContext } from "@static";
+import { T_ChatHistory, T_Overview, globalDataContext } from "@static";
 
 export const useChat = () => {
   const [loadingChat, setLoading] = useState(false);
-  const {history, setHistory} = useContext(globalDataContext);
+  const {history, setHistory, setSavedSuccessful} = useContext(globalDataContext);
 
   const sendChat = useCallback((human: string, overview: T_Overview) => {
+    setSavedSuccessful(null);
     const body = JSON.stringify({ history, human, overview });
     setLoading(true);
     setHistory((history) => {

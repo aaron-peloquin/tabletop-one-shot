@@ -29,11 +29,6 @@ export const GlobalDataProvider: React.FC<PropsWithChildren> = ({children}) => {
     setOverview(overview);
   }, []);
 
-  const handleSetHistory = useCallback((history: T_ChatHistory) => {
-    setSavedSuccessful(null);
-    setHistory(history);
-  }, []);
-
   const clearHistory = useCallback(() => {
     setSavedSuccessful(null);
     setHistory([]);
@@ -51,10 +46,10 @@ export const GlobalDataProvider: React.FC<PropsWithChildren> = ({children}) => {
     saveId, setSaveId,
     savedSuccessful, setSavedSuccessful,
     context, setContext: handleSetContext,
-    history, setHistory: handleSetHistory, clearHistory,
+    history, setHistory, clearHistory,
     overview, setOverview: handleSetOverview, clearOverview,
     overviewError, setOverviewError
-  }), [clearHistory, clearOverview, context, handleSetContext, handleSetHistory, handleSetName, handleSetOverview, history, name, overview, overviewError, saveId, savedSuccessful]);
+  }), [clearHistory, clearOverview, context, handleSetContext, handleSetName, handleSetOverview, history, name, overview, overviewError, saveId, savedSuccessful]);
 
   return <Provider value={value}>{children}</Provider>;
 };

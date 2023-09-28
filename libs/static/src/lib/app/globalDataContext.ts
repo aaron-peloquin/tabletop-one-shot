@@ -31,7 +31,7 @@ type T_globalDataContext = {
   overviewError: string
   setOverviewError: Dispatch<SetStateAction<string>>
   history: T_ChatHistory
-  setHistory: (history: T_ChatHistory) => void
+  setHistory: Dispatch<SetStateAction<T_ChatHistory>>
   clearHistory: () => void
 };
 
