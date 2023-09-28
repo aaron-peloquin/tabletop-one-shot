@@ -9,6 +9,7 @@ import { ContextLayout } from "../organisms/ContextLayout";
 import { ChatLayout } from "../organisms/ChatLayout";
 import { AccountLayout } from '../organisms/AccountLayout';
 import { ManageDataLayout } from "../organisms/ManageDataLayout";
+import { Suspense } from "react";
 
 const GRID_TEMPLATE_AREA =`
 "login_____ save_load_ save_load_ save_load_"
@@ -27,7 +28,9 @@ export const HomeTemplate = () => {
         textAlign='left'
         columns={4}
       >
-        <AccountLayout gridName="login_____" />
+        <Suspense>
+          <AccountLayout gridName="login_____" />
+        </Suspense>
         <ManageDataLayout gridName="save_load_" />
         <SettingsLayout gridName="name______" />
         <ContextLayout gridName="context___" />

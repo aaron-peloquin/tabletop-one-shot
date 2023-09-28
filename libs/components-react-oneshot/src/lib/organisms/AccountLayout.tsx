@@ -1,7 +1,6 @@
 "use client";
 import { useCallback } from 'react';
 
-import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 
 import { signIn } from "next-auth/react";
