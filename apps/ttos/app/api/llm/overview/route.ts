@@ -10,14 +10,15 @@ const outputParser = StructuredOutputParser.fromZodSchema(zodSchemaOverview);
 
 const promptTemplate = new PromptTemplate({
   template: `
-Create the Overview synopsys for a homebrew original custom tabletop RPG one-shot session for a group of 2-5 players.
-Do not reference any existing intellectual property or campaign settings like Phandelver, Volo, or Faerun.
+Overview synopsys for an original homebrew custom tabletop RPG one-shot session for a group of 2-4 players.
 
-You should make up 1-3 Encounters, and no more than 5 Creatures total.
+This document will never reference any existing intellectual property or campaign settings like Phandelver or Faerun.
+
+You should make up 1-4 Encounters, and no more than 5 Creatures total between all encounters.
 
 The title for session is: "{name}"
 
-Required Context (Strictly follow this context while writing the session, but do not repeat it as part of your reply):
+Required Context for this session (Strictly follow this context, but do not repeat any of it):
 {context}
 ----
 {parsedFormat}`,

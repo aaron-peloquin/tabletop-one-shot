@@ -36,7 +36,7 @@ export const POST = async (req: NextRequest) => {
     });
     const questions = [
       new SystemMessage(
-        "A helpful game master has created up with the following one-shot session for a tabletop game. Another dungeon master will be asking you questions about this session. One-shot details in JSON format:" +
+        "A helpful game master (AI Assistant) has created the following one-shot session for a tabletop game. Another dungeon master (Human) will be asking questions about this session, and the game master will reply with short succinct answers. The One-shot session details in JSON format:" +
         "```session-overview.json" +
          JSON.stringify(params.overview) +
          "```"
