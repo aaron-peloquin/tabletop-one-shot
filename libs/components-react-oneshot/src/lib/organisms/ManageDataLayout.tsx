@@ -1,5 +1,5 @@
 "use client";
-import { Button, GridArea, GridTemplate, Label } from '@components-layout';
+import { Button, GridArea, GridTemplate, Label, Select } from '@components-layout';
 import { useSaveData } from '@helper';
 import { globalDataContext } from '@static';
 import { useContext } from 'react';
@@ -26,19 +26,19 @@ export const ManageDataLayout: React.FC<T_Props> = ({gridName}) => {
   } = useSaveData();
 
   return <GridArea name={gridName}>
-    <GridTemplate columns={5} gridTemplateAreas={GRID_TEMPLATE_AREA}>
+    <GridTemplate columns={5} gridTemplateAreas={GRID_TEMPLATE_AREA} alignItems='end'>
       <GridArea name="save">
         <Button onClick={saveData} disabled={!canSave}>{saveId?'Overwrite':'Save'} <AiFillSave size={14} /></Button>
-        {savedSuccessful?<FaCheckCircle color="green" />: <FaCheckCircle color="grey" />}
+        <FaCheckCircle color={savedSuccessful?"green":"grey"} />
       </GridArea>
       <GridArea name="list">
-        <select onChange={handleSageSave}>
+        <Select onChange={handleSageSave} label="Select Save" id="select-saved-session">
           <option value="">Select a saved session...</option>
           {savedDataList?.map(({id, name}) => <option value={id}>{name}</option>)}
-        </select>
+        </Select>
       </GridArea>
       <GridArea name="ctxt">
-        {stagedSave ? <Label text="Context" htmlFor="load-game-context"><em id="load-game-context">{stagedSave?.context || '(No context)'}</em></Label> : ''}
+        {stagedSave ? <Label text="Context" htmlFor="staged-save-context"><em id="staged-save-context">{stagedSave?.context || '(No context)'}</em></Label> : ''}
       </GridArea>
       <GridArea name="load">
         <Button onClick={loadData} disabled={!stagedSave}>Load {stagedSave?.name}</Button>

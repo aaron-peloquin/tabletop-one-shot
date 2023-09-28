@@ -24,7 +24,7 @@ export const AccountLayout: React.FC<T_Props> = ({gridName}) => {
   }, [callbackUrl]);
   const {status, data} = useSession();
   
-  return <GridArea name={gridName} justifySelf='left'>
+  return <GridArea name={gridName} justifySelf='left' alignSelf='end'>
     {status==='authenticated'
       ? <>
         Welcome{data?.user?.name ? `, ${data?.user?.name} `:''}

@@ -1,6 +1,7 @@
 
 export {Button} from './lib/atoms/Button';
 export {Input} from './lib/atoms/Input';
+export {Select} from './lib/atoms/Select';
 export {Label} from './lib/atoms/Label';
 export {Output} from './lib/atoms/Output';
 export {ProgressBar} from './lib/atoms/ProgressBar';
