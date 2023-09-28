@@ -18,18 +18,20 @@ export type T_SavedDataItem = {
 
 type T_globalDataContext = {
   name: string
-  setName: Dispatch<SetStateAction<string>>
+  setName: (name: string) => void
   saveId: number
   setSaveId: Dispatch<SetStateAction<number>>
+  savedSuccessful: boolean|null
+  setSavedSuccessful: Dispatch<SetStateAction<boolean|null>>
   context: string
-  setContext: Dispatch<SetStateAction<string>>
+  setContext: (context: string) => void
   overview: T_Overview
-  setOverview: Dispatch<SetStateAction<T_Overview>>
+  setOverview: (overview: T_Overview) => void
   clearOverview: () => void
   overviewError: string
   setOverviewError: Dispatch<SetStateAction<string>>
   history: T_ChatHistory
-  setHistory: Dispatch<SetStateAction<T_ChatHistory>>
+  setHistory: (history: T_ChatHistory) => void
   clearHistory: () => void
 };
 
@@ -40,6 +42,8 @@ export const globalDataContext = createContext<T_globalDataContext>({
   setSaveId: () => { return; },
   context: '',
   setContext: () => { return; },
+  savedSuccessful: null,
+  setSavedSuccessful: () => { return; },
   history: [],
   setHistory: () => { return; },
   clearHistory: () => { return; },

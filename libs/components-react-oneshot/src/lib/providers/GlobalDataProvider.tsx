@@ -12,25 +12,49 @@ export const GlobalDataProvider: React.FC<PropsWithChildren> = ({children}) => {
   const [history, setHistory] = useState<T_ChatHistory>([]);
   const [overview, setOverview] = useState<T_Overview>(null);
   const [overviewError, setOverviewError] = useState('');
+  const [savedSuccessful, setSavedSuccessful] = useState<boolean|null>(null);
+
+  const handleSetName = useCallback((name: string) => {
+    setSavedSuccessful(null);
+    setName(name);
+  }, []);
+
+  const handleSetContext = useCallback((context: string) => {
+    setSavedSuccessful(null);
+    setContext(context);
+  }, []);
+
+  const handleSetOverview = useCallback((overview: T_Overview) => {
+    setSavedSuccessful(null);
+    setOverview(overview);
+  }, []);
+
+  const handleSetHistory = useCallback((history: T_ChatHistory) => {
+    setSavedSuccessful(null);
+    setHistory(history);
+  }, []);
 
   const clearHistory = useCallback(() => {
+    setSavedSuccessful(null);
     setHistory([]);
   }, []);
 
   const clearOverview = useCallback(() => {
+    setSavedSuccessful(null);
     setSaveId(0);
     setOverview(null);
     clearHistory();
   }, [clearHistory]);
 
   const value = useMemo(() => ({
-    name, setName,
+    name, setName: handleSetName,
     saveId, setSaveId,
-    context, setContext,
-    history, setHistory, clearHistory,
-    overview, setOverview, clearOverview,
+    savedSuccessful, setSavedSuccessful,
+    context, setContext: handleSetContext,
+    history, setHistory: handleSetHistory, clearHistory,
+    overview, setOverview: handleSetOverview, clearOverview,
     overviewError, setOverviewError
-  }), [clearHistory, clearOverview, context, history, name, overview, overviewError, saveId]);
+  }), [clearHistory, clearOverview, context, handleSetContext, handleSetHistory, handleSetName, handleSetOverview, history, name, overview, overviewError, saveId, savedSuccessful]);
 
   return <Provider value={value}>{children}</Provider>;
 };
