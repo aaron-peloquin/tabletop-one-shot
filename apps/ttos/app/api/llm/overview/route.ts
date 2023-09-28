@@ -2,7 +2,7 @@ import { StructuredOutputParser } from "langchain/output_parsers";
 import { PromptTemplate } from "langchain/prompts";
 import { LLMChain } from 'langchain/chains';
 
-import { llmGoogle } from '@helper/server';
+import { llmGoogleStrict } from '@helper/server';
 import { zodSchemaOverview } from '@static';
 import { NextRequest, NextResponse } from "next/server";
 
@@ -29,7 +29,7 @@ Required Context for this session (Strictly follow this context, but do not repe
 });
 
 const overviewChain = new LLMChain({
-  llm: llmGoogle,
+  llm: llmGoogleStrict,
   prompt: promptTemplate,
   outputParser: outputParser,
   verbose: false

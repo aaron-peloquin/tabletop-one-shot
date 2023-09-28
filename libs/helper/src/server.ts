@@ -1,1 +1,1 @@
-export {llmGoogle, llmGoogleCreative} from './lib/llmGoogle';
+export {llmGoogle, llmGoogleCreative, llmGoogleStrict} from './lib/llmGoogle';
