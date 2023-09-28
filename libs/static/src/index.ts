@@ -9,4 +9,4 @@ export {zodSchemaCreature} from './lib/app/zodSchemaCreature';
 export {zodSchemaStats} from './lib/app/zodSchemaStats';
 
 export {globalDataContext} from './lib/app/globalDataContext';
-export type {T_Overview, T_ChatHistory} from './lib/app/globalDataContext';
+export type {T_Overview, T_ChatHistory, T_SavedDataItem} from './lib/app/globalDataContext';

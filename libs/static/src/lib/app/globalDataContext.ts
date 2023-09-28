@@ -9,6 +9,13 @@ export type T_ChatHistory = {
   message: string
 }[];
 
+export type T_SavedDataItem = {
+  id: number
+  name: string
+  context: string
+};
+
+
 type T_globalDataContext = {
   name: string
   setName: Dispatch<SetStateAction<string>>
