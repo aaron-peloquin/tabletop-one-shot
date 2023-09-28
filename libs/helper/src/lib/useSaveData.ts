@@ -5,33 +5,62 @@ import { T_SavedDataItem, globalDataContext } from "@static";
 
 type T_Sig = () => {
   canSave: boolean
+  handleSageSave: (event: React.ChangeEvent<HTMLSelectElement>) => void
+  loadData: () => void
   saveData: () => Promise<void>
   savedSuccessful: boolean|null
-  savedGamesList: T_SavedDataItem[]
+  savedDataList: T_SavedDataItem[]
+  stagedSave: T_SavedDataItem|null,
   saveIsLoading: boolean
 };
 
 export const useSaveData:T_Sig = () => {
   const [saveIsLoading, setSaveIsLoading] = useState(false);
   const [savedSuccessful, setSavedSuccessful] = useState<boolean|null>(null);
-  const [savedGamesList, setSavedGamesList] = useState<T_SavedDataItem[]>([]);
-  const {name, context, overview, history, saveId, setSaveId} = useContext(globalDataContext);
+  const [savedDataList, setSavedDataList] = useState<T_SavedDataItem[]>([]);
+  const {
+    name, context, overview, history, saveId,
+    setSaveId, setName, setContext, setHistory, setOverview, setOverviewError
+  } = useContext(globalDataContext);
+  const [stagedSave, setStagedSave] = useState<T_SavedDataItem|null>(null);
 
-  console.log({savedGamesList});
-
+  const handleSageSave = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
+    const sageSave = savedDataList?.find((save) => save.id === parseInt(event.target.value));
+    if(sageSave) {
+      setStagedSave(sageSave);
+    }
+  }, [savedDataList]);
 
   const fetchSavedData = useCallback(() => {
     fetch('/api/data/load', {method: 'GET'})
       .then(res => res.json())
       .then(({saves}) => {
-        setSavedGamesList(saves);
+        setSavedDataList(saves);
       });
   }, []);
   useEffect(fetchSavedData, []);
 
   const canSave = !!(name && overview);
 
+  const loadData = useCallback(() => {
+    const body = JSON.stringify({saveId: stagedSave?.id});
+    fetch('/api/data/load', {method: 'POST', body})
+      .then(res => res.json())
+      .then(({data}) => {
+        setSaveId(data.id);
+        setName(data.name);
+        setContext(data.context);
+        setHistory(data.chat_history);
+        setOverview(data.overview_data);
+        setStagedSave(null);
+      })
+      .catch(e => {
+        setOverviewError('Error loading '+stagedSave?.name);
+      });
+  }, [stagedSave?.id]);
+
   const saveData = useCallback(async () => {
+    setSavedSuccessful(null);
     if (canSave) {
       setSaveIsLoading(true);
       const body = JSON.stringify({name, saveId, context, overview, history});
@@ -51,9 +80,19 @@ export const useSaveData:T_Sig = () => {
             setSavedSuccessful(true);
           }
           setSaveIsLoading(false);
+          fetchSavedData();
         });
     }
   }, [canSave, name, saveId, context, overview, history]);
 
-  return {canSave, saveData, savedSuccessful, saveIsLoading, savedGamesList};
+  return {
+    canSave,
+    handleSageSave,
+    loadData,
+    saveData,
+    savedSuccessful,
+    saveIsLoading,
+    savedDataList,
+    stagedSave,
+  };
 };

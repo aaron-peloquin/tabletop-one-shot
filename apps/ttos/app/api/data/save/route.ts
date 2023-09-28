@@ -37,7 +37,6 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
         overview_data = ${overviewData},
         chat_history = ${chatHistory},
         date_updated = NOW()
-        date_created = date_created
       WHERE email = ${email}
         AND id = ${saveId};`;
       console.log("result", result);
