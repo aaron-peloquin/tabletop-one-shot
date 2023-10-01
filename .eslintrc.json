@@ -6,6 +6,7 @@
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "rules": {
+        "no-html-link-for-pages": "off",
         "@nx/enforce-module-boundaries": [
           "error",
           {
