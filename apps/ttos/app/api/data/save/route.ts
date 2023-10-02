@@ -21,7 +21,6 @@ import { sql } from '@vercel/postgres';
 
 export const POST = async (req: NextRequest, res: NextResponse) => {
   const postedArgs = await req.json();
-  // console.log('postedArgs', postedArgs);
   const {saveId, name, context, overview, history} = postedArgs;
   let responseId = saveId;
   try {
@@ -39,14 +38,12 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
         date_updated = NOW()
       WHERE email = ${email}
         AND id = ${saveId};`;
-      console.log("result", result);
     } else {
       // insert
       await sql`INSERT INTO one_shots (name, context, overview_data, chat_history, email, date_created)
       VALUES (${name}, ${context}, ${overviewData}, ${chatHistory}, ${email}, NOW());`;
       const queryResult = await sql`SELECT MAX(id) as new_id from one_shots where email=${email}`;
       responseId = queryResult.rows[0].new_id;
-      console.log('responseId', responseId);
     }
     return NextResponse.json({ message: "save complete", saveId: responseId }, { status: 200 });
   } catch(error) {
