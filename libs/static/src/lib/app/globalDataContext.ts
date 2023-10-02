@@ -15,10 +15,11 @@ export type T_SavedDataItem = {
   context: string
 };
 
-
 type T_globalDataContext = {
   name: string
   setName: (name: string) => void
+  levelDescriptor: string,
+  setLevelDescriptor: (levelDescriptor: string) => void
   saveId: number
   setSaveId: Dispatch<SetStateAction<number>>
   savedSuccessful: boolean|null
@@ -38,6 +39,8 @@ type T_globalDataContext = {
 export const globalDataContext = createContext<T_globalDataContext>({
   name: '',
   setName: () => { return; },
+  levelDescriptor: '',
+  setLevelDescriptor: () => { return; },
   saveId: 0,
   setSaveId: () => { return; },
   context: '',

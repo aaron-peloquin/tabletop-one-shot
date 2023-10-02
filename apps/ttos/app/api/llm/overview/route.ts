@@ -10,7 +10,7 @@ const outputParser = StructuredOutputParser.fromZodSchema(zodSchemaOverview);
 
 const promptTemplate = new PromptTemplate({
   template: `
-Overview synopsys for an original homebrew custom tabletop RPG one-shot session for a group of 2-4 players.
+Overview synopsys for an original homebrew custom tabletop RPG one-shot session for a group of {levelDescriptor} level players containing creatures of challenge rating (CR) of at least {crRangeLow} and no greater than {crRangeHigh}.
 
 This document will never reference any existing intellectual property or campaign settings like Phandelver or Faerun.
 
@@ -22,7 +22,7 @@ Required Context for this session (Strictly follow this context, but do not repe
 {context}
 ----
 {parsedFormat}`,
-  inputVariables: ['name', 'context'],
+  inputVariables: ['name', 'context', 'levelDescriptor', 'crRangeLow', 'crRangeHigh'],
   partialVariables: {
     parsedFormat: outputParser.getFormatInstructions()
   }
@@ -36,9 +36,25 @@ const overviewChain = new LLMChain({
 });
 
 export const POST = async (req: NextRequest) => {
-  const params = await req.json();
+  const {name, context, levelDescriptor} = await req.json();
+  let crRangeLow;
+  let crRangeHigh;
+  switch(levelDescriptor) {
+  case 'low':
+    crRangeLow = '0 or 1/8';
+    crRangeHigh = 4;
+    break;
+  case 'mid':
+    crRangeLow = 5;
+    crRangeHigh = 10;
+    break;
+  case 'high':
+    crRangeLow = 12;
+    crRangeHigh = 30;
+    break;
+  }
   try {
-    const response = await overviewChain.call(params);
+    const response = await overviewChain.call({name, context, levelDescriptor, crRangeLow, crRangeHigh});
     return NextResponse.json({ message: response.text }, { status: 200 });
   } catch (error) {
     console.log('error: ', error);

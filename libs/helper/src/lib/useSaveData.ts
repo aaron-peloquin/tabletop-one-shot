@@ -1,7 +1,7 @@
 "use client";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { T_SavedDataItem, globalDataContext } from "@static";
-import { useSession } from "next-auth/react"
+import { useSession } from "next-auth/react";
 
 type T_Sig = () => {
   canSave: boolean
@@ -27,6 +27,8 @@ export const useSaveData:T_Sig = () => {
     const sageSave = savedDataList?.find((save) => save.id === parseInt(event.target.value));
     if(sageSave) {
       setStagedSave(sageSave);
+    } else {
+      setStagedSave(null);
     }
   }, [savedDataList]);
 

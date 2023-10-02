@@ -1,22 +1,20 @@
 "use client";
-import { T_Overview } from "@static";
-import { Dispatch, SetStateAction, useCallback, useState } from "react";
+import { globalDataContext } from "@static";
+import { useCallback, useContext, useState } from "react";
 
 
-type T_Sig = (
-  setOverviewCallback: (overview: T_Overview) => void,
-  setOverviewErrorCallback: Dispatch<SetStateAction<string>>,
-) => {
-  generateOverview: (name: string, context: string) => Promise<void>,
+type T_Sig = () => {
+  generateOverview: () => Promise<void>,
   overviewLoading: boolean
 };
 
-export const useGenerateOverview:T_Sig = (setOverviewCallback, setOverviewErrorCallback) => {
+export const useGenerateOverview:T_Sig = () => {
   const [overviewLoading, setOverviewLoading] = useState(false);
+  const {name, context, levelDescriptor, setOverview, setOverviewError} = useContext(globalDataContext);
 
-  const generateOverview = useCallback(async (name: string, context: string) => {
+  const generateOverview = useCallback(async () => {
     setOverviewLoading(true);
-    const body = JSON.stringify({name, context});
+    const body = JSON.stringify({name, context, levelDescriptor});
     fetch('/api/llm/overview', {
       method: 'POST',
       body,
@@ -27,15 +25,18 @@ export const useGenerateOverview:T_Sig = (setOverviewCallback, setOverviewErrorC
       .then(res => res.json())
       .then(({message, error})=>{
         if(message) {
-          setOverviewErrorCallback('');
-          setOverviewCallback(message);
+          setOverviewError('');
+          setOverview(message);
         }
         if(error) {
-          setOverviewErrorCallback(error);
+          setOverviewError(error);
         }
         setOverviewLoading(false);
+      }).catch(() => {
+        setOverviewError('Network or API error');
+        setOverviewLoading(false);
       });
-  }, [setOverviewCallback, setOverviewErrorCallback]);
+  }, [name, context, levelDescriptor, setOverview]);
 
   return {generateOverview, overviewLoading};
 };

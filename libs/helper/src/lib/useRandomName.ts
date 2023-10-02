@@ -1,20 +1,23 @@
 "use client";
-import { Dispatch, SetStateAction, useCallback, useState } from "react";
+import { globalDataContext } from "@static";
+import { useCallback, useContext, useState } from "react";
 
-type T_Sig = (callback: (name: string) => void) => {
+type T_Sig = () => {
   getName: () => Promise<void>,
   nameLoading: boolean
 };
 
-export const useRandomName:T_Sig = (callback) => {
+export const useRandomName:T_Sig = () => {
   const [nameLoading, setNameLoading] = useState(false);
+  const {setName, levelDescriptor} = useContext(globalDataContext);
   const getName = useCallback(async () => {
     setNameLoading(true);
-    fetch('/api/llm/name', {method: 'POST'}).then(res => res.json()).then(({message}) => {
-      callback(message);
+    const body = JSON.stringify({levelDescriptor});
+    fetch('/api/llm/name', {method: 'POST', body}).then(res => res.json()).then(({message}) => {
+      setName(message);
       setNameLoading(false);
     });
-  }, [callback]);
+  }, [setName, levelDescriptor]);
 
   return {getName, nameLoading};
-}
+};

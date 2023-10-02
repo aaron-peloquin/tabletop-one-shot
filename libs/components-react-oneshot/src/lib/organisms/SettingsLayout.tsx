@@ -1,23 +1,29 @@
 "use client";
-import { Button, Card, GridArea, GridTemplate, Input } from "@components-layout";
+import React from 'react';
+import { GridArea, Input, Select, Card, GridTemplate, Button } from "@components-layout";
 import { useRandomName } from '@helper';
 import { globalDataContext } from "@static";
 import { useCallback, useContext } from "react";
+import { GenerateOverviewButton } from "./GenerateOverviewButton";
 
 type T_Props = {
   gridName: string
 };
 
 export const SettingsLayout: React.FC<T_Props> = ({gridName}) => {
-  const {name, setName} = useContext(globalDataContext);
+  const {name, setName, levelDescriptor, setLevelDescriptor} = useContext(globalDataContext);
   const handleSetName = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event?.target.value);
   }, [setName]);
-  const {getName, nameLoading} = useRandomName(setName);
+  const {getName, nameLoading} = useRandomName();
+
+  const handleLevelDescriptor = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
+    setLevelDescriptor(event.target.value);
+  }, [setLevelDescriptor]);
 
   return <GridArea className="full-width" name={gridName}>
     <Card layer="2" heading="Settings">
-      <GridTemplate columns={2}>
+      <GridTemplate columns={4}>
         <GridArea>
           <Input
             id="name"
@@ -28,7 +34,17 @@ export const SettingsLayout: React.FC<T_Props> = ({gridName}) => {
           />
         </GridArea>
         <GridArea justifySelf="center" alignSelf="end">
-          <Button text="Random Name" disabled={nameLoading} onClick={getName} />
+          <Button text="Generate Random Name" disabled={nameLoading} onClick={getName} />
+        </GridArea>
+        <GridArea>
+          <Select onChange={handleLevelDescriptor} value={levelDescriptor} label="Party Level" id="party-level-descriptor">
+            <option value="low">Low Level</option>
+            <option value="mid">Mid Level</option>
+            <option value="high">High Level</option>
+          </Select>
+        </GridArea>
+        <GridArea justifySelf="center" alignSelf="end">
+          <GenerateOverviewButton gridName="" />
         </GridArea>
       </GridTemplate>
     </Card>
