@@ -1,7 +1,7 @@
 {
     "functions": {
       "app/api/llm/**/*.ts": {
-        "maxDuration": 20
+        "maxDuration": 10
       }
     }
 }
