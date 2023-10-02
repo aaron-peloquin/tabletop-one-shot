@@ -16,7 +16,7 @@ export const CreatureDetails: React.FC<T_Creature> = ({name, description, backst
 
   const statsButtonText = loadingStats ? "Loading..." : `${stats?'Re':''}Generate Stats`;
 
-  return <Card layer="4" heading={name}>
+  return <Card layer="4" heading={`${name} (CR ${cr}, ${classification})`}>
     <Button text={statsButtonText} onClick={generateStats} disabled={loadingStats} />
     <Card layer="5" heading="Description">{description}</Card>
     <Card layer="5" heading="Backstory">{backstory}</Card>

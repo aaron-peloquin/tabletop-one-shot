@@ -3,7 +3,6 @@ import { Card, GridTemplate } from "@components-layout";
 import { SettingsLayout } from '../organisms/SettingsLayout';
 import { OverviewLayout } from '../organisms/OverviewLayout';
 import { GlobalDataProvider } from "../providers/GlobalDataProvider";
-import { GenerateOverviewButton } from "../organisms/GenerateOverviewButton";
 import { EncountersLayout } from "../organisms/EncountersLayout";
 import { ContextLayout } from "../organisms/ContextLayout";
 import { ChatLayout } from "../organisms/ChatLayout";
@@ -13,7 +12,7 @@ import { Suspense } from "react";
 
 const GRID_TEMPLATE_AREA =`
 "login_____ save_load_ save_load_ save_load_"
-"name______ generate__ chat______ chat______"
+"settings__ settings__ chat______ chat______"
 "context___ context___ chat______ chat______"
 "overview__ overview__ chat______ chat______"
 "encounters encounters chat______ chat______"
@@ -32,9 +31,8 @@ export const HomeTemplate = () => {
           <AccountLayout gridName="login_____" />
         </Suspense>
         <ManageDataLayout gridName="save_load_" />
-        <SettingsLayout gridName="name______" />
+        <SettingsLayout gridName="settings__" />
         <ContextLayout gridName="context___" />
-        <GenerateOverviewButton gridName="generate__" />
         <OverviewLayout gridName="overview__" />
         <EncountersLayout gridName="encounters" />
         <ChatLayout gridName="chat______" />

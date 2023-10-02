@@ -1,4 +1,5 @@
 "use client";
+import React from 'react';
 import { Button, GridArea, GridTemplate, Label, Select } from '@components-layout';
 import { useSaveData } from '@helper';
 import { globalDataContext } from '@static';
@@ -34,7 +35,7 @@ export const ManageDataLayout: React.FC<T_Props> = ({gridName}) => {
       <GridArea name="list">
         <Select onChange={handleSageSave} label="Select Save" id="select-saved-session">
           <option value="">Select a saved session...</option>
-          {savedDataList?.map(({id, name}) => <option value={id}>{name}</option>)}
+          {savedDataList?.map(({id, name}) => <option key={`save-id-${id}`} value={id}>{name}</option>)}
         </Select>
       </GridArea>
       <GridArea name="ctxt">

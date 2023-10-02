@@ -18,6 +18,7 @@ const GridArea: React.FC<PropsWithChildren<T_CombinedProps>> = memo(({alignSelf,
     gridArea: name,
     justifySelf,
     textAlign,
+    width:'100%',
     ...style,
   }), [alignSelf, name, justifySelf, style, textAlign]);
 
