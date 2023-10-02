@@ -18,8 +18,12 @@ export const useSaveData:T_Sig = () => {
   const [saveIsLoading, setSaveIsLoading] = useState(false);
   const [savedDataList, setSavedDataList] = useState<T_SavedDataItem[]>([]);
   const {
-    name, context, overview, history, saveId, setSavedSuccessful,
-    setSaveId, setName, setContext, setHistory, setOverview, setOverviewError
+    name, setName,
+    context, setContext,
+    partyLevel, setPartyLevel,
+    overview, setOverview, setOverviewError,
+    history, setHistory,
+    saveId, setSaveId, setSavedSuccessful
   } = useContext(globalDataContext);
   const [stagedSave, setStagedSave] = useState<T_SavedDataItem|null>(null);
 
@@ -50,6 +54,7 @@ export const useSaveData:T_Sig = () => {
       .then(({data}) => {
         setSaveId(data.id);
         setName(data.name);
+        setPartyLevel(data.party_level || 'mid');
         setContext(data.context);
         setHistory(data.chat_history);
         setOverview(data.overview_data);
@@ -67,7 +72,7 @@ export const useSaveData:T_Sig = () => {
     setSavedSuccessful(null);
     if (canSave) {
       setSaveIsLoading(true);
-      const body = JSON.stringify({name, saveId, context, overview, history});
+      const body = JSON.stringify({saveId, name, partyLevel, context, overview, history});
       fetch('/api/data/save', {
         method: 'POST',
         body,

@@ -11,15 +11,15 @@ type T_Props = {
 };
 
 export const SettingsLayout: React.FC<T_Props> = ({gridName}) => {
-  const {name, setName, levelDescriptor, setLevelDescriptor} = useContext(globalDataContext);
+  const {name, setName, overview, partyLevel, setPartyLevel} = useContext(globalDataContext);
   const handleSetName = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event?.target.value);
   }, [setName]);
   const {getName, nameLoading} = useRandomName();
 
-  const handleLevelDescriptor = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
-    setLevelDescriptor(event.target.value);
-  }, [setLevelDescriptor]);
+  const handlePartyLevel = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
+    setPartyLevel(event.target.value);
+  }, [setPartyLevel]);
 
   return <GridArea className="full-width" name={gridName}>
     <Card layer="2" heading="Settings">
@@ -37,7 +37,7 @@ export const SettingsLayout: React.FC<T_Props> = ({gridName}) => {
           <Button text="Generate Random Name" disabled={nameLoading} onClick={getName} />
         </GridArea>
         <GridArea>
-          <Select onChange={handleLevelDescriptor} value={levelDescriptor} label="Party Level" id="party-level-descriptor">
+          <Select onChange={handlePartyLevel} value={partyLevel} disabled={!!overview} label="Party Level" id="party-level-descriptor">
             <option value="low">Low Level</option>
             <option value="mid">Mid Level</option>
             <option value="high">High Level</option>

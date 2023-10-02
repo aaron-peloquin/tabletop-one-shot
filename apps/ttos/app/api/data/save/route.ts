@@ -3,16 +3,16 @@ import { NextRequest, NextResponse } from "next/server";
 import { sql } from '@vercel/postgres';
 
 // const SQLcreate_one_shots = sql`CREATE TABLE one_shots (
-//     id bigint NOT NULL PRIMARY KEY,
-//     name varchar(255),
-//     context TEXT,
-//     overview_data jsonb,
-//     chat_history jsonb,
-//     user_id bigint NOT NULL,
-//     email  varchar(255),
-//     date_created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-//     date_updated timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-//   );`;
+//   id bigint NOT NULL PRIMARY KEY,
+//   name varchar(255),
+//   context TEXT,
+//   overview_data jsonb,
+//   chat_history jsonb,
+//   user_id bigint,
+//   email varchar(255),
+//   date_created timestamp,
+//   party_level varchar(50)
+// );`;
 
 /**
  * Note: SQL Injection protection done by vercel
@@ -21,7 +21,7 @@ import { sql } from '@vercel/postgres';
 
 export const POST = async (req: NextRequest, res: NextResponse) => {
   const postedArgs = await req.json();
-  const {saveId, name, context, overview, history} = postedArgs;
+  const {saveId, name, context, overview, history, partyLevel} = postedArgs;
   let responseId = saveId;
   try {
     const session = await getServerSession();
@@ -35,7 +35,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
         context = ${context},
         overview_data = ${overviewData},
         chat_history = ${chatHistory},
-        date_updated = NOW()
+        party_level = ${partyLevel}
       WHERE email = ${email}
         AND id = ${saveId};`;
     } else {

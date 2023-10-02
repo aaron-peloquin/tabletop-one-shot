@@ -7,7 +7,7 @@ const {Provider} = globalDataContext;
 
 export const GlobalDataProvider: React.FC<PropsWithChildren> = ({children}) => {
   const [name, setName] = useState('');
-  const [levelDescriptor, setLevelDescriptor] = useState('low');
+  const [partyLevel, setPartyLevel] = useState('low');
   const [saveId, setSaveId] = useState(0);
   const [context, setContext] = useState('');
   const [history, setHistory] = useState<T_ChatHistory>([]);
@@ -20,9 +20,9 @@ export const GlobalDataProvider: React.FC<PropsWithChildren> = ({children}) => {
     setName(name);
   }, []);
 
-  const handleSetLevelDescriptor = useCallback((levelDescriptor: string) => {
+  const handleSetPartyLevel = useCallback((partyLevel: string) => {
     setSavedSuccessful(null);
-    setLevelDescriptor(levelDescriptor);
+    setPartyLevel(partyLevel);
   }, []);
 
   const handleSetContext = useCallback((context: string) => {
@@ -43,20 +43,21 @@ export const GlobalDataProvider: React.FC<PropsWithChildren> = ({children}) => {
   const clearOverview = useCallback(() => {
     setSavedSuccessful(null);
     setSaveId(0);
+    setPartyLevel('low');
     setOverview(null);
     clearHistory();
   }, [clearHistory]);
 
   const value = useMemo(() => ({
     name, setName: handleSetName,
-    levelDescriptor, setLevelDescriptor: handleSetLevelDescriptor,
+    partyLevel, setPartyLevel: handleSetPartyLevel,
     saveId, setSaveId,
     savedSuccessful, setSavedSuccessful,
     context, setContext: handleSetContext,
     history, setHistory, clearHistory,
     overview, setOverview: handleSetOverview, clearOverview,
     overviewError, setOverviewError
-  }), [clearHistory, clearOverview, context, handleSetContext, handleSetLevelDescriptor, handleSetName, handleSetOverview, history, levelDescriptor, name, overview, overviewError, saveId, savedSuccessful]);
+  }), [clearHistory, clearOverview, context, handleSetContext, handleSetPartyLevel, handleSetName, handleSetOverview, history, partyLevel, name, overview, overviewError, saveId, savedSuccessful]);
 
   return <Provider value={value}>{children}</Provider>;
 };

@@ -10,11 +10,11 @@ type T_Sig = () => {
 
 export const useGenerateOverview:T_Sig = () => {
   const [overviewLoading, setOverviewLoading] = useState(false);
-  const {name, context, levelDescriptor, setOverview, setOverviewError} = useContext(globalDataContext);
+  const {name, context, partyLevel, setOverview, setOverviewError} = useContext(globalDataContext);
 
   const generateOverview = useCallback(async () => {
     setOverviewLoading(true);
-    const body = JSON.stringify({name, context, levelDescriptor});
+    const body = JSON.stringify({name, context, partyLevel});
     fetch('/api/llm/overview', {
       method: 'POST',
       body,
@@ -36,7 +36,7 @@ export const useGenerateOverview:T_Sig = () => {
         setOverviewError('Network or API error');
         setOverviewLoading(false);
       });
-  }, [name, context, levelDescriptor, setOverview]);
+  }, [name, context, partyLevel, setOverview]);
 
   return {generateOverview, overviewLoading};
 };

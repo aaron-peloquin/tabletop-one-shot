@@ -9,15 +9,15 @@ type T_Sig = () => {
 
 export const useRandomName:T_Sig = () => {
   const [nameLoading, setNameLoading] = useState(false);
-  const {setName, levelDescriptor} = useContext(globalDataContext);
+  const {setName, partyLevel} = useContext(globalDataContext);
   const getName = useCallback(async () => {
     setNameLoading(true);
-    const body = JSON.stringify({levelDescriptor});
+    const body = JSON.stringify({partyLevel});
     fetch('/api/llm/name', {method: 'POST', body}).then(res => res.json()).then(({message}) => {
       setName(message);
       setNameLoading(false);
     });
-  }, [setName, levelDescriptor]);
+  }, [setName, partyLevel]);
 
   return {getName, nameLoading};
 };
