@@ -18,6 +18,8 @@ Type/Ancestry/Race: {classification}
 Challenge Rating: {cr}
 Physical Description: {description}
 
+Please omit new line characters from your response, and do not terminate the JSON document without fully closing all open arrays and objects
+
 {parsedFormat}`,
   inputVariables: ['name', 'cr', 'description', 'classification'],
   partialVariables: {
@@ -29,7 +31,7 @@ const overviewChain = new LLMChain({
   llm: llmGoogle,
   prompt: promptTemplate,
   outputParser: outputParser,
-  verbose: false
+  verbose: true
 });
 
 export const POST = async (req: NextRequest) => {

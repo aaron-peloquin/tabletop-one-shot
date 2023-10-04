@@ -36,6 +36,8 @@ export const useGenerateStats: T_Sig = ({name, description, cr, classification})
           setStats(message);
         }
         setLoadingStats(false);
+      }).catch(error => {
+        setLoadingStats(false);
       });
   }, [setStats]);
 
