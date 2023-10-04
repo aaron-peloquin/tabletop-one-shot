@@ -3,7 +3,7 @@ import { zodSchemaStats } from "@static";
 import { useCallback, useState } from "react";
 import { z } from "zod";
 
-export type T_Stats = z.infer<typeof zodSchemaStats> | null;
+export type T_Stats = z.infer<typeof zodSchemaStats> & { rolledInitiative: number } | null;
 
 type T_Sig = (hookArgs: {
   name: string
@@ -33,7 +33,10 @@ export const useGenerateStats: T_Sig = ({name, description, cr, classification})
       .then(res => res.json())
       .then(({message})=>{
         if(message) {
-          setStats(message);
+          setStats({
+            ...message,
+            rolledInitiative: Math.floor( Math.random() * 20 ) + 1,
+          });
         }
         setLoadingStats(false);
       }).catch(error => {

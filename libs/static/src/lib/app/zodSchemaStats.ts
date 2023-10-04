@@ -11,17 +11,19 @@ export const zodSchemaStats = z.object({
   }),
   armorClass: z.number(),
   hitPoints: z.number(),
-  initiative: z.number(),
-  speed: z.number().describe('typically 25 or 30'),
-  // flySpeed: z.number().describe('typically 0'),
-  // swimSpeed: z.number().describe('typically 0'),
+  initiative: z.number().describe('based on dexterity'),
+  speed: z.number().describe('value in feet, typically 25 or 30'),
+  abilities: z.array(z.object({
+    name: z.string(),
+    toHitOrDc: z.string(),
+    range: z.number(),
+    dmgDice: z.string(),
+    description: z.string().describe('description of how this creature uses this abilities'),
+    actionType: z.string().describe('Typically: Action, Passive, Bonus Action, or Reaction'),
+  })).describe('List of 1-3 creature weapon attacks and abilities (spells, attacks, and special features). If this is an attack action, it must include any applicable to damage or to-hit dice, or the DC save it causes'),
   skills: z.object({
     perception: z.number(),
     insight: z.number(),
     stealth: z.number(),
-    // languages: z.string().describe('Typically "common" or "none"'),
-    // weapons: z.string(),
-    // armors: z.string(),
-    // tools: z.string(),
-  }).describe('Skills are typically low numbers (-2 to 4), collated to their ability scores')
+  }).describe('Skills are typically low numbers (-2 to 4), correlated to their ability scores')
 });

@@ -39,7 +39,7 @@ export const POST = async (req: NextRequest) => {
   try {
     const response = await overviewChain.call(params);
     return NextResponse.json({ message: response.text }, { status: 200 });
-  } catch (e) {
+  } catch (error) {
     return NextResponse.json({ error: `Unable to generate stat block for ${params.name}, please try again` },  {status: 500 });
   }
 };
