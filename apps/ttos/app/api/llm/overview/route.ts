@@ -10,7 +10,7 @@ const outputParser = StructuredOutputParser.fromZodSchema(zodSchemaOverview);
 
 const promptTemplate = new PromptTemplate({
   template: `
-Overview synopsys for an original homebrew custom tabletop RPG one-shot session for a group of {partyLevel} level players containing creatures of challenge rating (CR) of at least {crRangeLow} and no greater than {crRangeHigh}.
+Overview synopsys for an original homebrew custom tabletop RPG one-shot session for a group of {partyLevel} level players containing creatures of challenge rating (CR) of at least {crRangeLow} and no greater than {crRangeHigh}, or 0 defenseless creatures like average citizens.
 
 This document will never reference any existing intellectual property or campaign settings like Phandelver or Faerun.
 
@@ -41,7 +41,7 @@ export const POST = async (req: NextRequest) => {
   let crRangeHigh;
   switch(partyLevel) {
   case 'low':
-    crRangeLow = '0 or 1/8';
+    crRangeLow = '1/8';
     crRangeHigh = 4;
     break;
   case 'mid':
