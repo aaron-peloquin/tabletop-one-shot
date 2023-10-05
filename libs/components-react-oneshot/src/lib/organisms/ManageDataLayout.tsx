@@ -29,7 +29,7 @@ export const ManageDataLayout: React.FC<T_Props> = ({gridName}) => {
   return <GridArea name={gridName}>
     <GridTemplate columns={5} gridTemplateAreas={GRID_TEMPLATE_AREA} alignItems='end'>
       <GridArea name="save">
-        <Button onClick={saveData} disabled={!canSave}>{saveId?'Overwrite':'Save'} <AiFillSave size={14} /></Button>
+        <Button onClick={saveData} disabled={!canSave}>{saveId?'Overwrite':'Save (excluding stats)'} <AiFillSave size={14} /></Button>
         <FaCheckCircle color={savedSuccessful?"green":"grey"} />
       </GridArea>
       <GridArea name="list">
