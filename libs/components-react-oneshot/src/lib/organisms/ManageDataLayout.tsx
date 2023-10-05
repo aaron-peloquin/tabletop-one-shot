@@ -33,7 +33,7 @@ export const ManageDataLayout: React.FC<T_Props> = ({gridName}) => {
         <FaCheckCircle color={savedSuccessful?"green":"grey"} />
       </GridArea>
       <GridArea name="list">
-        <Select onChange={handleSageSave} label="Select Save" id="select-saved-session">
+        <Select value={stagedSave?.id || ''} onChange={handleSageSave} label="Select Save" id="select-saved-session">
           <option value="">Select a saved session...</option>
           {savedDataList?.map(({id, name}) => <option key={`save-id-${id}`} value={id}>{name}</option>)}
         </Select>
