@@ -45,8 +45,8 @@ export const CreatureDetails: React.FC<T_Creature> = ({name, description, backst
       </Card>
       {stats.abilities.map(({name, description, toHitOrDc, dmgDice, range, actionType}) => {
         return <Card layer="5" heading={name}>
-          <em>{actionType}</em> ({range}ft)<br />
-          <strong>{description}</strong><br />
+          {actionType} {range>0 ? `(${range}ft)`:''}<br />
+          <em>{description}</em><br />
           <GridTemplate columns={2}>
             <Card layer="5" heading="Hit">{toHitOrDc}</Card>
             <Card layer="5" heading="Damage">{dmgDice}</Card>
