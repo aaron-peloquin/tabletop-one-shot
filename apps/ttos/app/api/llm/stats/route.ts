@@ -18,7 +18,11 @@ Type/Ancestry/Race: {classification}
 Challenge Rating: {cr}
 Physical Description: {description}
 
-Please omit new line characters from your response, and do not terminate the JSON document without fully closing all open arrays and objects
+In addition to the JSON spec below, also follow these rules when replying in JSON format:
+- Abilities array items MUST start with an opening curly brace
+- DO NOT create new keys, strictly follow the JSON specification
+- DO NOT terminate the JSON document early
+- OMIT newline characters
 
 {parsedFormat}`,
   inputVariables: ['name', 'cr', 'description', 'classification'],
@@ -31,7 +35,7 @@ const overviewChain = new LLMChain({
   llm: llmGoogle,
   prompt: promptTemplate,
   outputParser: outputParser,
-  verbose: true
+  verbose: false
 });
 
 export const POST = async (req: NextRequest) => {

@@ -54,13 +54,13 @@ export const CreatureDetails: React.FC<T_Creature> = ({name, description, backst
         </Card>;
       })}
 
-      <Card layer="5" heading="Skills">
+      {/* <Card layer="5" heading="Skills">
         <GridTemplate columns={1}>
           <GridArea>Perception: {stats.skills.perception}</GridArea>
           <GridArea>Insight: {stats.skills.insight}</GridArea>
           <GridArea>Stealth: {stats.skills.stealth}</GridArea>
         </GridTemplate>
-      </Card>
+      </Card> */}
     </Card>}
   </Card>;
 };
