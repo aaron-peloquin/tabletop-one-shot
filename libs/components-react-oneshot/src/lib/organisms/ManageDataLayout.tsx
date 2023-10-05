@@ -12,7 +12,8 @@ type T_Props = {
 };
 
 const GRID_TEMPLATE_AREA =`
-"save list load ctxt ctxt"
+"save list load"
+"ctxt ctxt ctxt"
 `;
 
 export const ManageDataLayout: React.FC<T_Props> = ({gridName}) => {
@@ -27,7 +28,7 @@ export const ManageDataLayout: React.FC<T_Props> = ({gridName}) => {
   } = useSaveData();
 
   return <GridArea name={gridName}>
-    <GridTemplate columns={5} gridTemplateAreas={GRID_TEMPLATE_AREA} alignItems='end'>
+    <GridTemplate columns={3} gridTemplateAreas={GRID_TEMPLATE_AREA} alignItems='end'>
       <GridArea name="save">
         <Button onClick={saveData} disabled={!canSave}>{saveId?'Overwrite':'Save (excluding stats)'} <AiFillSave size={14} /></Button>
         <FaCheckCircle color={savedSuccessful?"green":"grey"} />
@@ -39,10 +40,10 @@ export const ManageDataLayout: React.FC<T_Props> = ({gridName}) => {
         </Select>
       </GridArea>
       <GridArea name="ctxt">
-        {stagedSave ? <Label text="Context" htmlFor="staged-save-context"><em id="staged-save-context">{stagedSave?.context || '(No context)'}</em></Label> : ''}
+        {stagedSave ? <Label text={`Context from ${stagedSave.name}`} htmlFor="staged-save-context"><em id="staged-save-context">{stagedSave?.context || '(No context given)'}</em></Label> : ''}
       </GridArea>
       <GridArea name="load">
-        <Button onClick={loadData} disabled={!stagedSave}>Load {stagedSave?.name}</Button>
+        <Button onClick={loadData} disabled={!stagedSave}>Load</Button>
       </GridArea>
     </GridTemplate>
     
