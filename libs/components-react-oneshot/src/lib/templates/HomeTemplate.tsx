@@ -10,22 +10,13 @@ import { AccountLayout } from '../organisms/AccountLayout';
 import { ManageDataLayout } from "../organisms/ManageDataLayout";
 import { Suspense } from "react";
 
-const GRID_TEMPLATE_AREA =`
-"login_____ save_load_ save_load_ save_load_"
-"settings__ settings__ chat______ chat______"
-"context___ context___ chat______ chat______"
-"overview__ overview__ chat______ chat______"
-"encounters encounters chat______ chat______"
-`;
-
 export const HomeTemplate = () => {
   return <GlobalDataProvider>
     <Card layer="1" heading="Quickshot">
       <GridTemplate
-        gridTemplateAreas={GRID_TEMPLATE_AREA}
+        id="mainTemplate"
         justifyItems="center"
         textAlign='left'
-        columns={4}
       >
         <Suspense>
           <AccountLayout gridName="login_____" />

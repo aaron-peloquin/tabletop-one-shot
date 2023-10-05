@@ -9,6 +9,7 @@ type T_Props = {
   className?: string
   columns?: number
   rows?: number
+  id?: string
 };
 
 type T_CombinedProps = T_Props & T_CssProps;
@@ -21,13 +22,14 @@ const GridTemplate: React.FC<PropsWithChildren<T_CombinedProps>> = memo(({
   gridTemplateAreas,
   gridTemplateRows,
   gridTemplateColumns,
+  id,
   rows,
   justifyItems,
   textAlign,
 }) => {
   const dynamicStyles = useMemo(() => {
-    const columnsValue = gridTemplateColumns ?? `1fr `.repeat(columns || 1);
-    const rowsValue = gridTemplateRows ?? `1fr `.repeat(rows || 1);
+    const columnsValue = columns || gridTemplateColumns ? gridTemplateColumns ?? `1fr `.repeat(columns || 1) : undefined;
+    const rowsValue = gridTemplateRows || rows ? gridTemplateRows ?? `1fr `.repeat(rows || 1) : undefined;
     return {
       alignItems,
       gridTemplateAreas,
@@ -38,7 +40,7 @@ const GridTemplate: React.FC<PropsWithChildren<T_CombinedProps>> = memo(({
     };
   }, [alignItems, columns, gridTemplateAreas, gridTemplateColumns, gridTemplateRows, justifyItems, rows, textAlign]);
 
-  return <div className={`${styles['grid-template']} ${className}`.trim()} style={dynamicStyles}>
+  return <div id={id} className={`${styles['grid-template']} ${className}`.trim()} style={dynamicStyles}>
     {children}
   </div>;
 });
