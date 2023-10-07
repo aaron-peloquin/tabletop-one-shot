@@ -5,22 +5,32 @@ import { zodSchemaCreature } from "@static";
 import { useCallback, useState } from "react";
 import { GiDiceTwentyFacesTwenty } from "react-icons/gi";
 import { z } from "zod";
+import { ErrorIcon, IdleIcon, LoadingIcon, SuccessIcon } from '@static';
 
 export type T_Creature = z.infer<typeof zodSchemaCreature>;
 
 export const CreatureDetails: React.FC<T_Creature> = ({name, description, backstory, cr, classification}) => {
-  const { generateStats, loadingStats, stats } = useGenerateStats({name, description, cr, classification});
+  const { generateStats, statsStatus, stats } = useGenerateStats({name, description, cr, classification});
   const [currentHp, setCurrentHp] = useState<number>(0);
   const handleSetHealth = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const newVal = parseInt(event.target.value);
     setCurrentHp(newVal === 0 ? -1 : newVal);
   }, []);
 
-  const statsButtonText = loadingStats ? "Loading..." : `${stats?'Re':''}Generate Stats`;
-
+  
 
   return <Card layer="4" heading={`${name} (CR ${cr}, ${classification})`}>
-    <Button text={statsButtonText} onClick={generateStats} disabled={loadingStats} />
+    <GridArea>
+      <Button text="Generate Stats" onClick={generateStats} disabled={statsStatus === 'loading'} />
+      {statsStatus === 'loading'
+        ? <LoadingIcon />
+        : statsStatus === 'error'
+          ? <ErrorIcon />
+          : statsStatus === 'success'
+            ? <SuccessIcon />
+            : <IdleIcon />
+      }
+    </GridArea>
     <Card layer="5" heading="Description">{description}</Card>
     <Card layer="5" heading="Backstory">{backstory}</Card>
     {/* <Card layer="5" heading="Motivations">{motivations}</Card> */}

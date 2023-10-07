@@ -2,6 +2,7 @@
 import { URLs, zodSchemaStats } from "@static";
 import { useCallback, useState } from "react";
 import { z } from "zod";
+import { useNetworkOperation } from "./useNetworkOperation";
 
 export type T_Stats = z.infer<typeof zodSchemaStats> & { rolledInitiative: number } | null;
 
@@ -12,41 +13,31 @@ type T_Sig = (hookArgs: {
   classification: string
 }) => {
   generateStats: () => Promise<void>
-  loadingStats: boolean
+  statsStatus: string
   stats: T_Stats
 };
 
 export const useGenerateStats: T_Sig = ({name, description, cr, classification}) => {
-  const [loadingStats, setLoadingStats] = useState(false);
   const [stats, setStats] = useState<T_Stats>(null);
+  const onSuccess = useCallback((message: T_Stats) => {
+    if(message) {
+      setStats({
+        ...message,
+        rolledInitiative: Math.floor( Math.random() * 20 ) + 1,
+      });
+    }
+  }, []);
+  const {status, run} = useNetworkOperation(URLs.api.stats, onSuccess);
+
 
   const generateStats = useCallback(async () => {
-    setLoadingStats(true);
     const body = JSON.stringify({name, description, cr, classification});
-    fetch(URLs.api.stats, {
-      method: 'POST',
-      body,
-      headers: {
-        "Content-Type": "application/json",
-      }
-    })
-      .then(res => res.json())
-      .then(({message})=>{
-        if(message) {
-          setStats({
-            ...message,
-            rolledInitiative: Math.floor( Math.random() * 20 ) + 1,
-          });
-        }
-        setLoadingStats(false);
-      }).catch(error => {
-        setLoadingStats(false);
-      });
+    run(body);
   }, [setStats]);
 
   return {
     generateStats,
-    loadingStats,
+    statsStatus: status,
     stats
   };
 };
