@@ -58,3 +58,41 @@ textarea {
   scrollbar-color: red;
   scrollbar-base-color: blue;
 }
+
+.icon {
+  font-size: 18px;
+  margin-top: 4px;
+  margin-left: 4px;
+}
+
+.success {
+  color: green;
+}
+
+.error {
+  color: red;
+}
+
+.neutral {
+  color: sandybrown;
+}
+
+.spin {
+  animation-name: spin;
+  animation-duration: 1000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@-moz-keyframes spin {
+  from { -moz-transform: rotate(360deg); }
+  to { -moz-transform: rotate(0deg); }
+}
+@-webkit-keyframes spin {
+  from { -webkit-transform: rotate(360deg); }
+  to { -webkit-transform: rotate(0deg); }
+}
+@keyframes spin {
+  from {transform:rotate(360deg);}
+  to {transform:rotate(0deg);}
+}

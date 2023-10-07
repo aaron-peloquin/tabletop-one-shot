@@ -10,3 +10,8 @@ export {zodSchemaStats} from './lib/app/zodSchemaStats';
 
 export {globalDataContext} from './lib/app/globalDataContext';
 export type {T_Overview, T_ChatHistory, T_SavedDataItem} from './lib/app/globalDataContext';
+
+export {LoadingIcon} from './icons/LoadingIcon';
+export {IdleIcon} from './icons/IdleIcon';
+export {SuccessIcon} from './icons/SuccessIcon';
+export {ErrorIcon} from './icons/ErrorIcon';
