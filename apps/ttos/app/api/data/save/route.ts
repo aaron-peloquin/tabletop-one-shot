@@ -30,7 +30,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
     const chatHistory = JSON.stringify(history);
     if(saveId) {
       // update
-      const result = await sql`UPDATE one_shots
+      await sql`UPDATE one_shots
       SET name = ${name},
         context = ${context},
         overview_data = ${overviewData},
@@ -45,7 +45,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
       const queryResult = await sql`SELECT MAX(id) as new_id from one_shots where email=${email}`;
       responseId = queryResult.rows[0].new_id;
     }
-    return NextResponse.json({ message: "save complete", saveId: responseId }, { status: 200 });
+    return NextResponse.json({ message: {saveId: responseId} }, { status: 200 });
   } catch(error) {
     console.error('save error', error);
     return NextResponse.json({ message: "error saving session", error }, { status: 500 });
