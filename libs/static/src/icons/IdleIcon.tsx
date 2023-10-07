@@ -1,5 +1,5 @@
-import {GiCartwheel} from 'react-icons/gi';
+import {FaCheckCircle} from 'react-icons/fa';
 
 export const IdleIcon = () => {
-  return <GiCartwheel className='icon neutral' />;
+  return <FaCheckCircle className='icon neutral' />;
 };
