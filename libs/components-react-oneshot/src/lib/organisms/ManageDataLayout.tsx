@@ -2,10 +2,9 @@
 import React from 'react';
 import { Button, GridArea, GridTemplate, Label, Select } from '@components-layout';
 import { useSaveData } from '@helper';
-import { globalDataContext } from '@static';
+import { IdleIcon, LoadingIcon, SuccessIcon, globalDataContext } from '@static';
 import { useContext } from 'react';
 import { AiFillSave } from 'react-icons/ai';
-import { FaCheckCircle } from 'react-icons/fa';
 
 type T_Props = {
   gridName: string
@@ -23,6 +22,7 @@ export const ManageDataLayout: React.FC<T_Props> = ({gridName}) => {
     handleSageSave,
     loadData,
     saveData,
+    somethingIsLoading,
     savedDataList,
     stagedSave,
   } = useSaveData();
@@ -31,7 +31,11 @@ export const ManageDataLayout: React.FC<T_Props> = ({gridName}) => {
     <GridTemplate columns={3} gridTemplateAreas={GRID_TEMPLATE_AREA} alignItems='end'>
       <GridArea name="save">
         <Button onClick={saveData} disabled={!canSave}>{saveId?'Overwrite':'Save (excluding stats)'} <AiFillSave size={14} /></Button>
-        <FaCheckCircle color={savedSuccessful?"green":"grey"} />
+        {somethingIsLoading
+          ? <LoadingIcon />
+          : savedSuccessful
+            ? <SuccessIcon />
+            : <IdleIcon />}
       </GridArea>
       <GridArea name="list">
         <Select value={stagedSave?.id || ''} onChange={handleSageSave} label="Select Save" id="select-saved-session">

@@ -11,12 +11,11 @@ type T_Sig = () => {
   saveData: () => Promise<void>
   savedDataList: T_SavedDataItem[]
   stagedSave: T_SavedDataItem|null,
-  saveIsLoading: boolean
+  somethingIsLoading: boolean
 };
 
 export const useSaveData:T_Sig = () => {
   const {status} = useSession();
-  const [saveIsLoading, setSaveIsLoading] = useState(false);
   const [savedDataList, setSavedDataList] = useState<T_SavedDataItem[]>([]);
   const {
     name, setName,
@@ -54,13 +53,12 @@ export const useSaveData:T_Sig = () => {
   const onLoadError = useCallback(() => {
     setOverviewError('Error loading ' + stagedSave?.name);
   }, [stagedSave]);
-
-  const listingBag = useNetworkOperation('/api/data/load', setSavedDataList);
-  const loadBag = useNetworkOperation('/api/data/load', onLoadSuccess, onLoadError);
-
-  const fetchSavedData = useCallback(listingBag.run, [listingBag]);
   
+  const listingBag = useNetworkOperation('/api/data/load', setSavedDataList);
+  const fetchSavedData = useCallback(listingBag.run, [listingBag]);
   useEffect(fetchSavedData, []);
+  
+  const loadBag = useNetworkOperation('/api/data/load', onLoadSuccess, onLoadError);
 
   const canSave = status === 'authenticated' && !!(name && overview);
 
@@ -69,29 +67,27 @@ export const useSaveData:T_Sig = () => {
     loadBag.run(body);
   }, [stagedSave?.id]);
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const onSaveSuccess = useCallback(({saveId, error})=>{
+    if(error) {
+      setSavedSuccessful(false);
+    } else if(saveId) {
+      setSaveId(saveId);
+      setSavedSuccessful(true);
+    }
+    fetchSavedData();
+  }, []);
+  
+  const onSaveError = useCallback(() => {
+    setOverviewError('Error loading ' + stagedSave?.name);
+  }, [stagedSave]);
+  const saveBag = useNetworkOperation('/api/data/save', onSaveSuccess, onSaveError);
+
   const saveData = useCallback(async () => {
-    setSavedSuccessful(null);
     if (canSave) {
-      setSaveIsLoading(true);
       const body = JSON.stringify({saveId, name, partyLevel, context, overview, history});
-      fetch('/api/data/save', {
-        method: 'POST',
-        body,
-        headers: {
-          "Content-Type": "application/json",
-        }
-      })
-        .then(res => res.json())
-        .then(({message, saveId, error})=>{
-          if(error) {
-            setSavedSuccessful(false);
-          } else if(message) {
-            setSaveId(saveId);
-            setSavedSuccessful(true);
-          }
-          setSaveIsLoading(false);
-          fetchSavedData();
-        });
+      saveBag.run(body);
     }
   }, [canSave, name, saveId, context, overview, history]);
 
@@ -100,7 +96,7 @@ export const useSaveData:T_Sig = () => {
     handleSageSave,
     loadData,
     saveData,
-    saveIsLoading,
+    somethingIsLoading: saveBag.loading || loadBag.loading || listingBag.loading,
     savedDataList,
     stagedSave,
   };
