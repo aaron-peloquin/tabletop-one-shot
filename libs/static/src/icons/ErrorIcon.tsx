@@ -1,6 +1,6 @@
 import {GiButterflyWarning} from 'react-icons/gi';
 
-export const WarningIcon = () => {
+export const ErrorIcon = () => {
   return <span className='icon error'>
     <GiButterflyWarning />
   </span>;
