@@ -3,6 +3,7 @@ import { useChat } from '@helper';
 import { globalDataContext } from "@static";
 import { useCallback, useContext, useState } from "react";
 import { AiFillMessage } from "react-icons/ai";
+import { FaTrashAlt } from "react-icons/fa";
 import ReactMarkdown from 'react-markdown';
 
 type T_Props = {
@@ -32,7 +33,7 @@ export const ChatLayout: React.FC<T_Props> = ({gridName}) => {
 
   return <GridArea className="full-width" name={gridName}>
     <Card layer="2" heading="Chat">
-      {history.length > 0 ? <Button type="button" text="Clear Chat" onClick={clearHistory} /> : []}
+      {history.length > 0 ? <Button type="button" onClick={clearHistory}>Clear Chat <FaTrashAlt /></Button> : []}
       <GridTemplate columns={1}>
         {history.map(({role, message})=> <Card layer="3" heading={`${role}:`}>
           <ReactMarkdown>{message}</ReactMarkdown>
