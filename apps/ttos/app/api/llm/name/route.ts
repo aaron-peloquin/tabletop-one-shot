@@ -11,10 +11,14 @@ export const POST = async (req: NextRequest) => {
     const response = await llmGoogleCreative.call(
       `Generate a random name for a ${descriptor} of a unique homebrew tabletop RPG one-shot session for a group of ${partyLevel} level players.
       The name should grab the reader's attention and make them want to know more about this ${descriptor} adventure.
-      NEVER reference any existing intellectual property or campaign settings, especially Phandelver, Tiamat, or Faerun.
-      NEVER include any additional string formatting in your reply like quotes, new lines, or asterisks.`
+      NEVER reference any existing intellectual property or campaign settings, especially Phandelver, Tiamat, or Faerun.`
     );
-    return NextResponse.json({ message: response, descriptor }, { status: 200 });
+    const cleanResponse = response
+      .replace('*', '')
+      .replace('*', '')
+      .replace('"', '')
+      .replace('\n', '');
+    return NextResponse.json({ message: cleanResponse, descriptor }, { status: 200 });
   } catch (e) {
     return NextResponse.json({ message: `Error naming a ${descriptor} adventure`, descriptor }, { status: 200 });
   }
