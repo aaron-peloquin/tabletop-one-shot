@@ -2,6 +2,7 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { T_SavedDataItem, globalDataContext } from "@static";
 import { useSession } from "next-auth/react";
+import { useNetworkOperation } from "./useNetworkOperation";
 
 type T_Sig = () => {
   canSave: boolean
@@ -36,12 +37,10 @@ export const useSaveData:T_Sig = () => {
     }
   }, [savedDataList]);
 
+  const listingBag = useNetworkOperation('/api/data/load', setSavedDataList);
+
   const fetchSavedData = useCallback(() => {
-    fetch('/api/data/load', {method: 'GET'})
-      .then(res => res.json())
-      .then(({saves}) => {
-        setSavedDataList(saves);
-      });
+    listingBag.run();
   }, []);
   useEffect(fetchSavedData, []);
 
