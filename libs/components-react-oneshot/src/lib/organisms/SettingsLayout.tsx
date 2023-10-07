@@ -1,8 +1,8 @@
 "use client";
 import React from 'react';
 import { GridArea, Input, Select, Card, GridTemplate, Button } from "@components-layout";
-import { useRandomName } from '@helper';
-import { globalDataContext } from "@static";
+import { useGenerateName } from '@helper';
+import { globalDataContext, IdleIcon, LoadingIcon, SuccessIcon } from "@static";
 import { useCallback, useContext } from "react";
 import { GenerateOverviewButton } from "./GenerateOverviewButton";
 
@@ -15,7 +15,7 @@ export const SettingsLayout: React.FC<T_Props> = ({gridName}) => {
   const handleSetName = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event?.target.value);
   }, [setName]);
-  const {getName, nameLoading} = useRandomName();
+  const {getName, nameLoading, nameStatus} = useGenerateName();
 
   const handlePartyLevel = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
     setPartyLevel(event.target.value);
@@ -34,7 +34,12 @@ export const SettingsLayout: React.FC<T_Props> = ({gridName}) => {
           />
         </GridArea>
         <GridArea justifySelf="center" alignSelf="end">
-          <Button text="Generate Random Name" disabled={nameLoading} onClick={getName} />
+          <Button disabled={nameLoading} onClick={getName}>Random Name</Button>
+          {nameStatus ==='loading'
+            ? <LoadingIcon />
+            : nameStatus==='success'
+              ? <SuccessIcon />
+              : <IdleIcon />}
         </GridArea>
         <GridArea>
           <Select onChange={handlePartyLevel} value={partyLevel} disabled={!!overview} label="Party Level" id="party-level-descriptor">
