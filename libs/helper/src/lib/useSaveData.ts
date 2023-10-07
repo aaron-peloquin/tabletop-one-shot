@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useContext, useEffect, useState } from "react";
-import { T_SavedDataItem, globalDataContext } from "@static";
+import { T_SavedDataItem, URLs, globalDataContext } from "@static";
 import { useSession } from "next-auth/react";
 import { useNetworkOperation } from "./useNetworkOperation";
 
@@ -54,11 +54,11 @@ export const useSaveData:T_Sig = () => {
     setOverviewError('Error loading ' + stagedSave?.name);
   }, [stagedSave]);
   
-  const listingBag = useNetworkOperation('/api/data/load', setSavedDataList);
+  const listingBag = useNetworkOperation(URLs.api.load, setSavedDataList);
   const fetchSavedData = useCallback(listingBag.run, [listingBag]);
   useEffect(fetchSavedData, []);
   
-  const loadBag = useNetworkOperation('/api/data/load', onLoadSuccess, onLoadError);
+  const loadBag = useNetworkOperation(URLs.api.load, onLoadSuccess, onLoadError);
 
   const canSave = status === 'authenticated' && !!(name && overview);
 
@@ -82,7 +82,7 @@ export const useSaveData:T_Sig = () => {
   const onSaveError = useCallback(() => {
     setOverviewError('Error loading ' + stagedSave?.name);
   }, [stagedSave]);
-  const saveBag = useNetworkOperation('/api/data/save', onSaveSuccess, onSaveError);
+  const saveBag = useNetworkOperation(URLs.api.save, onSaveSuccess, onSaveError);
 
   const saveData = useCallback(async () => {
     if (canSave) {

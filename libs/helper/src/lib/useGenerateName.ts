@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useContext } from "react";
-import { globalDataContext } from "@static";
+import { URLs, globalDataContext } from "@static";
 import { useNetworkOperation } from './useNetworkOperation';
 
 type T_Sig = () => {
@@ -15,7 +15,7 @@ export const useGenerateName:T_Sig = () => {
     console.log({message});
     setName(message);
   }, []);
-  const {run, loading, status} = useNetworkOperation('api/llm/name', handleReply);
+  const {run, loading, status} = useNetworkOperation(URLs.api.name, handleReply);
   const getName = useCallback(() => {
     const body = JSON.stringify({partyLevel});
     run(body);

@@ -1,5 +1,5 @@
 import { useCallback, useContext, useState } from "react";
-import { T_ChatHistory, T_Overview, globalDataContext } from "@static";
+import { T_Overview, URLs, globalDataContext } from "@static";
 
 export const useChat = () => {
   const [loadingChat, setLoading] = useState(false);
@@ -20,7 +20,7 @@ export const useChat = () => {
       });  
     };
 
-    fetch('/api/llm/chat', {
+    fetch(URLs.api.chat, {
       method: 'POST',
       body,
       headers: { "Content-Type": "application/json" }

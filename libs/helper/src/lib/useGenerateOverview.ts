@@ -1,5 +1,5 @@
 "use client";
-import { T_Overview, globalDataContext } from "@static";
+import { T_Overview, URLs, globalDataContext } from "@static";
 import { useCallback, useContext } from "react";
 import { useNetworkOperation } from "./useNetworkOperation";
 
@@ -17,7 +17,7 @@ export const useGenerateOverview:T_Sig = () => {
       setOverview(message);
     }
   }, []);
-  const {run, loading} = useNetworkOperation('/api/llm/overview', onSuccess, setOverviewError);
+  const {run, loading} = useNetworkOperation(URLs.api.overview, onSuccess, setOverviewError);
 
   const generateOverview = useCallback(async () => {
     const body = JSON.stringify({name, context, partyLevel});

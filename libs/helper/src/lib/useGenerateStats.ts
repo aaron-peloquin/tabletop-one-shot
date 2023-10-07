@@ -1,5 +1,5 @@
 "use client";
-import { zodSchemaStats } from "@static";
+import { URLs, zodSchemaStats } from "@static";
 import { useCallback, useState } from "react";
 import { z } from "zod";
 
@@ -23,7 +23,7 @@ export const useGenerateStats: T_Sig = ({name, description, cr, classification})
   const generateStats = useCallback(async () => {
     setLoadingStats(true);
     const body = JSON.stringify({name, description, cr, classification});
-    fetch('/api/llm/stats', {
+    fetch(URLs.api.stats, {
       method: 'POST',
       body,
       headers: {
