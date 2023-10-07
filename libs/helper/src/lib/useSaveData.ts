@@ -37,34 +37,36 @@ export const useSaveData:T_Sig = () => {
     }
   }, [savedDataList]);
 
-  const listingBag = useNetworkOperation('/api/data/load', setSavedDataList);
-
-  const fetchSavedData = useCallback(() => {
-    listingBag.run();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onLoadSuccess = useCallback((data: any) => {
+    setSaveId(data.id);
+    setName(data.name);
+    setPartyLevel(data.party_level || 'mid');
+    setContext(data.context);
+    setHistory(data.chat_history);
+    setOverview(data.overview_data);
+    setStagedSave(null);
+    setTimeout(() => {
+      setSavedSuccessful(true);
+    }, 5);
   }, []);
+
+  const onLoadError = useCallback(() => {
+    setOverviewError('Error loading ' + stagedSave?.name);
+  }, [stagedSave]);
+
+  const listingBag = useNetworkOperation('/api/data/load', setSavedDataList);
+  const loadBag = useNetworkOperation('/api/data/load', onLoadSuccess, onLoadError);
+
+  const fetchSavedData = useCallback(listingBag.run, [listingBag]);
+  
   useEffect(fetchSavedData, []);
 
-  const canSave = status==='authenticated' && !!(name && overview);
+  const canSave = status === 'authenticated' && !!(name && overview);
 
   const loadData = useCallback(() => {
     const body = JSON.stringify({saveId: stagedSave?.id});
-    fetch('/api/data/load', {method: 'POST', body})
-      .then(res => res.json())
-      .then(({data}) => {
-        setSaveId(data.id);
-        setName(data.name);
-        setPartyLevel(data.party_level || 'mid');
-        setContext(data.context);
-        setHistory(data.chat_history);
-        setOverview(data.overview_data);
-        setStagedSave(null);
-        setTimeout(() => {
-          setSavedSuccessful(true);
-        }, 5);
-      })
-      .catch(e => {
-        setOverviewError('Error loading '+stagedSave?.name);
-      });
+    loadBag.run(body);
   }, [stagedSave?.id]);
 
   const saveData = useCallback(async () => {
