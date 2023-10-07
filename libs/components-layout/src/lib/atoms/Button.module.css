@@ -16,6 +16,7 @@
 }
 
 .button:disabled {
-  background-color: darkgrey;
-  border-color: darkgrey;
+  background-color: #222;
+  border-color: #432;
+  cursor: not-allowed;
 }
