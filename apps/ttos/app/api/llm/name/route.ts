@@ -14,8 +14,8 @@ export const POST = async (req: NextRequest) => {
       NEVER reference any existing intellectual property or campaign settings, especially Phandelver, Tiamat, or Faerun.`
     );
     const cleanResponse = response
-      .replace('*', '')
-      .replace('*', '')
+      .replace('*', '').replace('*', '')
+      .replace('*', '').replace('*', '')
       .replace('"', '')
       .replace('\n', '');
     return NextResponse.json({ message: cleanResponse, descriptor }, { status: 200 });
