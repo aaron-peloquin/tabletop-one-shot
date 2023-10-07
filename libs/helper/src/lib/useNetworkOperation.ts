@@ -7,7 +7,7 @@ type T_FetchResponse = {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const useNetworkOperation = (url: string, onSuccess: (data: any) => void) => {
+export const useNetworkOperation = (url: string, onSuccess: (data: any) => void, onError: (data: any) => void) => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
@@ -31,9 +31,11 @@ export const useNetworkOperation = (url: string, onSuccess: (data: any) => void)
     fetch(url, { method, body })
       .then(response => response.json())
       .then(({message, error}: T_FetchResponse) => {
-        console.log({message, error});
         onSuccess(message);
         setError(error);
+        if(error) {
+          onError(error);
+        }
         if (message && !error) {
           setSuccess(true);
         } else {
@@ -42,6 +44,7 @@ export const useNetworkOperation = (url: string, onSuccess: (data: any) => void)
         setLoading(false);
       })
       .catch(error => {
+        onError(error);
         setError(error);
         setLoading(false);
       });
