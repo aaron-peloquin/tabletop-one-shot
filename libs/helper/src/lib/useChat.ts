@@ -12,7 +12,7 @@ export const useChat = () => {
     });  
   }, []);
 
-  const onSuccess = useCallback((message) => {
+  const onSuccess = useCallback((message: string) => {
     if(message) {
       setHistory((history) => {
         history.push({message: message, role: 'ai'});
@@ -23,8 +23,7 @@ export const useChat = () => {
     }
   }, []);
 
-  const onError = useCallback((error) => {
-    console.error(error);
+  const onError = useCallback(() => {
     popHistory();
   }, []);
 
