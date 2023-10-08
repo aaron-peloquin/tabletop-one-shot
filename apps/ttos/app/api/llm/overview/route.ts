@@ -12,9 +12,11 @@ const promptTemplate = new PromptTemplate({
   template: `
 Overview synopsys for an original homebrew custom tabletop RPG one-shot session for a group of {partyLevel} level players containing creatures of challenge rating (CR) of at least {crRangeLow} and no greater than {crRangeHigh}, or 0 defenseless creatures like average citizens.
 
+This style of tabletop game encourages players to practice empathy by thinking complexly about the people and creatures - either strategically in combat, or socially in roleplaying encounters, while traps and other encounters encourage group problem solving by collaborating with their other party members
+
 This document will never reference any existing intellectual property or campaign settings like Phandelver or Faerun.
 
-You should make up 1-4 Encounters, and no more than 5 Creatures total between all encounters.
+Listed below are 1-4 Encounters with no more than 5 Creatures total between all encounters.
 
 The title for session is: "{name}"
 
