@@ -1,3 +1,4 @@
+import React from 'react';
 import { Button, Card, GridArea, GridTemplate, Input } from "@components-layout";
 import { useChat } from '@helper';
 import { globalDataContext } from "@static";
@@ -5,6 +6,7 @@ import { useCallback, useContext, useState } from "react";
 import { AiFillMessage } from "react-icons/ai";
 import { FaTrashAlt } from "react-icons/fa";
 import ReactMarkdown from 'react-markdown';
+import { ErrorIcon, LoadingIcon } from '@static';
 
 type T_Props = {
   gridName: string
@@ -20,7 +22,7 @@ export const ChatLayout: React.FC<T_Props> = ({gridName}) => {
   const handleSetName = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setHumanText(event?.target.value);
   }, []);
-  const {loadingChat, sendChat} = useChat();
+  const {sendChat, chatStatus} = useChat();
 
   const handleSendChat = useCallback(() => {
     setHumanText('');
@@ -45,14 +47,19 @@ export const ChatLayout: React.FC<T_Props> = ({gridName}) => {
             <Input
               id="name"
               value={humanText}
-              disabled={loadingChat}
+              disabled={chatStatus === 'loading'}
               autoComplete="off"
               onChange={handleSetName}
               label="Message"
             />
           </GridArea>
           <GridArea name="submit__" justifySelf="center" alignSelf="end">
-            <Button type="submit" disabled={loadingChat} onClick={handleSendChat}>Send <AiFillMessage /></Button>
+            <Button type="submit" disabled={chatStatus === 'loading'} onClick={handleSendChat}>Send <AiFillMessage /></Button>
+            {chatStatus === 'loading'
+              ? <LoadingIcon />
+              : chatStatus==='error'
+                ? <ErrorIcon />
+                : []}
           </GridArea>
         </GridTemplate>
       </form>

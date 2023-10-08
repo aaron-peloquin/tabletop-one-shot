@@ -1,47 +1,48 @@
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useContext } from "react";
 import { T_Overview, URLs, globalDataContext } from "@static";
+import { useNetworkOperation } from "./useNetworkOperation";
 
 export const useChat = () => {
-  const [loadingChat, setLoading] = useState(false);
   const {history, setHistory, setSavedSuccessful} = useContext(globalDataContext);
+
+  const popHistory = useCallback(() => {
+    setHistory((history) => {
+      history.pop();
+      return history;
+    });  
+  }, []);
+
+  const onSuccess = useCallback((message) => {
+    if(message) {
+      setHistory((history) => {
+        history.push({message: message, role: 'ai'});
+        return history;
+      });
+    } else {
+      popHistory();
+    }
+  }, []);
+
+  const onError = useCallback((error) => {
+    console.error(error);
+    popHistory();
+  }, []);
+
+  const {run, status} = useNetworkOperation(URLs.api.chat, onSuccess, onError);
 
   const sendChat = useCallback((human: string, overview: T_Overview) => {
     setSavedSuccessful(null);
     const body = JSON.stringify({ history, human, overview });
-    setLoading(true);
     setHistory((history) => {
       history.push({message: human, role: 'human'});
       return history;
     });
-    const popHistory = () => {
-      setHistory((history) => {
-        history.pop();
-        return history;
-      });  
-    };
 
-    fetch(URLs.api.chat, {
-      method: 'POST',
-      body,
-      headers: { "Content-Type": "application/json" }
-    })
-      .then(res => res.json())
-      .then(({message}) => {
-        if(message) {
-          setHistory((history) => {
-            history.push({message: message, role: 'ai'});
-            return history;
-          });
-        } else {
-          popHistory();
-        }
-        setLoading(false);
-      }).catch((error) => {
-        console.error(error);
-        popHistory();
-        setLoading(false);
-      });
-  }, [history]);
+    run(body);
+  }, [history, run]);
 
-  return {loadingChat, sendChat};
+  return {
+    sendChat,
+    chatStatus: status
+  };
 };
