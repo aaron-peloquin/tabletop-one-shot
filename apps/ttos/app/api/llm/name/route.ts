@@ -17,7 +17,7 @@ export const POST = async (req: NextRequest) => {
       Session Seed: "${seed}"
       NEVER reference any existing intellectual property or campaign settings, like Phandelver, Tiamat, or Faerun`
     );
-    const cleanResponse = response.replace(/[^A-Za-z'-]/g, "").trim();
+    const cleanResponse = response.replace(/[^A-Za-z'-]/g, " ").trim();
     return NextResponse.json({ message: cleanResponse, descriptor, seed }, { status: 200 });
   } catch (e) {
     return NextResponse.json({ message: `Error naming a ${descriptor} adventure`, descriptor }, { status: 200 });
