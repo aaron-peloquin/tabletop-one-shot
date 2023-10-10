@@ -7,7 +7,7 @@ Prompt engineering is the process of designing prompts that can be used to gener
 
 We can think of prompt templates like a text document that a software engineers wrote, often adding in end-user text to one or more parts of the document, then sending the whole document off to a large language model (LLM), which continues writing the document where the prompt engineer left off. The software engineer then takes what the LLM generated and uses that in their application
 
-This can be as simple as requesting it generate a short phrase ([name](apps\ttos\app\api\llm\name\route.ts)), generating text that _appears_ to be a chat log ([chat](apps\ttos\app\api\llm\chat\route.ts)), or even returning a well-formatted JSON document by using an output parser ([overview](apps\ttos\app\api\llm\overview\route.ts) & [stats](apps\ttos\app\api\llm\stats\route.ts))
+This can be as simple as requesting it generate a short phrase ([name](apps/ttos/app/api/llm/name/route.ts)), generating text that _appears_ to be a chat log ([chat](apps/ttos/app/api/llm/chat/route.ts)), or even returning a well-formatted JSON document by using an output parser ([overview](apps/ttos/app/api/llm/overview/route.ts) & [stats](apps/ttos/app/api/llm/stats/route.ts))
 
 ## Services
 |  Service                                                                     | Role |
