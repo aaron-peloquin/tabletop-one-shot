@@ -26,6 +26,8 @@ This can be as simple as requesting it generate a short phrase ([name](apps\ttos
 3. Get an API key from [Google MakerSuite](https://makersuite.google.com/)
 3. Create `.env` at base of repository and set its contents to `GOOGLE_PALM_API_KEY=YOUR KEY`
 
+_Note: Authorization and DB won't work until you set all keys from [.env-example](./.env-example)_
+
 ### Monorepo Packages
 This project is built using internal packages (monorepo), powered by [Nx](https://nx.dev).
 
