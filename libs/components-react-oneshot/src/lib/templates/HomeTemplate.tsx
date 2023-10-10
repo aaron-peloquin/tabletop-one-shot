@@ -13,7 +13,7 @@ import { Suspense } from "react";
 
 export const HomeTemplate = () => {
   return <GlobalDataProvider>
-    <Card layer="1" heading="Quickshot">
+    <Card layer="1" heading="Quickshot: A TTRPG Session Generator">
       <GridTemplate
         id="mainTemplate"
         justifyItems="center"
