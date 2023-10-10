@@ -15,6 +15,10 @@ export const ContextLayout: React.FC<T_Props> = ({gridName}) => {
   
   const editable = !(overview);
 
+  if(!editable && !context) {
+    return [];
+  }
+
   return <GridArea className='full-width' name={gridName}>
     <Card layer="2" heading="Context">
       {editable ? <Textarea

@@ -29,7 +29,7 @@ export const ChatLayout: React.FC<T_Props> = ({gridName}) => {
     sendChat(humanText, overview);
   }, [humanText, overview, sendChat]);
 
-  if(!overview) {
+  if(!overview?.description) {
     return [];
   }
 
