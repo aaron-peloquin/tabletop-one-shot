@@ -29,6 +29,8 @@ This can be as simple as requesting it generate a short phrase ([name](apps\ttos
 ### Monorepo Packages
 This project is built using internal packages (monorepo), powered by [Nx](https://nx.dev).
 
+![package dependency tree](./images-for-gh/packages.png)
+
 #### Application Package
 - [/apps/ttos](/apps/ttos) Main web application, wrote in [NextJS](https://nextjs.org/docs) (v13's app router style). Contains React [Page](/apps/ttos/app/) component(s) and [API](/apps/ttos/app/api/) routes.
 
