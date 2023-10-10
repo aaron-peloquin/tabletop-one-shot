@@ -23,16 +23,18 @@ export const SettingsLayout: React.FC<T_Props> = ({gridName}) => {
 
   return <GridArea className="full-width" name={gridName}>
     <Card layer="2" heading="Settings">
-      <GridTemplate columns={4}>
-        <GridArea>
-          <Input
-            id="name"
-            value={name}
-            onChange={handleSetName}
-            label="One Shot Session Name"
-            autoComplete="off"
-          />
-        </GridArea>
+      <GridArea>
+        <Input
+          id="name"
+          value={name}
+          disabled={nameLoading}
+          onChange={handleSetName}
+          label="One Shot Session Name"
+          autoComplete="off"
+        />
+      </GridArea>
+      <br />
+      <GridTemplate columns={3}>
         <GridArea justifySelf="center" alignSelf="end">
           <Button disabled={nameLoading} onClick={getName}>Random Name</Button>
           {nameStatus ==='loading'
