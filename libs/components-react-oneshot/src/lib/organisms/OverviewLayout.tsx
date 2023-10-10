@@ -14,11 +14,11 @@ export const OverviewLayout: React.FC<T_Props> = ({gridName}) => {
     {overview && 
       <Card layer="2" heading="Overview Output">
         {overview?.description}
-        <Card layer="2" heading="Adventure Hooks">
+        {overview?.hooks?.length && <Card layer="2" heading="Adventure Hooks">
           <Card layer="3">
             <ul>{overview?.hooks?.map(hook => <li>{hook}</li>)}</ul>
           </Card>
-        </Card>
+        </Card>}
       </Card>
     }
   </GridArea>;

@@ -10,7 +10,7 @@ type T_Props = {
 export const EncountersLayout: React.FC<T_Props> = ({gridName}) => {
   const {overview} = useContext(globalDataContext);
 
-  if(!overview) {
+  if(!overview?.encounters?.length) {
     return [];
   }
   return <GridArea name={gridName}>

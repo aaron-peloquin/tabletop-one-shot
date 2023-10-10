@@ -13,13 +13,22 @@ export const useGenerateOverview:T_Sig = () => {
   const {name, context, partyLevel, setOverview, setOverviewError} = useContext(globalDataContext);
   const onSuccess = useCallback((message: T_Overview) => {
     if(message) {
-      setOverviewError('');
       setOverview(message);
     }
   }, []);
-  const {run, loading} = useNetworkOperation(URLs.api.overview, onSuccess, setOverviewError);
+
+  const onError = useCallback((error: string) => {
+    setOverviewError(error);
+    setOverview(null);
+  }, []);
+
+  const {run, loading} = useNetworkOperation(URLs.api.overview, onSuccess, onError);
 
   const generateOverview = useCallback(async () => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    setOverview({});
+    setOverviewError('');
     const body = JSON.stringify({name, context, partyLevel});
     run(body);
   }, [name, context, partyLevel, setOverview]);
