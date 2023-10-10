@@ -19,7 +19,7 @@ export const zodSchemaStats = z.object({
   }),
   armorClass: z.number(),
   hitPoints: z.number(),
-  initiative: z.preprocess(forceNumber, z.number().describe('based on dexterity')),
+  initiative: z.preprocess(forceNumber, z.number().describe('typically between 1 and 5, correlated to dexterity')),
   speed: z.number().describe('value in feet, typically 25 or 30'),
   abilities: z.array(z.object({
     name: z.string(),
