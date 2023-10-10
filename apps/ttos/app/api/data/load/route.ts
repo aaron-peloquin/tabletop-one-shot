@@ -10,7 +10,7 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
     return NextResponse.json({ message: result.rows, count: result.rowCount }, { status: 200 });
   } catch(error) {
     console.error('save error', error);
-    return NextResponse.json({ message: "error listing sessions", error }, { status: 500 });
+    return NextResponse.json({ error }, { status: 500 });
   }
 };
 
@@ -24,7 +24,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
     return NextResponse.json({ message: result.rows?.[0] || {} }, { status: 200 });
   } catch(error) {
     console.error('save error', error);
-    return NextResponse.json({ message: "error loading sessions", error }, { status: 500 });
+    return NextResponse.json({ error }, { status: 500 });
   }
 };
   
