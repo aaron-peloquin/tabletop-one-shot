@@ -3,6 +3,7 @@ import { zodSchemaCreature } from "./zodSchemaCreature";
 
 export const zodSchemaEncounter = z.object({
   name: z.string(),
+  intendedType: z.string().describe('one-word descriptor for how we expect players will engage with this encounter'),
   details: z.string().describe('game master notes for this encounter. Mention any items, traps, etc that the GM should know about'),
   // areaDescription: z.string().describe('Description of the physical area, to be read by the game master'),
   purpose: z.string().describe('reason this encounter exists'),

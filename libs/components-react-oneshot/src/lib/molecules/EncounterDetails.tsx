@@ -11,8 +11,8 @@ type T_Props = {
 };
 
 export const EncounterDetails: React.FC<T_Props> = ({encounter, number}) => {
-  const {name, details, purpose, creatures} = encounter;
-  return <Card layer="3" heading={`#${number} ${name}`}>
+  const {name, details, purpose, intendedType, creatures} = encounter;
+  return <Card layer="3" heading={`#${number} ${name} (${intendedType})`}>
     <Card layer="4" heading="Details">{details}</Card>
     <Card layer="4" heading="Purpose">{purpose}</Card>
     {creatures?.length ? <Card heading="Creatures" layer="3">
