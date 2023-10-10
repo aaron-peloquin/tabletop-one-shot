@@ -12,7 +12,6 @@ type T_Sig = () => {
 export const useGenerateName:T_Sig = () => {
   const {setName, partyLevel} = useContext(globalDataContext);
   const handleReply = useCallback((message: string) => {
-    console.log({message});
     setName(message);
   }, []);
   const {run, loading, status} = useNetworkOperation(URLs.api.name, handleReply);
