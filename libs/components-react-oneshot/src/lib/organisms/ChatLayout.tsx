@@ -24,10 +24,11 @@ export const ChatLayout: React.FC<T_Props> = ({gridName}) => {
   }, []);
   const {sendChat, chatStatus} = useChat();
 
-  const handleSendChat = useCallback(() => {
+  const handleSendChat = useCallback((event: React.SyntheticEvent) => {
+    event.preventDefault();
+    sendChat(humanText);
     setHumanText('');
-    sendChat(humanText, overview);
-  }, [humanText, overview, sendChat]);
+  }, [humanText, sendChat]);
 
   if(!overview?.description) {
     return [];
@@ -41,7 +42,7 @@ export const ChatLayout: React.FC<T_Props> = ({gridName}) => {
           <ReactMarkdown>{message}</ReactMarkdown>
         </Card>)}
       </GridTemplate>
-      <form>
+      <form onSubmit={handleSendChat}>
         <GridTemplate gridTemplateAreas={GRID_TEMPLATE_AREA} columns={4}>
           <GridArea name="input___">
             <Input
@@ -54,7 +55,7 @@ export const ChatLayout: React.FC<T_Props> = ({gridName}) => {
             />
           </GridArea>
           <GridArea name="submit__" justifySelf="center" alignSelf="end">
-            <Button type="submit" disabled={chatStatus === 'loading'} onClick={handleSendChat}>Send <AiFillMessage /></Button>
+            <Button type="submit" disabled={chatStatus === 'loading'}>Send <AiFillMessage /></Button>
             {chatStatus === 'loading'
               ? <LoadingIcon />
               : chatStatus==='error'

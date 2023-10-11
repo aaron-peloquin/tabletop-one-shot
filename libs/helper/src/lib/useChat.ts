@@ -3,7 +3,7 @@ import { T_Overview, URLs, globalDataContext } from "@static";
 import { useNetworkOperation } from "./useNetworkOperation";
 
 export const useChat = () => {
-  const {history, setHistory, setSavedSuccessful} = useContext(globalDataContext);
+  const {history, overview, setHistory, setSavedSuccessful} = useContext(globalDataContext);
 
   const popHistory = useCallback(() => {
     setHistory((history) => {
@@ -15,30 +15,39 @@ export const useChat = () => {
   const onSuccess = useCallback((message: string) => {
     if(message) {
       setHistory((history) => {
-        history.push({message: message, role: 'ai'});
+        if(history?.[history.length-1]?.message !== message) {
+          history.push({message, role: 'ai'});
+        }
         return history;
       });
     } else {
       popHistory();
     }
-  }, []);
+  }, [popHistory]);
 
   const onError = useCallback(() => {
     popHistory();
-  }, []);
+  }, [popHistory]);
 
   const {run, status} = useNetworkOperation(URLs.api.chat, onSuccess, onError);
 
-  const sendChat = useCallback((human: string, overview: T_Overview) => {
-    setSavedSuccessful(null);
-    const body = JSON.stringify({ history, human, overview });
-    setHistory((history) => {
-      history.push({message: human, role: 'human'});
-      return history;
-    });
+  const sendChat = useCallback((human: string) => {
+    if (human) {
+      setSavedSuccessful(null);
+      console.log('history', JSON.stringify(history));
+      
+      const body = JSON.stringify({ history, human, overview });
+      run(body);
 
-    run(body);
-  }, [history, run]);
+      setHistory((history) => {
+        if(history?.[history.length-1]?.message !== human) {
+          history.push({message: human, role: 'human'});
+        }
+        return history;
+      });
+
+    }
+  }, [history, run, overview]);
 
   return {
     sendChat,
