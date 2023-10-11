@@ -22,6 +22,7 @@ export const useSaveData:T_Sig = () => {
     context, setContext,
     partyLevel, setPartyLevel,
     overview, setOverview, setOverviewError,
+    clearOverview, clearHistory,
     history, setHistory,
     saveId, setSaveId, setSavedSuccessful
   } = useContext(globalDataContext);
@@ -63,6 +64,11 @@ export const useSaveData:T_Sig = () => {
   const canSave = status === 'authenticated' && !!(name && overview);
 
   const loadData = useCallback(() => {
+    clearOverview();
+    clearHistory();
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    setOverview({});
     const body = JSON.stringify({saveId: stagedSave?.id});
     loadBag.run(body);
   }, [stagedSave?.id]);
