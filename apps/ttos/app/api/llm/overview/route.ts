@@ -58,8 +58,7 @@ export const POST = async (req: NextRequest) => {
   try {
     const response = await overviewChain.call({name, context, partyLevel, crRangeLow, crRangeHigh});
     return NextResponse.json({ message: response.text }, { status: 200 });
-  } catch (error) {
-    console.log('error: ', error);
-    return NextResponse.json({ error: 'Unable to generate overview, please try again' },  {status: 500 });
+  } catch (errorReason) {
+    return NextResponse.json({ error: 'Unable to generate overview, please try again', errorReason },  {status: 500 });
   }
 };
