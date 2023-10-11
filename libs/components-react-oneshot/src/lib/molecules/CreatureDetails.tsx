@@ -32,7 +32,7 @@ export const CreatureDetails: React.FC<T_Creature> = ({name, description, backst
       }
     </GridArea>
     <Card layer="5" heading="Description">{description}</Card>
-    <Card layer="5" heading="Backstory">{backstory}</Card>
+    {backstory && <Card layer="5" heading="Backstory">{backstory}</Card>}
     {/* <Card layer="5" heading="Motivations">{motivations}</Card> */}
     {stats && <Card layer="4" heading={`${name}'s Stats`}>
       <Card layer="5" heading="Ability Scores">
