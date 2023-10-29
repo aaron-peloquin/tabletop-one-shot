@@ -17,8 +17,6 @@ export const CreatureDetails: React.FC<T_Creature> = ({name, description, backst
     setCurrentHp(newVal === 0 ? -1 : newVal);
   }, []);
 
-  
-
   return <Card layer="4" heading={`${name} (CR ${cr}, ${classification})`}>
     <GridArea>
       <Button text="Generate Stats" onClick={generateStats} disabled={statsStatus === 'loading'} />
