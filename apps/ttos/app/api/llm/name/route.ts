@@ -12,7 +12,7 @@ export const POST = async (req: NextRequest) => {
   const seed = generator.syllable();
   try {
     const response = await llmGoogleCreative.call(
-      `Generate a random name for a family-friendly ${descriptor} of a unique homebrew tabletop RPG one-shot session for a group of ${partyLevel} level players.
+      `Generate a random name for a unique family-friendly ${descriptor} homebrew tabletop RPG one-shot session for a group of ${partyLevel} level players.
       Find ONE safe for work name that is shorter and grabs the reader's attention and make them want to know more about this ${descriptor} adventure.
       Session Seed: "${seed}"
       NEVER reference any existing intellectual property or campaign settings, like Phandelver, Tiamat, or Faerun`
