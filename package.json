@@ -2,16 +2,21 @@
   "name": "@ttos/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "serve": "nx serve ttos",
+    "build": "nx build ttos"
+  },
   "private": true,
   "dependencies": {
     "@google-ai/generativelanguage": "^0.2.1",
+    "@langchain/community": "^0.0.35",
+    "@langchain/google-genai": "^0.0.10",
     "@nx/next": "16.8.1",
     "@swc/helpers": "~0.5.0",
     "@vercel/analytics": "^1.0.2",
     "@vercel/postgres": "^0.5.0",
     "chance": "^1.1.11",
-    "langchain": "^0.0.181",
+    "langchain": "^0.1.31",
     "next": "^14.0.1",
     "next-auth": "^4.24.4",
     "react": "18.2.0",

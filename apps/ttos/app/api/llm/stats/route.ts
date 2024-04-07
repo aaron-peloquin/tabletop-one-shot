@@ -1,5 +1,5 @@
 import { StructuredOutputParser } from "langchain/output_parsers";
-import { PromptTemplate } from "langchain/prompts";
+import { PromptTemplate } from "@langchain/core/prompts";
 import { LLMChain } from 'langchain/chains';
 
 import { llmGoogle } from '@helper/server';
