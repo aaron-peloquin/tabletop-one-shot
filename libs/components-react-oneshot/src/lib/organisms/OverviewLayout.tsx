@@ -9,10 +9,9 @@ type T_Props = {
 
 export const OverviewLayout: React.FC<T_Props> = ({gridName}) => {
   const {overview, overviewError} = useContext(globalDataContext);
-  console.log('==overviewError==', overviewError);
 
   return <GridArea name={gridName} className="full-width">
-    {overviewError && <Card layer="1" heading="Error">{overviewError}</Card>}
+    {overviewError && <Card layer="1" heading="Error">{`${overviewError}`}</Card>}
     {overview?.description && 
       <Card layer="2" heading="Overview Output">
         {overview?.description}
