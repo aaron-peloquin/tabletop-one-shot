@@ -15,7 +15,7 @@ export const OverviewLayout: React.FC<T_Props> = ({gridName}) => {
     {overview?.description && 
       <Card layer="2" heading="Overview Output">
         {overview?.description}
-        {overview?.hooks?.length && <Card layer="2" heading="Adventure Hooks">
+        {/* {overview?.hooks?.length && <Card layer="2" heading="Adventure Hooks">
           <Card layer="3">
             <ul>{overview?.hooks?.map(hook => <li>{hook}</li>)}</ul>
           </Card>
@@ -24,7 +24,7 @@ export const OverviewLayout: React.FC<T_Props> = ({gridName}) => {
           <Card layer="3">
             <ul>{overview?.resolutions?.map(resolution => <li>{resolution}</li>)}</ul>
           </Card>
-        </Card>}
+        </Card>} */}
       </Card>
     }
   </GridArea>;
