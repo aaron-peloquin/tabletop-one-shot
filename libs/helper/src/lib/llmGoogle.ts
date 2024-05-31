@@ -1,43 +1,25 @@
-import { GooglePaLM } from "langchain/llms/googlepalm";
+import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 
-export const llmGoogleCreative = new GooglePaLM({
+export const llmGoogleCreative = new ChatGoogleGenerativeAI({
+  modelName: "gemini-pro",
   temperature: 0.6,
   maxOutputTokens: 128,
   topK: 20,
   topP: .5,
-  safetySettings: [
-    {
-      category: "HARM_CATEGORY_DANGEROUS",
-      threshold: "BLOCK_MEDIUM_AND_ABOVE",
-    },
-  ],
-  // stopSequences: ["stop"],
 });
 
-export const llmGoogleStrict = new GooglePaLM({
+export const llmGoogleStrict = new ChatGoogleGenerativeAI({
+  modelName: "gemini-pro",
   temperature: 1,
   maxOutputTokens: 2048,
   topK: 30,
   topP: 1,
-  safetySettings: [
-    {
-      category: "HARM_CATEGORY_DANGEROUS",
-      threshold: "BLOCK_MEDIUM_AND_ABOVE",
-    },
-  ],
-  // stopSequences: ["stop"],
 });
 
-export const llmGoogle = new GooglePaLM({
+export const llmGoogle = new ChatGoogleGenerativeAI({
+  modelName: "gemini-pro",
   temperature: 0.9,
   maxOutputTokens: 2048,
   topK: 30,
   topP: 1,
-  safetySettings: [
-    {
-      category: "HARM_CATEGORY_DANGEROUS",
-      threshold: "BLOCK_MEDIUM_AND_ABOVE",
-    },
-  ],
-  // stopSequences: ["stop"],
 });

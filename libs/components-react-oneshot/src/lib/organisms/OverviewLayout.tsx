@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { GridArea, Card } from "@components-layout";
 import { useContext } from "react";
@@ -11,7 +12,7 @@ export const OverviewLayout: React.FC<T_Props> = ({gridName}) => {
   const {overview, overviewError} = useContext(globalDataContext);
 
   return <GridArea name={gridName} className="full-width">
-    {overviewError && <Card layer="1" heading="Error">{overviewError}</Card>}
+    {overviewError && <Card layer="1" heading="Error">{`${overviewError}`}</Card>}
     {overview?.description && 
       <Card layer="2" heading="Overview Output">
         {overview?.description}

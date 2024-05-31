@@ -1,10 +1,12 @@
 import { StructuredOutputParser } from "langchain/output_parsers";
-import { PromptTemplate } from "langchain/prompts";
+import { PromptTemplate } from "@langchain/core/prompts";
 import { LLMChain } from 'langchain/chains';
 
 import { llmGoogle } from '@helper/server';
 import { zodSchemaStats } from '@static';
 import { NextRequest, NextResponse } from "next/server";
+
+export const maxDuration = 15;
 
 const outputParser = StructuredOutputParser.fromZodSchema(zodSchemaStats);
 
@@ -43,7 +45,8 @@ export const POST = async (req: NextRequest) => {
   try {
     const response = await overviewChain.call(params);
     return NextResponse.json({ message: response.text }, { status: 200 });
-  } catch (error) {
-    return NextResponse.json({ error: `Unable to generate stat block for ${params.name}, please try again` },  {status: 500 });
+  } catch (errorReason) {
+    console.error(errorReason);
+    return NextResponse.json({ error: `Unable to generate stat block for ${params.name}, please try again`, errorReason },  {status: 500 });
   }
 };

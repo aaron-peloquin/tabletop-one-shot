@@ -1,5 +1,5 @@
 import { StructuredOutputParser } from "langchain/output_parsers";
-import { PromptTemplate } from "langchain/prompts";
+import { PromptTemplate } from "@langchain/core/prompts";
 import { LLMChain } from 'langchain/chains';
 
 import { llmGoogleStrict } from '@helper/server';
@@ -7,16 +7,17 @@ import { zodSchemaOverview } from '@static';
 import { NextRequest, NextResponse } from "next/server";
 
 const outputParser = StructuredOutputParser.fromZodSchema(zodSchemaOverview);
+export const maxDuration = 30;
 
 const promptTemplate = new PromptTemplate({
   template: `
-Overview synopsys for an original homebrew custom family-friendly tabletop RPG one-shot session for a group of {partyLevel} level players containing creatures of challenge rating (CR) of at least {crRangeLow} and no greater than {crRangeHigh}, or 0 defenseless creatures like average citizens.
+Overview synopsys for an english-language original homebrew custom family-friendly tabletop RPG one-shot session for a group of {partyLevel} level players containing creatures of challenge rating (CR) of at least {crRangeLow} and no greater than {crRangeHigh}, or 0 defenseless creatures like average citizens.
 
 This style of tabletop game encourages players to practice empathy by thinking complexly about the people and creatures - either strategically in combat, or socially in roleplaying encounters, while traps and other encounters encourage group problem solving by collaborating with their other party members
 
 This document will NEVER reference any existing intellectual property or campaign settings like Phandelver or Faerun.
 
-Listed below are 1-4 Encounters with no more than 5 Creatures total between all encounters.
+Listed below are 1-3 Encounters with no more than 3 Creatures total between all encounters.
 
 The title for session is: "{name}"
 
@@ -59,6 +60,7 @@ export const POST = async (req: NextRequest) => {
     const response = await overviewChain.call({name, context, partyLevel, crRangeLow, crRangeHigh});
     return NextResponse.json({ message: response.text }, { status: 200 });
   } catch (errorReason) {
+    console.error(errorReason);
     return NextResponse.json({ error: 'Unable to generate overview, please try again', errorReason },  {status: 500 });
   }
 };
