@@ -6,6 +6,8 @@ import { llmGoogle } from '@helper/server';
 import { zodSchemaStats } from '@static';
 import { NextRequest, NextResponse } from "next/server";
 
+export const maxDuration = 15;
+
 const outputParser = StructuredOutputParser.fromZodSchema(zodSchemaStats);
 
 const promptTemplate = new PromptTemplate({
