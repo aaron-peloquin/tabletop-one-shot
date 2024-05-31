@@ -7,6 +7,7 @@ import { zodSchemaOverview } from '@static';
 import { NextRequest, NextResponse } from "next/server";
 
 const outputParser = StructuredOutputParser.fromZodSchema(zodSchemaOverview);
+export const maxDuration = 30;
 
 const promptTemplate = new PromptTemplate({
   template: `
