@@ -3,6 +3,7 @@
         "ctxt",
         "genai",
         "googlepalm",
-        "Quickshot"
+        "Quickshot",
+        "SVGR"
     ]
 }
