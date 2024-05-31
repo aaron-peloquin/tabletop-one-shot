@@ -32,6 +32,7 @@ export const POST = async (req: NextRequest) => {
     const response = await model.invoke(chatMessages);
     return NextResponse.json({ message: response.content }, { status: 200 });
   } catch (errorReason) {
+    console.error(errorReason);
     return NextResponse.json({ error: 'Unable to generate chat reply, please try again', errorReason },  {status: 500 });
   }
 };
