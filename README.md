@@ -10,21 +10,21 @@ We can think of prompt templates like a text document that a software engineers 
 This can be as simple as requesting it generate a short phrase ([name](apps/ttos/app/api/llm/name/route.ts)), generating text that _appears_ to be a chat log ([chat](apps/ttos/app/api/llm/chat/route.ts)), or even returning a well-formatted JSON document by using an output parser ([overview](apps/ttos/app/api/llm/overview/route.ts) & [stats](apps/ttos/app/api/llm/stats/route.ts))
 
 ## Services
-|  Service                                                                     | Role |
-|---                                                                           |---|
-|  [Google PaLM API](https://developers.generativeai.google/products/palm)     | LLM Inference Layer (AI text generation) |
-|  [LangChain JS](https://js.langchain.com/docs/get_started/introduction)      | LLM Application Framework |
-|  [Vercel](https://vercel.com/)                                               | Site hosting |
-|  [Nx.dev](https://nx.dev/)                                                   | Monorepo build and development tool |
-|  [Next.js](https://nextjs.org/)                                              | React server framework |
-|  [Google oAuth2](https://developers.google.com/identity/protocols/oauth2)    | Authentication and authorization service |
-|  [PostgreSQL](https://www.postgresql.org/)                                   | Database |
+|  Service                                                                     | Role                                           |
+|----                                                                          |----                                            |
+|  [Gemini Pro](https://aistudio.google.com/)                                  | LLM Inference service (AI text generation)     |
+|  [LangChain JS](https://js.langchain.com/docs/get_started/introduction)      | LLM Application Framework                      |
+|  [Vercel](https://vercel.com/)                                               | Site hosting                                   |
+|  [Nx.dev](https://nx.dev/)                                                   | Monorepo build and development tool            |
+|  [Next.js](https://nextjs.org/)                                              | React server framework                         |
+|  [Google oAuth2](https://developers.google.com/identity/protocols/oauth2)    | Authentication and authorization service       |
+|  [PostgreSQL](https://www.postgresql.org/)                                   | Database                                       |
 
 ## Local dev setup
 1. `npm i`
 2. `nx serve ttos`
 3. Get an API key from [Google MakerSuite](https://makersuite.google.com/)
-3. Create `.env` at base of repository and set its contents to `GOOGLE_PALM_API_KEY=YOUR KEY`
+3. Create `.env` at base of repository and set its contents to `GOOGLE_API_KEY=YOUR KEY`
 
 _Note: Authorization and DB won't work until you set all keys from [.env-example](./.env-example)_
 
