@@ -12,7 +12,7 @@ This can be as simple as requesting it generate a short phrase ([name](apps/ttos
 ## Services
 |  Service                                                                     | Role                                           |
 |----                                                                          |----                                            |
-|  [Gemini Pro](https://aistudio.google.com/)                                  | LLM Inference service (AI text generation)     |
+|  [Gemini 1.5 Pro](https://aistudio.google.com/)                              | LLM Inference service (AI text generation)     |
 |  [LangChain JS](https://js.langchain.com/docs/get_started/introduction)      | LLM Application Framework                      |
 |  [Vercel](https://vercel.com/)                                               | Site hosting                                   |
 |  [Nx.dev](https://nx.dev/)                                                   | Monorepo build and development tool            |
@@ -23,7 +23,7 @@ This can be as simple as requesting it generate a short phrase ([name](apps/ttos
 ## Local dev setup
 1. `npm i`
 2. `nx serve ttos`
-3. Get an API key from [Google MakerSuite](https://makersuite.google.com/)
+3. Get an API key from [Google MakerSuite (AI Studio)](https://aistudio.google.com/)
 3. Create `.env` at base of repository and set its contents to `GOOGLE_API_KEY=YOUR KEY`
 
 _Note: Authorization and DB won't work until you set all keys from [.env-example](./.env-example)_
