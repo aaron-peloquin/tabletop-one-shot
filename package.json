@@ -2,7 +2,10 @@
   "name": "@ttos/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "serve": "nx serve ttos",
+    "build": "nx build ttos"
+  },
   "private": true,
   "dependencies": {
     "@google-ai/generativelanguage": "^2.5.0",
