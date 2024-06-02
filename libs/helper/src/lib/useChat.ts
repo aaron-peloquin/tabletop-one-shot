@@ -1,5 +1,5 @@
 import { useCallback, useContext } from "react";
-import { T_Overview, URLs, globalDataContext } from "@static";
+import { URLs, globalDataContext } from "@static";
 import { useNetworkOperation } from "./useNetworkOperation";
 
 export const useChat = () => {
