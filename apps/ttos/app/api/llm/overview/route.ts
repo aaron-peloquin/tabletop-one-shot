@@ -1,6 +1,6 @@
 import { StructuredOutputParser } from "langchain/output_parsers";
 import { PromptTemplate } from "@langchain/core/prompts";
-import { LLMChain } from 'langchain/chains';
+import { RunnableSequence } from "@langchain/core/runnables";
 
 import { llmGoogleStrict } from '@helper/server';
 import { zodSchemaOverview } from '@static';
@@ -31,12 +31,7 @@ Required Context for this session (Strictly follow this context, but do not repe
   }
 });
 
-const overviewChain = new LLMChain({
-  llm: llmGoogleStrict,
-  prompt: promptTemplate,
-  outputParser: outputParser,
-  verbose: false
-});
+const overviewChain = RunnableSequence.from([promptTemplate,llmGoogleStrict, outputParser]);
 
 export const POST = async (req: NextRequest) => {
   const {name, context, partyLevel} = await req.json();
@@ -57,8 +52,8 @@ export const POST = async (req: NextRequest) => {
     break;
   }
   try {
-    const response = await overviewChain.call({name, context, partyLevel, crRangeLow, crRangeHigh});
-    return NextResponse.json({ message: response.text }, { status: 200 });
+    const response = await overviewChain.invoke({name, context, partyLevel, crRangeLow, crRangeHigh});
+    return NextResponse.json({ message: response }, { status: 200 });
   } catch (errorReason) {
     console.error(errorReason);
     return NextResponse.json({ error: 'Unable to generate overview, please try again', errorReason },  {status: 500 });
