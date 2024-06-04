@@ -1,6 +1,6 @@
 import { StructuredOutputParser } from "langchain/output_parsers";
 import { PromptTemplate } from "@langchain/core/prompts";
-import { LLMChain } from 'langchain/chains';
+import { RunnableSequence } from "@langchain/core/runnables";
 
 import { llmGoogle } from '@helper/server';
 import { zodSchemaStats } from '@static';
@@ -33,18 +33,22 @@ In addition to the JSON spec below, also follow these rules when replying in JSO
   }
 });
 
-const overviewChain = new LLMChain({
-  llm: llmGoogle,
-  prompt: promptTemplate,
-  outputParser: outputParser,
-  verbose: false
+const onFailedAttempt = () => { console.log('a stat block generation attempt failed'); };
+
+const overviewChain = RunnableSequence.from([
+  promptTemplate,
+  llmGoogle,
+  outputParser
+]).withRetry({
+  stopAfterAttempt: 2,
+  onFailedAttempt,
 });
 
 export const POST = async (req: NextRequest) => {
   const params = await req.json();
   try {
-    const response = await overviewChain.call(params);
-    return NextResponse.json({ message: response.text }, { status: 200 });
+    const response = await overviewChain.invoke(params);
+    return NextResponse.json({ message: response }, { status: 200 });
   } catch (errorReason) {
     console.error(errorReason);
     return NextResponse.json({ error: `Unable to generate stat block for ${params.name}, please try again`, errorReason },  {status: 500 });

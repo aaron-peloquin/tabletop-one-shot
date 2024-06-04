@@ -7,7 +7,7 @@ import { zodSchemaOverview } from '@static';
 import { NextRequest, NextResponse } from "next/server";
 
 const outputParser = StructuredOutputParser.fromZodSchema(zodSchemaOverview);
-export const maxDuration = 30;
+export const maxDuration = 40;
 
 const promptTemplate = new PromptTemplate({
   template: `
@@ -31,7 +31,16 @@ Required Context for this session (Strictly follow this context, but do not repe
   }
 });
 
-const overviewChain = RunnableSequence.from([promptTemplate,llmGoogleStrict, outputParser]);
+const onFailedAttempt = () => { console.log('an overview generation attempt failed'); };
+
+const overviewChain = RunnableSequence.from([
+  promptTemplate,
+  llmGoogleStrict,
+  outputParser
+]).withRetry({
+  stopAfterAttempt: 3,
+  onFailedAttempt,
+});
 
 export const POST = async (req: NextRequest) => {
   const {name, context, partyLevel} = await req.json();

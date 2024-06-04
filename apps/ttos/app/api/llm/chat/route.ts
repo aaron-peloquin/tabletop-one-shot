@@ -1,12 +1,18 @@
-import { createStructuredChatAgent } from "langchain/agents";
 import { NextRequest, NextResponse } from "next/server";
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 
 import { AIMessage, HumanMessage, SystemMessage } from "@langchain/core/messages";
 
+export const maxDuration = 40;
+
+const onFailedAttempt = () => { console.log('a chat generation attempt failed'); };
+
 const llm = new ChatGoogleGenerativeAI({
   modelName: "gemini-1.5-pro",
   maxOutputTokens: 2048,
+}).withRetry({
+  stopAfterAttempt: 3,
+  onFailedAttempt,
 });
 
 export const POST = async (req: NextRequest) => {

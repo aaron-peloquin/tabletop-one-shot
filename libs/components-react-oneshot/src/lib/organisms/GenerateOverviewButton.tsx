@@ -24,9 +24,9 @@ export const GenerateOverviewButton: React.FC<T_Props> = ({gridName}) => {
       ? <Button style={{fontWeight:'bold', color: '#694834'}} disabled={overviewLoading} onClick={clearOverview}>Clear Data <FaTrashAlt /></Button>
       : <Button style={{fontWeight:'bold', color: '#586'}} text="Generate Session" disabled={disabled} onClick={handleGenerateOverview} />}
     {overviewLoading
-      ? <LoadingIcon />
+      ? <><LoadingIcon /> <em><small>may take up to 40 sec</small></em></>
       :overviewError
-        ?<ErrorIcon />
+        ?<><ErrorIcon /> <em>please retry</em></>
         :overview
           ?<SuccessIcon />
           :<IdleIcon />}
