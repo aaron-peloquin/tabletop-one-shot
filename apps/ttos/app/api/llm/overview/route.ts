@@ -2,7 +2,7 @@ import { StructuredOutputParser } from "langchain/output_parsers";
 import { PromptTemplate } from "@langchain/core/prompts";
 import { RunnableSequence } from "@langchain/core/runnables";
 
-import { llmGoogleStrict } from '@helper/server';
+import { agentWithTabletopKnowledge, llmGoogleStrict } from '@helper/server';
 import { zodSchemaOverview } from '@static';
 import { NextRequest, NextResponse } from "next/server";
 
@@ -61,7 +61,15 @@ export const POST = async (req: NextRequest) => {
     break;
   }
   try {
-    const response = await overviewChain.invoke({name, context, partyLevel, crRangeLow, crRangeHigh});
+    if(context) {
+      const toolDescription = `The preferred tool to use when you need to get information about the Dungeons and Dragons 5th Edition.
+The input argument should be a single string in the format of \`resource/resource_name\`.
+Accepted 'resource' items are: ['ability-scores', 'alignments', 'backgrounds', 'classes', 'conditions', 'damage-types', 'equipment-categories', 'equipment', 'feats', 'features', 'languages', 'magic-items', 'magic-schools', 'monsters', 'proficiencies', 'races', 'rules', 'rule-sections', 'skills', 'spells', 'subclasses', 'subraces', 'traits', 'weapon-properties'].
+The 'resource_name' is an optional free text query.
+Note: Querying for the same argument will always yield the same output.`;
+      await agentWithTabletopKnowledge(`"${name}", a tabletop one shot where: ${context}`, [{name: 'DND5E', description: toolDescription, invoke: () => 'Hello, tool reply!'}]);
+    }
+    const response = await overviewChain.invoke({ name, context, partyLevel, crRangeLow, crRangeHigh });
     return NextResponse.json({ message: response }, { status: 200 });
   } catch (errorReason) {
     console.error(errorReason);
