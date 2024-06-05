@@ -7,7 +7,7 @@ export const maxDuration = 40;
 
 const onFailedAttempt = () => { console.log('a chat generation attempt failed'); };
 
-const llm = new ChatGoogleGenerativeAI({
+const chatChain = new ChatGoogleGenerativeAI({
   modelName: "gemini-1.5-pro",
   maxOutputTokens: 2048,
 }).withRetry({
@@ -38,7 +38,7 @@ export const POST = async (req: NextRequest) => {
       new HumanMessage(params.human),
     ];
   
-    const response = await llm.invoke(chatMessages);
+    const response = await chatChain.invoke(chatMessages);
     return NextResponse.json({ message: response.content }, { status: 200 });
   } catch (errorReason) {
     console.error(errorReason);
