@@ -16,7 +16,7 @@
     "@vercel/analytics": "^1.0.2",
     "@vercel/postgres": "^0.5.0",
     "chance": "^1.1.11",
-    "langchain": "^0.2.4",
+    "langchain": "^0.2.5",
     "next": "14.2.3",
     "next-auth": "^4.24.4",
     "react": "18.3.1",
