@@ -13,9 +13,7 @@ const outputParser = StructuredOutputParser.fromZodSchema(zodSchemaAgentTools);
 
 export type T_AgentTools = z.infer<typeof zodSchemaAgentTools>;
 const parsedFormat = outputParser.getFormatInstructions();
-const promptTemplate = new PromptTemplate({
-  template: `
-You are an expert game master assistant who helpfully retrieves content and communicates it through JSON responses to fetch data that will assist in answering the user's question about tabletop gaming.
+const baseTemplate = `You are an expert game master assistant who helpfully retrieves content and communicates it through JSON responses to fetch data that will assist in answering the user's question about tabletop gaming.
 
 Decide which tool to call, how many times to call them, and with which arguments to send into these tools to retrieve the information.
 
@@ -25,9 +23,13 @@ Your job is to gather information related to the following prompt: "{query}".
 
 # Available Tools
 {toolsDetails}
+
+{followupScratchpad}
 ----
-{parsedFormat}`,
-  inputVariables: ['query', 'toolsDetails'],
+{parsedFormat}`;
+const promptTemplate = new PromptTemplate({
+  template: baseTemplate,
+  inputVariables: ['query', 'toolsDetails', 'followupScratchpad'],
   partialVariables: { parsedFormat }
 });
 
@@ -46,7 +48,22 @@ const agentChain = RunnableSequence.from([
 
 type T_Tool = DynamicStructuredTool | StructuredTool | Tool;
 
-export const agentWithTabletopKnowledge = async (query: string, tools: T_Tool[]) => {
+const invokeTools = (toolsToCall: T_AgentTools, tools: T_Tool[]) => {
+  const promiseBag = [] as Promise<string>[];
+  if (toolsToCall?.length) {
+    toolsToCall.forEach((requestedTool) => {
+      const tool = _.find(tools, {name: requestedTool.toolName});
+      const toolResult = tool?.invoke(JSON.parse(requestedTool.argument || '{}'));
+      if(toolResult) {
+        promiseBag.push(toolResult);
+      }
+    });
+  }
+  return promiseBag;
+};
+
+export const agentWithTabletopKnowledge = async (query: string, tools: T_Tool[], maxCalls=1) => {
+  let calls = 1;
   const toolsDetails = tools.reduce((detailsString, tool) => {
     const toolName = tool.name;
     const zodSchema = JSON.stringify(zodToJsonSchema(tool.schema) || {});
@@ -56,21 +73,41 @@ export const agentWithTabletopKnowledge = async (query: string, tools: T_Tool[])
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  const toolsToCall = [...await agentChain.invoke({query, toolsDetails})] as T_AgentTools;
-  if (toolsToCall?.length) {
-    const promiseBag = [] as Promise<string>[];
-    toolsToCall.forEach((requestedTool) => {
-      // tool.toolName;
-      const tool = _.find(tools, {name: requestedTool.toolName});
-      const toolResult = tool?.invoke(JSON.parse(requestedTool.argument || '{}'));
-      if(toolResult) {
-        promiseBag.push(toolResult);
-      }
+  const toolsToCall = [...await agentChain.invoke({query, toolsDetails, followupScratchpad: ''})] as T_AgentTools;
+  console.log('tools-to-call', 1, toolsToCall);
+
+  const promiseBag = invokeTools(toolsToCall, tools);
+
+  if(promiseBag.length) {
+    const promiseResults = (await Promise.all(promiseBag));
+    let toolResults = toolsToCall.map((tool, toolKey) => {
+      const toolResult = promiseResults[toolKey];
+      return {...tool, result: toolResult, fromSet: 1};
     });
-    if(promiseBag.length) {
-      const promiseResults = (await Promise.all(promiseBag));
-      return promiseResults.join('\n\n');
+    if(maxCalls > 1) {
+      while(calls < maxCalls) {
+        calls++;
+        const followupScratchpad = `# Already retrieved content: ${JSON.stringify(toolResults)}\nIf this is enough context, please respond with an empty array to indicate no new tool requests.`;
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        const toolsToCall = [...await agentChain.invoke({query, toolsDetails, followupScratchpad})] as T_AgentTools;
+        if(toolsToCall.length === 0) {
+          break;
+        }
+        console.log('tools-to-call', calls,  toolsToCall);
+        const promiseBag = invokeTools(toolsToCall, tools);
+        const promiseResults = (await Promise.all(promiseBag));
+        const newToolResults = toolsToCall.map((tool, toolKey) => {
+          const toolResult = promiseResults[toolKey];
+          return {...tool, result: toolResult, fromSet: calls};
+        });
+        toolResults = [
+          ...toolResults,
+          ...newToolResults
+        ];
+      }
     }
+    return toolResults;
   }
   return 'Unable to retrieve any helpful information';
 };
