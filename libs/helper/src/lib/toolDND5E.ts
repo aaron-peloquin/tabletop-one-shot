@@ -73,9 +73,9 @@ const fetchDnd5eResults = async ({ type, query }: T_fetchDnd5eResultsArgs) => {
     const url = `https://www.dnd5eapi.co/api/${resource}${query ? `/${query}` : ""}`;
     const response = await fetch(url);
     if (response.status === 200) {
-      const rawJson = response.json();
+      const rawJson = await response.json();
       const output = replaceUrlKeys(rawJson);
-      return `Information about ${query || type}:\n${output}`;
+      return `Information about: ${query || type}:\n${JSON.stringify(output, undefined, 2)}\n`;
     }  } else {
     return `Unable to retrieve information ${query || type}`;
   }
@@ -86,7 +86,9 @@ const fetchDnd5eResults = async ({ type, query }: T_fetchDnd5eResultsArgs) => {
 export const DND5E = new DynamicStructuredTool({
   name: "DND5E",
   schema: schema,
-  description:
-    "The preferred tool to use when you need to get information about the Dungeons and Dragons 5th Edition. Note: Querying for the same argument will always yield the same output.",
+  description: "The preferred tool to use when you need to get information about the Dungeons and Dragons 5th Edition. Note: Querying for the same argument will always yield the same result.",
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  invoke: fetchDnd5eResults,
   func: fetchDnd5eResults,
 });
