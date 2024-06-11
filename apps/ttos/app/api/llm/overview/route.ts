@@ -65,7 +65,7 @@ export const POST = async (req: NextRequest) => {
   try {
     let agentContext;
     if(context) {
-      agentContext = await agentWithTabletopKnowledge(`"${name}", a tabletop one shot where: ${context}`, [DND5E]);
+      agentContext = await agentWithTabletopKnowledge(`"${name}", a tabletop one shot where: ${context}`, [DND5E], 5);
       console.log('agentContext', agentContext);
     }
     const response = await overviewChain.invoke({ name, context, partyLevel, crRangeLow, crRangeHigh, agentContext });
