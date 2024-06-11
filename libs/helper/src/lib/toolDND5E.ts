@@ -70,17 +70,17 @@ type T_fetchDnd5eResultsArgs = { type: string, query: string };
 const fetchDnd5eResults = async ({ type, query }: T_fetchDnd5eResultsArgs) => {
   const resource = _.get(commonMistakes, type, type.replace(" ", "-"));
   if(ACCEPTABLE_RESOURCES.indexOf(resource) !== -1) {
-    const url = `https://www.dnd5eapi.co/api/${resource}${query ? `/${query}` : ""}`;
+    const url = `https://www.dnd5eapi.co/api/${resource.toLowerCase()}${query ? `/${query.toLowerCase()}` : ""}`;
     const response = await fetch(url);
     if (response.status === 200) {
       const rawJson = await response.json();
       const output = replaceUrlKeys(rawJson);
       return `Information about: ${query || type}:\n${JSON.stringify(output, undefined, 2)}\n`;
-    }  } else {
-    return `Unable to retrieve information ${query || type}`;
+    }
+    return `No information for: ${type}/${query}`;
   }
 
-  return '';
+  return `Error: Unknown type (${type})`;
 };
 
 export const DND5E = new DynamicStructuredTool({
