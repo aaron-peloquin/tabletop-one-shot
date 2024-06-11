@@ -71,6 +71,6 @@ export const agentWithTabletopKnowledge = async (query: string, tools: T_Tool[])
       const promiseResults = (await Promise.all(promiseBag));
       return promiseResults.join('\n\n');
     }
-    return 'Unable to retrieve any helpful information';
   }
+  return 'Unable to retrieve any helpful information';
 };
