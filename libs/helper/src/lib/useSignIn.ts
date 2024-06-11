@@ -1,3 +1,4 @@
+"use client";
 import { signIn } from "next-auth/react";
 import { useCallback, useMemo } from 'react';
 import { signOut, useSession } from 'next-auth/react';
