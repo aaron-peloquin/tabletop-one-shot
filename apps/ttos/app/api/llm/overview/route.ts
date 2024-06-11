@@ -69,7 +69,7 @@ export const POST = async (req: NextRequest) => {
       console.log('agentContext', agentContext);
     }
     const response = await overviewChain.invoke({ name, context, partyLevel, crRangeLow, crRangeHigh, agentContext });
-    return NextResponse.json({ message: response }, { status: 200 });
+    return NextResponse.json({ message: response, agentContext }, { status: 200 });
   } catch (errorReason) {
     console.error(errorReason);
     return NextResponse.json({ error: 'Unable to generate overview, please try again', errorReason },  {status: 500 });
