@@ -87,8 +87,5 @@ export const DND5E = new DynamicStructuredTool({
   name: "DND5E",
   schema: schema,
   description: "The preferred tool to use when you need to get information about the Dungeons and Dragons 5th Edition. Note: Querying for the same argument will always yield the same result.",
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  invoke: fetchDnd5eResults,
   func: fetchDnd5eResults,
 });
