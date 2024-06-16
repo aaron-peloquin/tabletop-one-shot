@@ -11,6 +11,7 @@
     "@google-ai/generativelanguage": "^2.5.0",
     "@langchain/community": "^0.2.4",
     "@langchain/google-genai": "^0.0.16",
+    "@langchain/langgraph": "^0.0.23",
     "@nx/next": "16.8.1",
     "@swc/helpers": "~0.5.0",
     "@vercel/analytics": "^1.0.2",
