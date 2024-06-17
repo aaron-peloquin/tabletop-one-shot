@@ -75,12 +75,12 @@ const fetchDnd5eResults = async ({ type, query }: T_fetchDnd5eResultsArgs) => {
     if (response.status === 200) {
       const rawJson = await response.json();
       const output = replaceUrlKeys(rawJson);
-      return { role: 'ai', message: `Information about: ${query || type}:\n${JSON.stringify(output, undefined, 2)}\n` };
+      return `Information about: ${query || type}:\n${JSON.stringify(output, undefined, 2)}\n`;
     }
-    return { role: 'ai', message: `No information for: ${type}/${query}` };
+    return `No information for: ${type}/${query}`;
   }
 
-  return { role: 'ai', message: `Error: Unknown type (${type})` };
+  return `Error: Unknown type (${type})`;
 };
 
 export const DND5E = new DynamicStructuredTool({
