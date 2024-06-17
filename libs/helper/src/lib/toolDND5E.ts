@@ -3,8 +3,7 @@ import { z } from "zod";
 import { DynamicStructuredTool } from "@langchain/core/tools";
 
 const ACCEPTABLE_RESOURCES = ['ability-scores', 'alignments', 'backgrounds', 'classes', 'conditions', 'damage-types', 'equipment-categories', 'equipment', 'feats', 'features', 'languages', 'magic-items', 'magic-schools', 'monsters', 'proficiencies', 'races', 'rules', 'rule-sections', 'skills', 'spells', 'subclasses', 'subraces', 'traits', 'weapon-properties'];
-
-const commonMistakes = {
+const COMMON_MISTAKES = {
   weapons: "equipment",
   armor: "equipment",
   class: "classes",
@@ -68,24 +67,29 @@ const replaceUrlKeys = (originalJson = {}, newJson: Record<string, any>|null = n
 
 type T_fetchDnd5eResultsArgs = { type: string, query: string };
 const fetchDnd5eResults = async ({ type, query }: T_fetchDnd5eResultsArgs) => {
-  const resource = _.get(commonMistakes, type, type.replace(" ", "-"));
+  console.log('== DND CALLED ==', type, query);
+  const resource = _.get(COMMON_MISTAKES, type, type.replace(" ", "-"));
   if(ACCEPTABLE_RESOURCES.indexOf(resource) !== -1) {
     const url = `https://www.dnd5eapi.co/api/${resource.toLowerCase()}${query ? `/${query.toLowerCase()}` : ""}`;
     const response = await fetch(url);
     if (response.status === 200) {
       const rawJson = await response.json();
       const output = replaceUrlKeys(rawJson);
-      return `Information about: ${query || type}:\n${JSON.stringify(output, undefined, 2)}\n`;
+      return { role: 'ai', message: `Information about: ${query || type}:\n${JSON.stringify(output, undefined, 2)}\n` };
     }
-    return `No information for: ${type}/${query}`;
+    return { role: 'ai', message: `No information for: ${type}/${query}` };
   }
 
-  return `Error: Unknown type (${type})`;
+  return { role: 'ai', message: `Error: Unknown type (${type})` };
 };
 
 export const DND5E = new DynamicStructuredTool({
   name: "DND5E",
   schema: schema,
+  tags: ['AI'],
   description: "The preferred tool to use when you need to get information about the Dungeons and Dragons 5th Edition. Note: Querying for the same argument will always yield the same result.",
   func: fetchDnd5eResults,
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  invoke: fetchDnd5eResults,
 });

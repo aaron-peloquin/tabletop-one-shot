@@ -1,113 +1,41 @@
 import { StructuredOutputParser } from "langchain/output_parsers";
 import { PromptTemplate } from "@langchain/core/prompts";
-import { RunnableSequence } from "@langchain/core/runnables";
 import { z } from 'zod';
+import { ToolNode } from "@langchain/langgraph/prebuilt";
+import { HumanMessage, AIMessage, BaseMessage } from "@langchain/core/messages";
+
 import _ from 'lodash';
-import { zodToJsonSchema } from "zod-to-json-schema";
 
-import { llmGoogleStrict } from './llmGoogle';
+import { makeAgentWithTools, llmGoogleStrict } from './llmGoogle';
 import { zodSchemaAgentTools } from '@static';
-import { DynamicStructuredTool, StructuredTool, Tool } from "@langchain/core/tools";
+import { END, START, MessageGraph, StateGraphArgs } from "@langchain/langgraph";
+import { DND5E } from "./toolDND5E";
+import { GoogleGenerativeAIChatCallOptions } from "@langchain/google-genai";
 
-const outputParser = StructuredOutputParser.fromZodSchema(zodSchemaAgentTools);
+type T_checkToolsDoneSig = (state: BaseMessage[]) => "tools" | typeof END;
+const checkToolsDone: T_checkToolsDoneSig = state => {
+  const messages = state;
 
-export type T_AgentTools = z.infer<typeof zodSchemaAgentTools>;
-const parsedFormat = outputParser.getFormatInstructions();
-const baseTemplate = `You are an expert game master assistant who helpfully retrieves content and communicates it through JSON responses to fetch data that will assist in answering the user's question about tabletop gaming.
+  const lastMessage = messages[messages.length - 1];
+  console.log('lastMessage', lastMessage);
 
-Decide which tool to call, how many times to call them, and with which arguments to send into these tools to retrieve the information.
-
-It is acceptable to call a tool more than once, or not call it at all
-
-Your job is to gather information related to the following prompt: "{query}".
-
-# Available Tools
-{toolsDetails}
-
-{followupScratchpad}
-----
-{parsedFormat}`;
-const promptTemplate = new PromptTemplate({
-  template: baseTemplate,
-  inputVariables: ['query', 'toolsDetails', 'followupScratchpad'],
-  partialVariables: { parsedFormat }
-});
-
-const onFailedAttempt = () => { console.log('an overview generation attempt failed'); };
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-const agentChain = RunnableSequence.from([
-  promptTemplate,
-  llmGoogleStrict,
-  outputParser
-]).withRetry({
-  stopAfterAttempt: 3,
-  onFailedAttempt,
-});
-
-type T_Tool = DynamicStructuredTool | StructuredTool | Tool;
-
-const invokeTools = (toolsToCall: T_AgentTools, tools: T_Tool[]) => {
-  const promiseBag = [] as Promise<string>[];
-  if (toolsToCall?.length) {
-    toolsToCall.forEach((requestedTool) => {
-      const tool = _.find(tools, {name: requestedTool.toolName});
-      const toolResult = tool?.invoke(JSON.parse(requestedTool.argument || '{}'));
-      if(toolResult) {
-        promiseBag.push(toolResult);
-      }
-    });
-  }
-  return promiseBag;
-};
-
-export const agentWithTabletopKnowledge = async (query: string, tools: T_Tool[], maxCalls=1) => {
-  let calls = 1;
-  const toolsDetails = tools.reduce((detailsString, tool) => {
-    const toolName = tool.name;
-    const zodSchema = JSON.stringify(zodToJsonSchema(tool.schema) || {});
-    detailsString += `## ${toolName}\n${toolName} arguments schema: ${zodSchema}\n${toolName} description: ${tool.description}\n\n`;
-    return detailsString;
-  }, '');
-
+  // If the LLM makes a tool call, then we route to the "tools" node
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  const toolsToCall = [...await agentChain.invoke({query, toolsDetails, followupScratchpad: ''})] as T_AgentTools;
-  console.log('tools-to-call', 1, toolsToCall);
-
-  const promiseBag = invokeTools(toolsToCall, tools);
-
-  if(promiseBag.length) {
-    const promiseResults = (await Promise.all(promiseBag));
-    let toolResults = toolsToCall.map((tool, toolKey) => {
-      const toolResult = promiseResults[toolKey];
-      return {...tool, result: toolResult, fromSet: 1};
-    });
-    if(maxCalls > 1) {
-      while(calls < maxCalls) {
-        calls++;
-        const followupScratchpad = `# Already retrieved content: ${JSON.stringify(toolResults)}\nIf this is enough context, please respond with an empty array to indicate no new tool requests.`;
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        const toolsToCall = [...await agentChain.invoke({query, toolsDetails, followupScratchpad})] as T_AgentTools;
-        if(toolsToCall.length === 0) {
-          break;
-        }
-        console.log('tools-to-call', calls,  toolsToCall);
-        const promiseBag = invokeTools(toolsToCall, tools);
-        const promiseResults = (await Promise.all(promiseBag));
-        const newToolResults = toolsToCall.map((tool, toolKey) => {
-          const toolResult = promiseResults[toolKey];
-          return {...tool, result: toolResult, fromSet: calls};
-        });
-        toolResults = [
-          ...toolResults,
-          ...newToolResults
-        ];
-      }
-    }
-    return toolResults;
+  if (lastMessage.tool_calls.length) {
+    return "tools";
   }
-  return 'Unable to retrieve any helpful information';
+  // Otherwise, we stop (reply to the user)
+  return END;
 };
+
+const tools = [DND5E];
+const toolsNode = new ToolNode<BaseMessage[]>(tools);
+const llmGoogleAgent = makeAgentWithTools(tools);
+const agentWorkflow = new MessageGraph()
+  .addNode('agent', llmGoogleAgent)
+  .addNode('tools', toolsNode)
+  .addEdge(START, "agent")
+  .addConditionalEdges("agent", checkToolsDone)
+  .addEdge("tools", "agent");
+export const agentWithTabletopKnowledge = agentWorkflow.compile();

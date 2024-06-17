@@ -5,7 +5,6 @@ import { RunnableSequence } from "@langchain/core/runnables";
 import { agentWithTabletopKnowledge, llmGoogleStrict } from '@helper/server';
 import { zodSchemaOverview } from '@static';
 import { NextRequest, NextResponse } from "next/server";
-import { DND5E } from "@helper";
 
 const outputParser = StructuredOutputParser.fromZodSchema(zodSchemaOverview);
 export const maxDuration = 40;
@@ -65,11 +64,14 @@ export const POST = async (req: NextRequest) => {
   try {
     let agentContext;
     if(context) {
-      agentContext = await agentWithTabletopKnowledge(`"${name}", a tabletop one shot where: ${context}`, [DND5E], 5);
-      console.log('agentContext', agentContext);
+      agentContext = await agentWithTabletopKnowledge.invoke(`"${name}", a tabletop one shot where: ${context}. Use the DND5E tool to retrieve any related context information.`);
+      console.log('==agentContext0==', agentContext[0]);
+      console.log('==agentContext1==', agentContext[1]);
+      console.log('==agentContext2==', agentContext[2]);
+      console.log('==agentContext3==', agentContext[3]);
     }
     const response = await overviewChain.invoke({ name, context, partyLevel, crRangeLow, crRangeHigh, agentContext });
-    return NextResponse.json({ message: response, agentContext }, { status: 200 });
+    return NextResponse.json({ message: response, agentContext: JSON.stringify(agentContext) }, { status: 200 });
   } catch (errorReason) {
     console.error(errorReason);
     return NextResponse.json({ error: 'Unable to generate overview, please try again', errorReason },  {status: 500 });
