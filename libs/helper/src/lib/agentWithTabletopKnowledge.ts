@@ -1,16 +1,8 @@
-import { StructuredOutputParser } from "langchain/output_parsers";
-import { PromptTemplate } from "@langchain/core/prompts";
-import { z } from 'zod';
 import { ToolNode } from "@langchain/langgraph/prebuilt";
-import { HumanMessage, AIMessage, BaseMessage } from "@langchain/core/messages";
-
-import _ from 'lodash';
-
-import { makeAgentWithTools, llmGoogleStrict } from './llmGoogle';
-import { zodSchemaAgentTools } from '@static';
-import { END, START, MessageGraph, StateGraphArgs } from "@langchain/langgraph";
+import { BaseMessage } from "@langchain/core/messages";
+import { END, START, MessageGraph } from "@langchain/langgraph";
+import { makeAgentWithTools } from './llmGoogle';
 import { DND5E } from "./toolDND5E";
-import { GoogleGenerativeAIChatCallOptions } from "@langchain/google-genai";
 
 type T_checkToolsDoneSig = (state: BaseMessage[]) => "tools" | typeof END;
 const checkToolsDone: T_checkToolsDoneSig = state => {
@@ -30,12 +22,14 @@ const checkToolsDone: T_checkToolsDoneSig = state => {
 };
 
 const tools = [DND5E];
-const toolsNode = new ToolNode<BaseMessage[]>(tools);
+const toolsNode = new ToolNode<BaseMessage[]>(tools, 'tools', ['tabletop gaming', 'dungeons and dragons']);
+console.log('==toolsNode==', toolsNode);
 const llmGoogleAgent = makeAgentWithTools(tools);
 const agentWorkflow = new MessageGraph()
   .addNode('agent', llmGoogleAgent)
   .addNode('tools', toolsNode)
   .addEdge(START, "agent")
-  .addConditionalEdges("agent", checkToolsDone)
+  // .addConditionalEdges("agent", checkToolsDone)
+  .addEdge("agent", "tools")
   .addEdge("tools", "agent");
 export const agentWithTabletopKnowledge = agentWorkflow.compile();
