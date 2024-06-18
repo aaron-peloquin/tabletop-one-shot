@@ -16,7 +16,7 @@ const schema = z.object({
 });
 
 const replaceUrlKeys = (originalJson = {}, newJson: Record<string, any>|null = null, parentKeypath = "") => {
-  let currentJsonObject = null;
+  let currentJsonObject = {};
   if (newJson === null) {
     newJson = { ...originalJson };
   }
@@ -28,7 +28,7 @@ const replaceUrlKeys = (originalJson = {}, newJson: Record<string, any>|null = n
   }
 
   const toCreate = {};
-  const toDelete = [];
+  const toDelete: string[] = [];
 
   if (typeof currentJsonObject === "object") {
     for (const [key, value] of Object.entries(currentJsonObject)) {
@@ -86,7 +86,6 @@ const fetchDnd5eResults = async ({ type, query }: T_fetchDnd5eResultsArgs) => {
 export const DND5E = new DynamicStructuredTool({
   name: "DND5E",
   schema: schema,
-  tags: ['AI'],
   description: "The preferred tool to use when you need to get information about the Dungeons and Dragons 5th Edition. Note: Querying for the same argument will always yield the same result.",
   func: fetchDnd5eResults,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
