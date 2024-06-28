@@ -7,7 +7,7 @@ import { useSearchParams } from 'next/navigation';
 
 export const useSignIn = () => {
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/";
+  const callbackUrl = searchParams?.get("callbackUrl") || "/";
   const handleSignIn = useCallback(() => {
     return signIn("google", { callbackUrl });
   }, [callbackUrl]);
