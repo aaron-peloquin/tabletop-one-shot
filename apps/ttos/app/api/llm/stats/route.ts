@@ -2,9 +2,10 @@ import { StructuredOutputParser } from "langchain/output_parsers";
 import { PromptTemplate } from "@langchain/core/prompts";
 import { RunnableSequence } from "@langchain/core/runnables";
 
-import { llmGoogle } from '@helper/server';
+import { agentWithTabletopKnowledge, llmGoogle } from '@helper/server';
 import { zodSchemaStats } from '@static';
 import { NextRequest, NextResponse } from "next/server";
+import { DND5E } from "@helper";
 
 export const maxDuration = 15;
 
@@ -47,7 +48,12 @@ const overviewChain = RunnableSequence.from([
 export const POST = async (req: NextRequest) => {
   const params = await req.json();
   try {
-    const response = await overviewChain.invoke(params);
+    const agentTemplate = `Generating a random character sheet for a non-player character named "${params.name}".
+Classification: ${params.classification}
+CR: ${params.cr}
+Description: ${params.description}`;
+    const agentContext = await agentWithTabletopKnowledge(agentTemplate, [DND5E], 5);
+    const response = await overviewChain.invoke({ ...params, agentContext });
     return NextResponse.json({ message: response }, { status: 200 });
   } catch (errorReason) {
     console.error(errorReason);

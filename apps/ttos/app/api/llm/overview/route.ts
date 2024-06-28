@@ -24,10 +24,9 @@ The title for session is: "{name}"
 
 Required Context for this session (Strictly follow this context, but do not repeat any of it):
 {context}
-{agentContext}
 ----
 {parsedFormat}`,
-  inputVariables: ['name', 'context', 'agentContext', 'partyLevel', 'crRangeLow', 'crRangeHigh'],
+  inputVariables: ['name', 'context', 'partyLevel', 'crRangeLow', 'crRangeHigh'],
   partialVariables: {
     parsedFormat: outputParser.getFormatInstructions()
   }
@@ -63,12 +62,7 @@ export const POST = async (req: NextRequest) => {
     break;
   }
   try {
-    let agentContext;
-    if(context) {
-      agentContext = await agentWithTabletopKnowledge(`"${name}", a tabletop one shot where: ${context}`, [DND5E], 5);
-      console.log('agentContext', agentContext);
-    }
-    const response = await overviewChain.invoke({ name, context, partyLevel, crRangeLow, crRangeHigh, agentContext });
+    const response = await overviewChain.invoke({ name, context, partyLevel, crRangeLow, crRangeHigh });
     return NextResponse.json({ message: response, agentContext }, { status: 200 });
   } catch (errorReason) {
     console.error(errorReason);
