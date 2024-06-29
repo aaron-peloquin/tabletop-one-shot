@@ -54,7 +54,7 @@ CR: ${params.cr}
 Description: ${params.description}`;
     const agentContext = await agentWithTabletopKnowledge(agentTemplate, [DND5E], 5);
     const response = await overviewChain.invoke({ ...params, agentContext });
-    return NextResponse.json({ message: response }, { status: 200 });
+    return NextResponse.json({ message: response, agentContext }, { status: 200 });
   } catch (errorReason) {
     console.error(errorReason);
     return NextResponse.json({ error: `Unable to generate stat block for ${params.name}, please try again`, errorReason },  {status: 500 });
