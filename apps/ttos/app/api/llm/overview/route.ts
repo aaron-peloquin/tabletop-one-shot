@@ -61,7 +61,7 @@ export const POST = async (req: NextRequest) => {
     break;
   }
   try {
-    const response = await overviewChain.invoke({name, context, partyLevel, crRangeLow, crRangeHigh});
+    const response = await overviewChain.invoke({ name, context, partyLevel, crRangeLow, crRangeHigh });
     return NextResponse.json({ message: response }, { status: 200 });
   } catch (errorReason) {
     console.error(errorReason);

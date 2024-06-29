@@ -8,6 +8,8 @@ export {zodSchemaEncounter} from './lib/app/zodSchemaEncounter';
 export {zodSchemaCreature} from './lib/app/zodSchemaCreature';
 export {zodSchemaStats} from './lib/app/zodSchemaStats';
 
+export {zodSchemaAgentTools} from './lib/app/zodSchemaAgentTools';
+
 export {globalDataContext} from './lib/app/globalDataContext';
 export type {T_Overview, T_ChatHistory, T_SavedDataItem} from './lib/app/globalDataContext';
 

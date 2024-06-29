@@ -46,7 +46,7 @@ export const ChatLayout: React.FC<T_Props> = ({gridName}) => {
         <GridTemplate gridTemplateAreas={GRID_TEMPLATE_AREA} columns={4}>
           <GridArea name="input___">
             <Input
-              id="name"
+              id="chatText"
               value={humanText}
               disabled={chatStatus === 'loading'}
               autoComplete="off"
