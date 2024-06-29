@@ -74,7 +74,6 @@ export const agentWithTabletopKnowledge = async (query: string, tools: T_Tool[],
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const toolsToCall = [...await agentChain.invoke({query, toolsDetails, followupScratchpad: ''})] as T_AgentTools;
-  console.log('tools-to-call', 1, toolsToCall);
 
   const promiseBag = invokeTools(toolsToCall, tools);
 
