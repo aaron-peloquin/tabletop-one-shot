@@ -52,7 +52,7 @@ export const POST = async (req: NextRequest) => {
 Classification: ${params.classification}
 CR: ${params.cr}
 Description: ${params.description}`;
-    const agentContext = await agentWithTabletopKnowledge(agentTemplate, [DND5E], 2);
+    const agentContext = await agentWithTabletopKnowledge(agentTemplate, [DND5E], 1);
     const response = await overviewChain.invoke({ ...params, agentContext });
     return NextResponse.json({ message: response, agentContext }, { status: 200 });
   } catch (errorReason) {

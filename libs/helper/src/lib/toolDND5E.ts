@@ -68,6 +68,9 @@ const replaceUrlKeys = (originalJson = {}, newJson: Record<string, any>|null = n
 
 type T_fetchDnd5eResultsArgs = { type: string, query: string };
 const fetchDnd5eResults = async ({ type, query }: T_fetchDnd5eResultsArgs) => {
+  if(!query) {
+    return "No information retrieved when `query` is blank";
+  }
   const resource = _.get(commonMistakes, type, type.replace(" ", "-"));
   if(ACCEPTABLE_RESOURCES.indexOf(resource) !== -1) {
     const url = `https://www.dnd5eapi.co/api/${resource.toLowerCase()}${query ? `/${query.toLowerCase()}` : ""}`;
