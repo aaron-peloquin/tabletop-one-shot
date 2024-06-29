@@ -106,8 +106,6 @@ export const agentWithTabletopKnowledge = async (query: string, tools: T_Tool[],
       }
     }
     const finishedTools = toolResults.filter((tool) => tool.result.indexOf('No information') !== 0);
-    console.log('==toolResults==', toolResults);
-    console.log('==finishedTools==', finishedTools);
     return finishedTools;
   }
   return 'Unable to retrieve any helpful information';
