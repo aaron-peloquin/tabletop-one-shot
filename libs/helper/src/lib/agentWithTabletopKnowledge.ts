@@ -33,7 +33,7 @@ const promptTemplate = new PromptTemplate({
   partialVariables: { parsedFormat }
 });
 
-const onFailedAttempt = () => { console.log('an overview generation attempt failed'); };
+const onFailedAttempt = () => { console.log('a tabletop agent generation attempt failed'); };
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -42,7 +42,7 @@ const agentChain = RunnableSequence.from([
   llmGoogleStrict,
   outputParser
 ]).withRetry({
-  stopAfterAttempt: 3,
+  stopAfterAttempt: 1,
   onFailedAttempt,
 });
 
@@ -93,7 +93,6 @@ export const agentWithTabletopKnowledge = async (query: string, tools: T_Tool[],
         if(toolsToCall.length === 0) {
           break;
         }
-        console.log('tools-to-call', calls,  toolsToCall);
         const promiseBag = invokeTools(toolsToCall, tools);
         const promiseResults = (await Promise.all(promiseBag));
         const newToolResults = toolsToCall.map((tool, toolKey) => {
@@ -106,7 +105,10 @@ export const agentWithTabletopKnowledge = async (query: string, tools: T_Tool[],
         ];
       }
     }
-    return toolResults;
+    const finishedTools = toolResults.filter((tool) => tool.result.indexOf('No information') !== 0);
+    console.log('==toolResults==', toolResults);
+    console.log('==finishedTools==', finishedTools);
+    return finishedTools;
   }
   return 'Unable to retrieve any helpful information';
 };
