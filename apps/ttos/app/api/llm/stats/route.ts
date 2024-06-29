@@ -7,7 +7,7 @@ import { zodSchemaStats } from '@static';
 import { NextRequest, NextResponse } from "next/server";
 import { DND5E } from "@helper";
 
-export const maxDuration = 40;
+export const maxDuration = 60;
 
 const outputParser = StructuredOutputParser.fromZodSchema(zodSchemaStats);
 
