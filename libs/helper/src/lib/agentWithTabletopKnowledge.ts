@@ -50,8 +50,9 @@ type T_Tool = DynamicStructuredTool | StructuredTool | Tool;
 
 const invokeTools = (toolsToCall: T_AgentTools, tools: T_Tool[]) => {
   const promiseBag = [] as Promise<string>[];
-  if (toolsToCall?.length) {
-    toolsToCall.forEach((requestedTool) => {
+  if (toolsToCall?.tools?.length) {
+    console.log('thoughts & observations:', toolsToCall.thoughts);
+    toolsToCall?.tools.forEach((requestedTool) => {
       const tool = _.find(tools, {name: requestedTool.toolName});
       const toolResult = tool?.invoke(JSON.parse(requestedTool.argument || '{}'));
       if(toolResult) {
@@ -73,29 +74,34 @@ export const agentWithTabletopKnowledge = async (query: string, tools: T_Tool[],
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  const toolsToCall = [...await agentChain.invoke({query, toolsDetails, followupScratchpad: ''})] as T_AgentTools;
+  const toolsToCall = await agentChain.invoke({query, toolsDetails, followupScratchpad: ''}) as T_AgentTools;
 
   const promiseBag = invokeTools(toolsToCall, tools);
 
   if(promiseBag.length) {
     const promiseResults = (await Promise.all(promiseBag));
-    let toolResults = toolsToCall.map((tool, toolKey) => {
+    let toolResults = toolsToCall?.tools?.map((tool, toolKey) => {
       const toolResult = promiseResults[toolKey];
       return {...tool, result: toolResult, fromSet: 1};
     });
+
+
+
+
+
     if(maxCalls > 1) {
       while(calls < maxCalls) {
         calls++;
         const followupScratchpad = `# Already retrieved content: ${JSON.stringify(toolResults)}\nIf this is enough context, please respond with an empty array to indicate no new tool requests.`;
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        const toolsToCall = [...await agentChain.invoke({query, toolsDetails, followupScratchpad})] as T_AgentTools;
-        if(toolsToCall.length === 0) {
+        const toolsToCall = await agentChain.invoke({query, toolsDetails, followupScratchpad}) as T_AgentTools;
+        if(toolsToCall?.tools.length === 0) {
           break;
         }
         const promiseBag = invokeTools(toolsToCall, tools);
         const promiseResults = (await Promise.all(promiseBag));
-        const newToolResults = toolsToCall.map((tool, toolKey) => {
+        const newToolResults = toolsToCall?.tools?.map((tool, toolKey) => {
           const toolResult = promiseResults[toolKey];
           return {...tool, result: toolResult, fromSet: calls};
         });
