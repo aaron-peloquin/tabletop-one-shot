@@ -14,6 +14,7 @@ export const POST = async (req: NextRequest) => {
     const response = await llmGoogleCreative.invoke(
       `Generate a random name for a unique family-friendly ${descriptor} homebrew tabletop RPG one-shot session for a group of ${partyLevel} level players.
       Find ONE safe for work name that is shorter and grabs the reader's attention and make them want to know more about this ${descriptor} adventure.
+      ONLY Reply with the name of the adventure.
       Session Seed: "${seed}"
       NEVER reference any existing intellectual property or campaign settings, like Phandelver, Tiamat, or Faerun`
     );
