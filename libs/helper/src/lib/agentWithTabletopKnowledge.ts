@@ -80,11 +80,6 @@ export const agentWithTabletopKnowledge = async (query: string, tools: T_Tool[],
       const toolResult = promiseResults[toolKey];
       return {...tool, result: toolResult, fromSet: 1};
     });
-
-
-
-
-
     if(maxCalls > 1) {
       while(calls < maxCalls) {
         calls++;
