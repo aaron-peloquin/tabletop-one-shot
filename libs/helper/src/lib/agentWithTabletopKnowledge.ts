@@ -35,8 +35,6 @@ const promptTemplate = new PromptTemplate({
 
 const onFailedAttempt = () => { console.log('a tabletop agent generation attempt failed'); };
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 const agentChain = RunnableSequence.from([
   promptTemplate,
   llmGoogleStrict,
@@ -72,8 +70,6 @@ export const agentWithTabletopKnowledge = async (query: string, tools: T_Tool[],
     return detailsString;
   }, '');
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   const toolsToCall = await agentChain.invoke({query, toolsDetails, followupScratchpad: ''}) as T_AgentTools;
 
   const promiseBag = invokeTools(toolsToCall, tools);
@@ -93,8 +89,6 @@ export const agentWithTabletopKnowledge = async (query: string, tools: T_Tool[],
       while(calls < maxCalls) {
         calls++;
         const followupScratchpad = `# Already retrieved content: ${JSON.stringify(toolResults)}\nIf this is enough context, please respond with an empty array to indicate no new tool requests.`;
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         const toolsToCall = await agentChain.invoke({query, toolsDetails, followupScratchpad}) as T_AgentTools;
         if(toolsToCall?.tools.length === 0) {
           break;
