@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 
-import { AIMessage, HumanMessage, SystemMessage } from "@langchain/core/messages";
+import { SystemMessage, HumanMessage, AIMessage } from '@langchain/core/messages';
 
 export const maxDuration = 40;
 
 const onFailedAttempt = () => { console.log('a chat generation attempt failed'); };
 
 const chatChain = new ChatGoogleGenerativeAI({
-  modelName: "gemini-1.5-pro",
+  model: "gemini-2.0-flash-lite",
   maxOutputTokens: 2048,
 }).withRetry({
   stopAfterAttempt: 3,
